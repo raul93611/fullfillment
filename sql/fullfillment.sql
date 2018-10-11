@@ -15,8 +15,7 @@ CREATE TABLE users(
 );
 
 CREATE TABLE rfq(
-  id INT NOT NULL AUTO_INCREMENT UNIQUE,
-  proposal INT NOT NULL,
+  id INT NOT NULL UNIQUE,
   id_usuario INT NOT NULL,
   usuario_designado INT NOT NULL,
   canal VARCHAR(100) NOT NULL,
@@ -44,9 +43,19 @@ CREATE TABLE rfq(
   shipping_cost DECIMAL(10,2) NOT NULL,
   shipping VARCHAR(100) NOT NULL,
   rfp INT NOT NULL,
+  fullfillment TINYINT NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE comments(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_rfq INT NOT NULL,
+  id_usuario INT NOT NULL,
+  comment TEXT CHARACTER SET utf8 NOT NULL,
+  fecha_comment DATETIME,
   PRIMARY KEY(id),
-  FOREIGN KEY(id_usuario)
-    REFERENCES usuarios(id)
+  FOREIGN KEY(id_rfq)
+    REFERENCES rfq(id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
 );
@@ -71,10 +80,6 @@ CREATE TABLE item(
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
-    ON UPDATE CASCADE
-    ON DELETE RESTRICT,
-  FOREIGN KEY(id_usuario)
-    REFERENCES usuarios(id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
 );

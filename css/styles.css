@@ -1,0 +1,350 @@
+body{
+  font-family: 'Roboto', sans-serif;
+  font-size: 11pt !important;
+  color: #39485A !important;
+}
+
+/**********************************************************************************************************************************************
+START SIDEBAR STYLES
+************************************************************************************************************************************************/
+.sidebar-dark-primary{
+  background-color: #39485A !important;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link:active, .sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link:focus {
+  color: #C2C7D0 !important;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item:hover > .nav-link {
+  color: #ffffff !important;
+  background-color: #485566 !important;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+.sidebar-dark-primary .nav-treeview > .nav-item > .nav-link:hover {
+  color: #ffffff !important;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-link.active {
+  color: #ffffff;
+  background-color: #13A8F0 !important;
+}
+
+.sidebar-dark-primary .nav-sidebar > .nav-item > .nav-treeview {
+  background: transparent !important;
+}
+
+.sidebar-dark-primary .nav-treeview > .nav-item > .nav-link {
+  color: #C2C7D0 !important;
+}
+
+.sidebar-dark-primary .nav-treeview > .nav-item > .nav-link.active, .sidebar-dark-primary .nav-treeview > .nav-item > .nav-link.active:hover {
+  color: #ffffff !important;
+  background-color: #616D7B !important;
+}
+
+.sidebar-dark-primary .nav-treeview > .nav-item > .nav-link:hover{
+  background-color: #485566 !important;
+}
+
+.sidebar-dark-primary .nav-treeview > .nav-item > .nav-treeview > .nav-item > .nav-link.active{
+  background-color: #2B3644 !important;
+}
+.sidebar-dark-primary .nav-treeview > .nav-item > .nav-link{
+  padding-left: 47px !important;
+}
+
+#new_quote{
+  padding-left: 13px !important;
+  background-color: white !important;
+  color: #39485A !important;
+}
+
+/***********************************************************************************************************************************************
+END SIDEBAR STYLES
+*************************************************************************************************************************************************/
+
+
+/**********************************************************************************************************************************************
+START BUTTON STYLES
+************************************************************************************************************************************************/
+.btn-primary {
+  color: #ffffff;
+  background-color: #32a4dd !important;
+  border-color: #32a4dd !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.btn-primary:hover {
+  color: #ffffff;
+  background-color: #40B7EE !important;
+  border-color: #40B7EE !important;
+}
+
+.btn-success {
+  color: #ffffff;
+  background-color: #01D3AA !important;
+  border-color: #01D3AA !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.btn-success:hover {
+  color: #ffffff;
+  background-color: #34DCBB !important;
+  border-color: #34DCBB !important;
+}
+
+.btn-danger {
+  color: #ffffff;
+  background-color: #DD355F !important;
+  border-color: #DD355F !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.btn-danger:hover {
+  color: #ffffff;
+  background-color: #E45D7F !important;
+  border-color: #E45D7F !important;
+}
+
+.btn-secondary {
+  color: #39485A !important;
+  background-color: #E7E9EB !important;
+  border-color: #E7E9EB !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.btn-secondary:hover {
+  color: #ffffff !important;
+  background-color: #5a6268 !important;
+  border-color: #545b62 !important;
+}
+
+.btn-warning {
+  color: #1F2D3D;
+  background-color: #F0E714 !important;
+  border-color: #F0E714 !important;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.btn-warning:hover {
+  color: #1F2D3D;
+  background-color: #F3EC43 !important;
+  border-color: #F3EC43 !important;
+}
+
+.btn-warning{
+    font-size: 0.9em !important;
+}
+/**************************************START GOBACK BUTTON STYLES**********************************************************/
+#go_back{
+  border-radius: 25px !important;
+  background-color: #B0B6BD !important;
+  border-color: #B0B6BD !important;
+}
+
+#go_back:hover{
+  background-color: #C0C5CA !important;
+  border-color: #C0C5CA !important;
+}
+/*********************************************END GOBACK BUTTON STYLES*****************************************************/
+
+/**********************************************START CALCULATE BUTTON STYLES******************************************************/
+.calculate{
+  color: #ffffff !important;
+  background-color: #007AFF !important;
+  border-color: #007AFF !important;
+}
+
+.calculate:hover{
+  background-color: #3395FF !important;
+  border-color: #3395FF !important;
+}
+/****************************************************END CALCULATE BUTTON STYLES********************************************************/
+
+/***************************************************START SAVE BUTTON STYLES*********************************************************/
+#save_item{
+  background-color: #03D3AB !important;
+  border-color: #03D3AB !important;
+}
+
+#save_item:hover{
+  background-color: #35DCBC !important;
+  border-color: #35DCBC !important;
+}
+/**********************************************************END SAVE BUTTON STYLES*********************************************************/
+
+/****************************************************START ADD ITEM BUTTON STYLES*********************************************************/
+.add_item_charter{
+  background-color: #40B7EE !important;
+  border-color: #40B7EE !important;
+}
+
+.add_item_charter:hover{
+  background-color: #66C5F1 !important;
+  border-color: #66C5F1 !important;
+}
+
+/****************************************************END ADD ITEM BUTTON STYLES**************************************************************/
+
+/****************************************************START HOME BUTTON STYLES*****************************************************************/
+.btn_home{
+  background-color: #39485A !important;
+  color: #ffffff !important;
+}
+
+.btn_home:hover{
+  background-color: #4f5359 !important;
+}
+/**************************************************END HOME BUTTON STYLES***********************************************************************/
+
+/***************************************************************************************************************************************************
+END BUTTON STYLES
+***************************************************************************************************************************************************/
+
+
+/**************************************************************************************************************************************************
+START ALERT STYLES
+****************************************************************************************************************************************************/
+.bg-danger, .alert-danger, .label-danger{
+  background-color: #DD355F !important;
+}
+
+.alert-danger:hover{
+  background-color: #E45D7F !important;
+}
+
+.bg-warning, .alert-warning, .label-warning {
+  background-color: #F0E714 !important;
+}
+
+/***************************************************************************************************************************************************
+END ALERT STYLES
+*****************************************************************************************************************************************************/
+
+
+/***************************************************************************************************************************************************
+START CARD PRIMARY STYLES
+******************************************************************************************************************************************************/
+.card-primary:not(.card-outline) .card-header {
+  background-color: #E7E9EB !important;
+  border-bottom: 0;
+}
+
+.card-primary:not(.card-outline) .card-header,
+.card-primary:not(.card-outline) .card-header a {
+  color: #39485A !important;
+}
+
+/********************************************************************************************************************************************************
+END CARD PRIMARY STYLES
+********************************************************************************************************************************************************/
+
+
+/*******************************************************************************************************************************************************
+START FIXED CARD FOOTER STYLES
+********************************************************************************************************************************************************/
+.card-footer{
+  background-color: #E7E9EB !important;
+}
+/*****************************************************************************************************************************************************
+END FIXED CARD FOOTER STYLES
+*********************************************************************************************************************************************************/
+
+
+/********************************************************START BORDER LEFT TR STYLES*********************************************************************/
+.waiting_for{
+  border-left: 5px solid #FBD200 !important;
+}
+
+/********************************************************END BORDER LEFT TR STYLES*********************************************************************/
+
+
+
+
+
+/******************************************************START PRIMARY INDICATOR STYLES*********************************************************************/
+.text-primary {
+  color: #32a4dd !important;
+}
+
+a.text-primary:hover, a.text-primary:focus {
+  color: #0062cc !important;
+}
+/***********************************************************END PRIMARY INDICATOR STYLES*******************************************************************/
+
+/******************************************************************************************************************************************************
+START TABLE ITEM STYLES
+********************************************************************************************************************************************************/
+table{
+  font-size: 0.8em;
+}
+
+.list-group-item:hover{
+  background-color: #f4f6f9;
+}
+
+#items_table .description{
+  width: 150px !important;
+}
+
+#items_table .options{
+  width: 150px !important;
+}
+
+#items_table .qty{
+  width: 100px !important;
+}
+
+.break_words{
+  word-break: break-all !important;
+}
+
+#items_table #numeration{
+  width: 20px !important;
+}
+
+/****************************************************************************************************************************************************
+END TABLE ITEM STYLES
+*******************************************************************************************************************************************************/
+
+/******************************************************************************************************************************************************
+START USERS TABLE STYLES
+******************************************************************************************************************************************************/
+#disable_user{
+  width: 100px !important;
+}
+#options{
+  width: 100px !important;
+}
+/******************************************************************************************************************************************************
+END USERS TABLE STYLES
+********************************************************************************************************************************************************/
+/*********************NARROW SPACE FOR LINKS***************************************************************************/
+.break_words{
+  word-break: break-all !important;
+}
+/*************************************************FOOTER BUTTON***************************************************************/
+.footer{
+  position: fixed !important;
+  bottom: 0 !important;
+  z-index: 2;
+  width: auto;
+  background-color: #E7E9EB;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+/*****************************************************STORY COMMENTS AND FULLCALENDAR CONTENT*************************************************************/
+.clickable_title, .fc-content{
+  cursor: pointer;
+}
+/**************************************************************************************************/
+.fc-today{
+  background-color: #E5F3FA !important;
+  color: #39485A !important;
+}
