@@ -13,6 +13,8 @@ define('SERVER', 'http://localhost/fullfillment/');
 define('PROFILE', SERVER . 'profile/');
 
 define('SIGN_IN', PROFILE . 'sign_in');
+define('DISABLE_USER', SERVER . 'disable_user/');
+define('ENABLE_USER', SERVER . 'enable_user/');
 
 define('RFQ_TEAM', PROFILE . 'rfq_team');
 

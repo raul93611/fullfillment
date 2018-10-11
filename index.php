@@ -69,6 +69,14 @@ if($parts_route[0] == 'fullfillment'){
             break;
         }
         break;
+      case 'disable_user':
+        $id_user = $parts_route[2];
+        $chosen_route = 'scripts/disable_user.php';
+        break;
+      case 'enable_user':
+        $id_user = $parts_route[2];
+        $chosen_route = 'scripts/enable_user.php';
+        break;
       default:
         break;
     }

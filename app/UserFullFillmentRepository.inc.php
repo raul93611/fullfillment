@@ -120,5 +120,149 @@ class UserFullFillmentRepository{
     }
     return $full_name_exists;
   }
+
+  public static function count_users($connection) {
+    $total_users = 0;
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT COUNT(*) as total_users FROM users WHERE level != 1";
+
+        $sentence = $connection->prepare($sql);
+        $sentence->execute();
+
+        $result = $sentence->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+          $total_users = $result['total_users'];
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $total_users;
+  }
+
+  public static function get_all_users($connection) {
+    $users = [];
+
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM users WHERE level != 1";
+
+        $sentence = $connection->prepare($sql);
+
+        $sentence->execute();
+
+        $result = $sentence->fetchAll(PDO::FETCH_ASSOC);
+
+        if (count($result)) {
+          foreach ($result as $row) {
+            $users [] = new User($row['id'], $row['username'], $row['password'], $row['names'], $row['last_names'], $row['level'], $row['email'], $row['status']);
+          }
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $users;
+  }
+
+  public static function print_user($user) {
+    if (!isset($user)) {
+        return;
+    }
+    ?>
+    <tr>
+      <td><?php echo $user-> get_id(); ?></td>
+      <td><?php echo $user-> get_level(); ?></td>
+      <td><?php echo $user-> get_names(); ?></td>
+      <td><?php echo $user-> get_last_names(); ?></td>
+      <td>
+        <?php
+        if($user-> get_status()){
+          echo '<a href="' . DISABLE_USER . $user-> get_id() . '" class="btn btn-block btn-sm btn-danger"><i class="fa fa-ban"></i> Disable</a>';
+        }else{
+          echo '<a href="' . ENABLE_USER . $user-> get_id() . '" class="btn btn-block btn-sm btn-success"><i class="fa fa-check"></i> Enable</a>';
+        }
+        ?>
+        <br>
+        <a class="btn btn-sm btn-block btn-info" href="<?php echo EDIT_USER . $user-> get_id(); ?>"><i class="fa fa-edit"></i> Edit</a>
+      </td>
+    </tr>
+    <?php
+  }
+
+  public static function print_users() {
+    ConnectionFullFillment::open_connection();
+    $users = self::get_all_users(ConnectionFullFillment::get_connection());
+    ConnectionFullFillment::close_connection();
+
+    if (count($users)) {
+      ?>
+      <table id="users_table" class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>LEVEL</th>
+            <th>FIRST NAMES</th>
+            <th>LAST NAMES</th>
+            <th id="disable_user">OPTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          foreach ($users as $user) {
+            self::print_user($user);
+          }
+          ?>
+        </tbody>
+      </table>
+      <?php
+    }
+  }
+
+  public static function disable_user($connection, $id_user){
+    $edited_user = false;
+
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE users SET status = 0 WHERE id = :id_user';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_user', $id_user, PDO::PARAM_STR);
+
+        $result = $sentence-> execute();
+
+        if($result){
+          $edited_user = true;
+        }
+
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $edited_user;
+  }
+
+  public static function enable_user($connection, $id_user){
+    $edited_user = false;
+
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE users SET status = 1 WHERE id = :id_user';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_user', $id_user, PDO::PARAM_STR);
+
+        $result = $sentence-> execute();
+
+        if($result){
+          $edited_user = true;
+        }
+
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $edited_user;
+  }
 }
 ?>
