@@ -21,6 +21,9 @@ switch ($current_manager) {
   case 'rfq_team':
     include_once 'templates/rfq_team.inc.php';
     break;
+  case 'sign_in':
+    include_once 'templates/sign_in.inc.php';
+    break;
 }
 include_once 'templates/end_document.inc.php';
 ?>

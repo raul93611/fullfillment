@@ -12,6 +12,8 @@ define('NOMBRE_BD', 'elogic');
 define('SERVER', 'http://localhost/fullfillment/');
 define('PROFILE', SERVER . 'profile/');
 
+define('SIGN_IN', PROFILE . 'sign_in');
+
 define('RFQ_TEAM', PROFILE . 'rfq_team');
 
 define('CSS', SERVER . 'css/');

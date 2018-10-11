@@ -26,7 +26,7 @@ include_once 'app/RepositorioProviderSubitemFullFillment.inc.php';
 
 include_once '../rfp/app/User.inc.php';
 include_once 'app/UserFullFillmentRepository.inc.php';
-include_once '../rfp/app/UserValidator.inc.php';
+include_once 'app/UserValidator.inc.php';
 include_once 'app/UserLoginValidatorFullFillment.inc.php';
 include_once '../rfp/app/UserSignInValidator.inc.php';
 
@@ -59,6 +59,10 @@ if($parts_route[0] == 'fullfillment'){
         switch ($parts_route[2]) {
           case 'rfq_team':
             $current_manager = 'rfq_team';
+            $chosen_route = 'views/profile.php';
+            break;
+          case 'sign_in':
+            $current_manager = 'sign_in';
             $chosen_route = 'views/profile.php';
             break;
           default:

@@ -27,6 +27,24 @@
             <p>Dashboard</p>
           </a>
         </li>
+        <?php
+        if ($level == 1) {
+        ?>
+        <li class="nav-item has-treeview menu-open">
+          <a href="<?php echo SIGN_IN; ?>" class="nav-link
+          <?php
+          if ($current_manager == 'sign_in') {
+            echo 'active';
+          }
+          ?>
+             ">
+            <i class="fa fa-users nav-icon"></i>
+            <p>User register</p>
+          </a>
+        </li>
+        <?php
+        }
+        ?>
         <li class="nav-item has-treeview menu-open">
           <a href="<?php echo RFQ_TEAM; ?>" class="nav-link
             <?php

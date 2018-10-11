@@ -71,5 +71,54 @@ class UserFullFillmentRepository{
     }
     return $user;
   }
+
+  public static function username_exists($connection, $username) {
+    $username_exists = true;
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM users WHERE username = :username";
+
+        $sentence = $connection->prepare($sql);
+        $sentence->bindParam(':username', $username, PDO::PARAM_STR);
+        $sentence->execute();
+
+        $result = $sentence->fetchAll(PDO::FETCH_ASSOC);
+
+        if (count($result)) {
+          $username_exists = true;
+        } else {
+          $username_exists = false;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $username_exists;
+  }
+
+  public static function full_name_exists($connection, $last_names, $names) {
+    $full_name_exists = true;
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM users WHERE names = :names AND last_names = :last_names";
+
+        $sentence = $connection->prepare($sql);
+        $sentence->bindParam(':names', $names, PDO::PARAM_STR);
+        $sentence->bindParam(':last_names', $last_names, PDO::PARAM_STR);
+        $sentence->execute();
+
+        $result = $sentence->fetchAll(PDO::FETCH_ASSOC);
+
+        if (count($result)) {
+          $full_name_exists = true;
+        } else {
+          $full_name_exists = false;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $full_name_exists;
+  }
 }
 ?>
