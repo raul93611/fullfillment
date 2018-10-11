@@ -24,6 +24,9 @@ switch ($current_manager) {
   case 'sign_in':
     include_once 'templates/sign_in.inc.php';
     break;
+  case 'edit_user':
+    include_once 'templates/edit_user.inc.php';
+    break;
 }
 include_once 'templates/end_document.inc.php';
 ?>

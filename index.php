@@ -50,20 +50,25 @@ if($parts_route[0] == 'fullfillment'){
       case 'generate_user':
         $chosen_route = 'tools/generate_user.php';
         break;
+      case 'save_edit_user':
+        $chosen_route = 'scripts/save_edit_user.php';
+        break;
       default:
         break;
     }
   }else if(count($parts_route) == 3){
     switch ($parts_route[1]) {
       case 'profile':
+        $chosen_route = 'views/profile.php';
         switch ($parts_route[2]) {
           case 'rfq_team':
             $current_manager = 'rfq_team';
-            $chosen_route = 'views/profile.php';
             break;
           case 'sign_in':
             $current_manager = 'sign_in';
-            $chosen_route = 'views/profile.php';
+            break;
+          case 'edit_user':
+            $current_manager = 'edit_user';
             break;
           default:
             break;
@@ -76,6 +81,22 @@ if($parts_route[0] == 'fullfillment'){
       case 'enable_user':
         $id_user = $parts_route[2];
         $chosen_route = 'scripts/enable_user.php';
+        break;
+      default:
+        break;
+    }
+  }else if(count($parts_route) == 4){
+    switch ($parts_route[1]) {
+      case 'profile':
+        $chosen_route = 'views/profile.php';
+        switch ($parts_route[2]) {
+          case 'edit_user':
+            $current_manager = 'edit_user';
+            $id_user = $parts_route[3];
+            break;
+          default:
+            break;
+        }
         break;
       default:
         break;
