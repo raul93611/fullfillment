@@ -49,5 +49,27 @@ class UserFullFillmentRepository{
     }
     return $user;
   }
+
+  public static function get_user_by_id($connection, $id_user) {
+    $user = null;
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM users WHERE id = :id_user";
+
+        $sentence = $connection->prepare($sql);
+        $sentence->bindParam(':id_user', $id_user, PDO::PARAM_STR);
+        $sentence->execute();
+
+        $result = $sentence->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+          $user = new User($result['id'], $result['username'], $result['password'], $result['names'], $result['last_names'], $result['level'], $result['email'], $result['status']);
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $user;
+  }
 }
 ?>

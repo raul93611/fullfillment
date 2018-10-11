@@ -41,5 +41,69 @@ class RepositorioRfqFullfillment{
       }
     }
   }
+/****************************************RFQ TEAM****************************************************************/
+  public static function get_all_quotes($connection){
+    $quotes = [];
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT * FROM rfq ORDER BY fecha_award DESC';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> execute();
+        $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+        if(count($result)){
+          foreach ($result as $row) {
+            $quotes[] = new Rfq($row['id'], $row['id_usuario'], $row['usuario_designado'], $row['canal'], $row['email_code'], $row['type_of_bid'], $row['issue_date'], $row['end_date'], $row['status'], $row['completado'], $row['total_cost'], $row['total_price'], $row['comments'], $row['award'], $row['fecha_completado'], $row['fecha_submitted'], $row['fecha_award'], $row['payment_terms'], $row['address'], $row['ship_to'], $row['expiration_date'], $row['ship_via'], $row['taxes'], $row['profit'], $row['additional'], $row['shipping'], $row['shipping_cost'], $row['rfp'], $row['fullfillment']);
+          }
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex-> getMessage() . '<br>';
+      }
+    }
+    return $quotes;
+  }
+
+  public static function print_quote($quote){
+    if(!isset($quote)){
+      return;
+    }
+    ?>
+    <tr>
+      <td><?php echo $quote-> obtener_id(); ?></td>
+      <td><?php echo $quote-> obtener_email_code(); ?></td>
+      <td>
+        <?php
+        Conexion::abrir_conexion();
+        $usuario = RepositorioUsuario::obtener_usuario_por_id(Conexion::obtener_conexion(), $quote->obtener_usuario_designado());
+        Conexion::cerrar_conexion();
+        echo $usuario->obtener_nombre_usuario();
+        ?>
+      </td>
+    </tr>
+    <?php
+  }
+
+  public static function print_all_quotes(){
+    ConnectionFullFillment::open_connection();
+    $quotes = self::get_all_quotes(ConnectionFullFillment::get_connection());
+    ConnectionFullFillment::close_connection();
+    ?>
+    <table id="rfq_team_table" class="table table-bordered">
+      <thead>
+        <tr>
+          <th>PROPOSAL</th>
+          <th>CODE</th>
+          <th>DESIGNATED USER</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        foreach ($quotes as $quote) {
+          self::print_quote($quote);
+        }
+        ?>
+      </tbody>
+    </table>
+    <?php
+  }
 }
 ?>

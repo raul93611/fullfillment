@@ -4,6 +4,11 @@ include_once 'app/ConnectionFullFillment.inc.php';
 include_once 'app/SessionControl.inc.php';
 include_once '../rfp/app/Redirection.inc.php';
 
+include_once '../rfq/app/Conexion.inc.php';
+
+include_once '../rfq/app/Usuario.inc.php';
+include_once '../rfq/app/RepositorioUsuario.inc.php';
+
 include_once '../rfq/app/Rfq.inc.php';
 include_once 'app/RepositorioRfqFullFillment.inc.php';
 
@@ -44,6 +49,21 @@ if($parts_route[0] == 'fullfillment'){
         break;
       case 'generate_user':
         $chosen_route = 'tools/generate_user.php';
+        break;
+      default:
+        break;
+    }
+  }else if(count($parts_route) == 3){
+    switch ($parts_route[1]) {
+      case 'profile':
+        switch ($parts_route[2]) {
+          case 'rfq_team':
+            $current_manager = 'rfq_team';
+            $chosen_route = 'views/profile.php';
+            break;
+          default:
+            break;
+        }
         break;
       default:
         break;
