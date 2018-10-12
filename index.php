@@ -86,6 +86,9 @@ if($parts_route[0] == 'fullfillment'){
       case 'save_comment':
         $chosen_route = 'scripts/save_comment.php';
         break;
+      case 'log_out':
+        $chosen_route = 'scripts/log_out.php';
+        break;
       default:
         break;
     }

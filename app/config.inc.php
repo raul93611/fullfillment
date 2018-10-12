@@ -11,6 +11,7 @@ define('NOMBRE_BD', 'elogic');
 
 define('SERVER', 'http://localhost/fullfillment/');
 define('PROFILE', SERVER . 'profile/');
+define('LOG_OUT', SERVER . 'log_out');
 /***************************************************************************/
 define('SIGN_IN', PROFILE . 'sign_in');
 define('DISABLE_USER', SERVER . 'disable_user/');
