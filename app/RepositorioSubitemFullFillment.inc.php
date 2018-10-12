@@ -27,5 +27,122 @@ class RepositorioSubitemFullFillment{
     }
     return $id;
   }
+
+  public static function actualizar_provider_menor_subitem($conexion, $provider_menor, $id_subitem){
+    if(isset($conexion)){
+      try{
+        $sql = 'UPDATE subitems SET provider_menor = :provider_menor WHERE id = :id_subitem';
+        $sentencia = $conexion-> prepare($sql);
+        $sentencia-> bindParam(':provider_menor', $provider_menor, PDO::PARAM_STR);
+        $sentencia-> bindParam(':id_subitem', $id_subitem, PDO::PARAM_STR);
+        $sentencia-> execute();
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
+
+  public static function obtener_subitems_por_id_item($conexion, $id_item) {
+    $subitems = [];
+    if (isset($conexion)) {
+      try {
+        $sql = 'SELECT * FROM subitems WHERE id_item = :id_item';
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentencia->execute();
+        $resultado = $sentencia->fetchAll();
+        if (count($resultado)) {
+          foreach ($resultado as $fila) {
+            $subitems[] = new Subitem($fila['id'], $fila['id_item'], $fila['provider_menor'], $fila['brand'], $fila['brand_project'], $fila['part_number'], $fila['part_number_project'], $fila['description'], $fila['description_project'], $fila['quantity'], $fila['unit_price'], $fila['total_price'], $fila['comments'], $fila['website'], $fila['additional']);
+          }
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $subitems;
+  }
+
+  public static function escribir_subitem($subitem, $i) {
+    if (!isset($subitem)) {
+      return;
+    }
+    $j = $i;
+    ConnectionFullFillment::open_connection();
+    $providers_subitem = RepositorioProviderSubitemFullFillment::obtener_providers_subitem_por_id_subitem(ConnectionFullFillment::get_connection(), $subitem->obtener_id());
+    ConnectionFullFillment::close_connection();
+    echo '<tr class="fila_subitem">';
+    echo '<td><a href="' . ADD_PROVIDER_SUBITEM . $subitem->obtener_id() . '" class="btn btn-warning btn-block subitem"><i class="fa fa-plus-circle"></i> Add Provider</a><br><a href="' . EDIT_SUBITEM . $subitem->obtener_id() . '" class="btn btn-warning btn-block subitem"><i class="fa fa-edit"></i> Edit subitem</a><br><a href="' . DELETE_SUBITEM . $subitem-> obtener_id() . '" class="delete_subitem_button btn btn-warning btn-block subitem"><i class="fa fa-trash"></i> Delete</a></td>';
+    echo '<td></td>';
+    if(strlen($subitem-> obtener_description_project()) >= 100){
+      echo '<td><b>Brand:</b> ' . $subitem->obtener_brand_project() . '<br><b>Part #:</b> ' . $subitem->obtener_part_number_project() . '<br><b>Description:</b> ' . nl2br(mb_substr($subitem->obtener_description_project(), 0, 100)) . ' ...</td>';
+    }else{
+      echo '<td><b>Brand:</b> ' . $subitem->obtener_brand_project() . '<br><b>Part #:</b> ' . $subitem->obtener_part_number_project() . '<br><b>Description:</b> ' . nl2br($subitem->obtener_description_project()) . '</td>';
+    }
+    if(strlen($subitem-> obtener_description()) >= 100){
+      echo '<td><b>Brand:</b> ' . $subitem->obtener_brand() . '<br><b>Part #:</b> ' . $subitem->obtener_part_number() . '<br><b>Description:</b> ' . nl2br(mb_substr($subitem->obtener_description(), 0, 100)) . ' ...</td>';
+    }else{
+      echo '<td><b>Brand:</b> ' . $subitem->obtener_brand() . '<br><b>Part #:</b> ' . $subitem->obtener_part_number() . '<br><b>Description:</b> ' . nl2br($subitem->obtener_description()) . '</td>';
+    }
+    echo '<td class="estrechar"><a target="_blank" href="'. $subitem-> obtener_website() .'">'. $subitem-> obtener_website() .'</a></td>';
+    echo '<td>' . $subitem->obtener_quantity() . '</td>';
+    echo '<td><div class="row"><div class="col-6">';
+    for ($i = 0; $i < count($providers_subitem); $i++) {
+      $provider_subitem = $providers_subitem[$i];
+      if(strlen($provider_subitem-> obtener_provider()) >= 10){
+        echo '<a href="' . EDIT_PROVIDER_SUBITEM . $provider_subitem->obtener_id() . '"><b>' . mb_substr($provider_subitem->obtener_provider(), 0, 10) . '... :</b></a><br>';
+      }else{
+        echo '<a href="' . EDIT_PROVIDER_SUBITEM . $provider_subitem->obtener_id() . '"><b>' . $provider_subitem->obtener_provider() . ':</b></a><br>';
+      }
+    }
+    echo '</div><div class="col-6">';
+    for ($i = 0; $i < count($providers_subitem); $i++) {
+      $provider_subitem = $providers_subitem[$i];
+      echo '$ ' . $provider_subitem->obtener_price() . '<br>';
+    }
+    echo '</div></div></td>';
+    if($subitem-> obtener_additional() != 0){
+      echo '<td><input type="text" class="form-control form-control-sm" id="add_cost'.$j.'" size="10" value="'.$subitem-> obtener_additional().'"></td>';
+    }else{
+      echo '<td><input type="text" class="form-control form-control-sm" id="add_cost'.$j.'" size="10" value="0"></td>';
+    }
+    echo '<td>';
+    for ($i = 0; $i < count($providers_subitem); $i++) {
+      $provider_subitem = $providers_subitem[$i];
+      $precios_subitem[$i] = $provider_subitem->obtener_price();
+    }
+    if (!empty($precios_subitem)) {
+      $best_unit_price = min($precios_subitem);
+      for($i = 0;$i < count($precios_subitem); $i++){
+        if($best_unit_price == $precios_subitem[$i]){
+          ConnectionFullFillment::open_connection();
+          self::actualizar_provider_menor_subitem(ConnectionFullFillment::get_connection(), $providers_subitem[$i]->obtener_id(), $subitem-> obtener_id());
+          ConnectionFullFillment::close_connection();
+        }
+      }
+      echo '$ ' . $best_unit_price;
+    }
+    echo '</td>';
+    echo '<td></td>';
+    echo '<td></td>';
+    echo '<td></td>';
+    echo '<td>' . nl2br($subitem->obtener_comments()) . '</td>';
+    echo '</tr>';
+  }
+
+  public static function escribir_subitems($id_item, $j) {
+    $j++;
+    ConnectionFullFillment::open_connection();
+    $subitems = self::obtener_subitems_por_id_item(ConnectionFullFillment::get_connection(), $id_item);
+    ConnectionFullFillment::close_connection();
+    if (count($subitems)) {
+      for ($i = 0; $i < count($subitems); $i++) {
+        $subitem = $subitems[$i];
+        self::escribir_subitem($subitem, $j);
+        $j++;
+      }
+    }
+    return $j;
+  }
 }
 ?>

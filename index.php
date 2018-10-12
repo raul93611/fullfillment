@@ -94,6 +94,10 @@ if($parts_route[0] == 'fullfillment'){
             $current_manager = 'edit_user';
             $id_user = $parts_route[3];
             break;
+          case 'edit_quote':
+            $current_manager = 'edit_quote';
+            $id_rfq = $parts_route[3];
+            break;
           default:
             break;
         }

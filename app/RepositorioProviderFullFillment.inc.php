@@ -19,5 +19,26 @@ class RepositorioProviderFullFillment{
     }
     return $provider_insertado;
   }
+
+  public static function obtener_providers_por_id_item($conexion, $id_item){
+    $providers = [];
+    if(isset($conexion)){
+      try{
+        $sql = 'SELECT * FROM provider WHERE id_item = :id_item';
+        $sentencia = $conexion-> prepare($sql);
+        $sentencia-> bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentencia-> execute();
+        $resultado = $sentencia-> fetchAll();
+        if(count($resultado)){
+          foreach ($resultado as $fila){
+            $providers[] = new Provider($fila['id'], $fila['id_item'], $fila['provider'], $fila['price']);
+          }
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $providers;
+  }
 }
 ?>

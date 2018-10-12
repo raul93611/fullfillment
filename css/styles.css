@@ -309,6 +309,37 @@ table{
   width: 20px !important;
 }
 
+#tabla_items .description{
+  width: 150px !important;
+}
+
+#tabla_items .options{
+  min-width: 130px !important;
+}
+
+#tabla_items .qty{
+  min-width: 80px !important;
+}
+
+.estrechar{
+  word-break: break-all !important;
+}
+
+#tabla_items #numeracion{
+  min-width: 20px !important;
+}
+
+#users #id{
+  width: 20px !important;
+}
+
+#users #options{
+  width: 140px !important;
+}
+#tabla_items #provider{
+  min-width: 200px !important;
+}
+
 /****************************************************************************************************************************************************
 END TABLE ITEM STYLES
 *******************************************************************************************************************************************************/

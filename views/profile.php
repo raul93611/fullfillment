@@ -27,6 +27,9 @@ switch ($current_manager) {
   case 'edit_user':
     include_once 'templates/edit_user.inc.php';
     break;
+  case 'edit_quote':
+    include_once 'templates/edit_quote.inc.php';
+    break;
 }
 include_once 'templates/end_document.inc.php';
 ?>

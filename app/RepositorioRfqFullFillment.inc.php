@@ -68,7 +68,11 @@ class RepositorioRfqFullfillment{
     }
     ?>
     <tr>
-      <td><?php echo $quote-> obtener_id(); ?></td>
+      <td>
+        <a href="<?php echo EDIT_QUOTE . $quote-> obtener_id(); ?>" class="btn-block">
+          <?php echo $quote-> obtener_id(); ?>
+        </a>
+      </td>
       <td><?php echo $quote-> obtener_email_code(); ?></td>
       <td>
         <?php
@@ -104,6 +108,25 @@ class RepositorioRfqFullfillment{
       </tbody>
     </table>
     <?php
+  }
+  /*********************************************************************************************/
+  public static function obtener_cotizacion_por_id($conexion, $id_rfq) {
+    $cotizacion_recuperada = null;
+    if (isset($conexion)) {
+      try {
+        $sql = "SELECT * FROM rfq WHERE id = :id_rfq";
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentencia->execute();
+        $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
+        if (!empty($resultado)) {
+          $cotizacion_recuperada = new Rfq($resultado['id'], $resultado['id_usuario'], $resultado['usuario_designado'], $resultado['canal'], $resultado['email_code'], $resultado['type_of_bid'], $resultado['issue_date'], $resultado['end_date'], $resultado['status'], $resultado['completado'], $resultado['total_cost'], $resultado['total_price'], $resultado['comments'], $resultado['award'], $resultado['fecha_completado'], $resultado['fecha_submitted'], $resultado['fecha_award'], $resultado['payment_terms'], $resultado['address'], $resultado['ship_to'], $resultado['expiration_date'], $resultado['ship_via'], $resultado['taxes'], $resultado['profit'], $resultado['additional'], $resultado['shipping'], $resultado['shipping_cost'], $resultado['rfp'], $resultado['fullfillment']);
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $cotizacion_recuperada;
   }
 }
 ?>
