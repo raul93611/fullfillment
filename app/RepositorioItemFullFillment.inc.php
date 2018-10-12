@@ -255,5 +255,92 @@ class RepositorioItemFullFillment{
       echo '<input type="hidden" id="total_price" name="total_price" value="">';
     }
   }
+
+  public static function obtener_item_por_id($conexion, $id_item) {
+    $item = null;
+    if (isset($conexion)) {
+      try {
+        $sql = 'SELECT * FROM item WHERE id = :id_item';
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentencia->execute();
+        $resultado = $sentencia->fetch();
+        if (!empty($resultado)) {
+          $item = new Item($resultado['id'], $resultado['id_rfq'], $resultado['id_usuario'], $resultado['provider_menor'], $resultado['brand'], $resultado['brand_project'], $resultado['part_number'], $resultado['part_number_project'], $resultado['description'], $resultado['description_project'], $resultado['quantity'], $resultado['unit_price'], $resultado['total_price'], $resultado['comments'], $resultado['website'], $resultado['additional']);
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $item;
+  }
+
+  public static function actualizar_item($conexion, $id_item, $brand, $brand_project, $part_number, $part_number_project, $description, $description_project, $quantity, $comments, $website) {
+    $item_editado = false;
+    if (isset($conexion)) {
+      try {
+        $sql = 'UPDATE item SET brand = :brand, brand_project = :brand_project, part_number = :part_number, part_number_project = :part_number_project, description = :description, description_project = :description_project, quantity = :quantity, comments = :comments, website = :website WHERE id = :id_item';
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':brand', $brand, PDO::PARAM_STR);
+        $sentencia->bindParam(':brand_project', $brand_project, PDO::PARAM_STR);
+        $sentencia->bindParam(':part_number', $part_number, PDO::PARAM_STR);
+        $sentencia->bindParam(':part_number_project', $part_number_project, PDO::PARAM_STR);
+        $sentencia->bindParam(':description', $description, PDO::PARAM_STR);
+        $sentencia->bindParam(':description_project', $description_project, PDO::PARAM_STR);
+        $sentencia->bindParam(':quantity', $quantity, PDO::PARAM_STR);
+        $sentencia->bindParam(':comments', $comments, PDO::PARAM_STR);
+        $sentencia->bindParam(':website', $website, PDO::PARAM_STR);
+        $sentencia->bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentencia->execute();
+        if ($sentencia) {
+          $item_editado = true;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $item_editado;
+  }
+
+  public static function delete_item($conexion, $id_item){
+    if(isset($conexion)){
+      try{
+        $conexion -> beginTransaction();
+        $sql1 = "DELETE FROM provider WHERE id_item = :id_item";
+        $sentencia1 = $conexion-> prepare($sql1);
+        $sentencia1-> bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentencia1-> execute();
+        $sql2 = "DELETE FROM item WHERE id = :id_item";
+        $sentencia2 = $conexion-> prepare($sql2);
+        $sentencia2-> bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentencia2-> execute();
+        $conexion-> commit();
+      } catch (PDOException $ex) {
+        print "ERROR:" . $ex->getMessage() . "<br>";
+        $conexion-> rollBack();
+      }
+    }
+  }
+
+  public static function insertar_calculos($conexion, $unit_price, $total_price, $additional, $id_item){
+    $item_editado = false;
+    if(isset($conexion)){
+      try{
+        $sql = 'UPDATE item SET unit_price = :unit_price, total_price = :total_price, additional = :additional WHERE id = :id_item';
+        $sentencia = $conexion-> prepare($sql);
+        $sentencia-> bindParam(':unit_price', $unit_price, PDO::PARAM_STR);
+        $sentencia-> bindParam(':total_price', $total_price, PDO::PARAM_STR);
+        $sentencia-> bindParam(':additional', $additional, PDO::PARAM_STR);
+        $sentencia-> bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentencia-> execute();
+        if($sentencia){
+          $item_editado = true;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $item_editado;
+  }
 }
 ?>

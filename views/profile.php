@@ -30,6 +30,30 @@ switch ($current_manager) {
   case 'edit_quote':
     include_once 'templates/edit_quote.inc.php';
     break;
+  case 'add_item':
+    include_once 'templates/add_item.inc.php';
+    break;
+  case 'edit_item':
+    include_once 'templates/edit_item.inc.php';
+    break;
+  case 'add_provider':
+    include_once 'templates/add_provider.inc.php';
+    break;
+  case 'edit_provider':
+    include_once 'templates/edit_provider.inc.php';
+    break;
+  case 'add_subitem':
+    include_once 'templates/add_subitem.inc.php';
+    break;
+  case 'edit_subitem':
+    include_once 'templates/edit_subitem.inc.php';
+    break;
+  case 'add_provider_subitem':
+    include_once 'templates/add_provider_subitem.inc.php';
+    break;
+  case 'edit_provider_subitem':
+    include_once 'templates/edit_provider_subitem.inc.php';
+    break;
 }
 include_once 'templates/end_document.inc.php';
 ?>

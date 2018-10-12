@@ -128,5 +128,103 @@ class RepositorioRfqFullfillment{
     }
     return $cotizacion_recuperada;
   }
+
+  public static function actualizar_shipping($conexion, $shipping, $shipping_cost, $id_rfq) {
+    $cotizacion_editada = false;
+    if (isset($conexion)) {
+      try {
+        $sql = 'UPDATE rfq SET shipping = :shipping, shipping_cost = :shipping_cost WHERE id = :id_rfq';
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':shipping', $shipping, PDO::PARAM_STR);
+        $sentencia->bindParam(':shipping_cost', $shipping_cost, PDO::PARAM_STR);
+        $sentencia->bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentencia->execute();
+        if ($sentencia) {
+          $cotizacion_editada = true;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $cotizacion_editada;
+  }
+
+  public static function actualizar_taxes_profit($conexion, $taxes, $profit, $total_cost, $total_price, $additional, $id_rfq) {
+    $cotizacion_editada = false;
+    if (isset($conexion)) {
+      try {
+        $sql = 'UPDATE rfq SET taxes = :taxes, profit = :profit, total_cost = :total_cost, total_price = :total_price, additional = :additional WHERE id = :id_rfq';
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':taxes', $taxes, PDO::PARAM_STR);
+        $sentencia->bindParam(':profit', $profit, PDO::PARAM_STR);
+        $sentencia->bindParam(':total_cost', $total_cost, PDO::PARAM_STR);
+        $sentencia->bindParam(':total_price', $total_price, PDO::PARAM_STR);
+        $sentencia->bindParam(':additional', $additional, PDO::PARAM_STR);
+        $sentencia->bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentencia->execute();
+        if ($sentencia) {
+          $cotizacion_editada = true;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $cotizacion_editada;
+  }
+
+  public static function actualizar_payment_terms($conexion, $payment_terms, $id_rfq) {
+    $rfq_editado = false;
+    if (isset($conexion)) {
+      try {
+        $sql = 'UPDATE rfq SET payment_terms = :payment_terms WHERE id = :id_rfq';
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':payment_terms', $payment_terms, PDO::PARAM_STR);
+        $sentencia->bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentencia->execute();
+        if ($sentencia) {
+          $rfq_editado = true;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $rfq_editado;
+  }
+
+  public static function guardar_total_price_fedbid($conexion, $total_price_fedbid, $id_rfq){
+    if(isset($conexion)){
+      try{
+        $sql = 'UPDATE rfq SET total_price = :total_price_fedbid WHERE id = :id_rfq';
+        $sentencia = $conexion-> prepare($sql);
+        $sentencia-> bindParam(':total_price_fedbid', $total_price_fedbid, PDO::PARAM_STR);
+        $sentencia-> bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentencia-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
+
+  public static function actualizar_rfq_2($conexion, $comments, $ship_via, $address, $ship_to, $id_rfq) {
+    $rfq_editado = false;
+    if (isset($conexion)) {
+      try {
+        $sql = 'UPDATE rfq SET comments = :comments, ship_via = :ship_via, address = :address, ship_to = :ship_to WHERE id = :id_rfq';
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':comments', $comments, PDO::PARAM_STR);
+        $sentencia->bindParam(':ship_via', $ship_via, PDO::PARAM_STR);
+        $sentencia->bindParam(':address', $address, PDO::PARAM_STR);
+        $sentencia->bindParam(':ship_to', $ship_to, PDO::PARAM_STR);
+        $sentencia->bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentencia->execute();
+        if ($sentencia) {
+          $rfq_editado = true;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $rfq_editado;
+  }
 }
 ?>

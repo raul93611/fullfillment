@@ -84,26 +84,24 @@
   </div>
   <?php
   RepositorioItemFullFillment::escribir_items($quote-> obtener_id());
-  /*
-  Conexion::abrir_conexion();
-  $items = RepositorioItem::obtener_items_por_id_rfq(Conexion::obtener_conexion(), $cotizacion_recuperada->obtener_id());
-  Conexion::cerrar_conexion();
+  ConnectionFullFillment::open_connection();
+  $items = RepositorioItemFullFillment::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $quote->obtener_id());
+  ConnectionFullFillment::close_connection();
   if(count($items)){
     ?>
     <br>
     <div class="row">
       <div class="col">
         <div class="form-group">
-          <textarea class="form-control form-control-sm" rows="3" id="shipping" name="shipping" placeholder="Enter shipping ..."><?php echo $cotizacion_recuperada->obtener_shipping(); ?></textarea>
+          <textarea class="form-control form-control-sm" rows="3" id="shipping" name="shipping" placeholder="Enter shipping ..."><?php echo $quote->obtener_shipping(); ?></textarea>
         </div>
       </div>
       <div class="col">
         <div class="form-group">
-          <input type="number" step=".01" class="form-control form-control-sm" id="shipping_cost" name="shipping_cost" value="<?php echo $cotizacion_recuperada->obtener_shipping_cost(); ?>">
+          <input type="number" step=".01" class="form-control form-control-sm" id="shipping_cost" name="shipping_cost" value="<?php echo $quote->obtener_shipping_cost(); ?>">
         </div>
       </div>
     </div>
     <?php
   }
-  */
   ?>

@@ -144,5 +144,82 @@ class RepositorioSubitemFullFillment{
     }
     return $j;
   }
+
+  public static function delete_subitem($conexion, $id_subitem){
+    if(isset($conexion)){
+      try{
+        $conexion -> beginTransaction();
+        $sql1 = "DELETE FROM provider_subitems WHERE id_subitem = :id_subitem";
+        $sentencia1 = $conexion-> prepare($sql1);
+        $sentencia1-> bindParam(':id_subitem', $id_subitem, PDO::PARAM_STR);
+        $sentencia1-> execute();
+        $sql2 = "DELETE FROM subitems WHERE id = :id_subitem";
+        $sentencia2 = $conexion-> prepare($sql2);
+        $sentencia2-> bindParam(':id_subitem', $id_subitem, PDO::PARAM_STR);
+        $sentencia2-> execute();
+        $conexion-> commit();
+      } catch (PDOException $ex) {
+        print "ERROR:" . $ex->getMessage() . "<br>";
+        $conexion-> rollBack();
+      }
+    }
+  }
+
+  public static function obtener_subitem_por_id($conexion, $id_subitem) {
+    $subitem = null;
+    if (isset($conexion)) {
+      try {
+        $sql = 'SELECT * FROM subitems WHERE id = :id_subitem';
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':id_subitem', $id_subitem, PDO::PARAM_STR);
+        $sentencia->execute();
+        $resultado = $sentencia->fetch();
+        if (!empty($resultado)) {
+          $subitem = new Subitem($resultado['id'], $resultado['id_item'], $resultado['provider_menor'], $resultado['brand'], $resultado['brand_project'], $resultado['part_number'], $resultado['part_number_project'], $resultado['description'], $resultado['description_project'], $resultado['quantity'], $resultado['unit_price'], $resultado['total_price'], $resultado['comments'], $resultado['website'], $resultado['additional']);
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $subitem;
+  }
+
+  public static function actualizar_subitem($conexion, $id_subitem, $brand, $brand_project, $part_number, $part_number_project, $description, $description_project, $quantity, $comments, $website) {
+    if (isset($conexion)) {
+      try {
+        $sql = 'UPDATE subitems SET brand = :brand, brand_project = :brand_project, part_number = :part_number, part_number_project = :part_number_project, description = :description, description_project = :description_project, quantity = :quantity, comments = :comments, website = :website WHERE id = :id_subitem';
+        $sentencia = $conexion->prepare($sql);
+        $sentencia->bindParam(':brand', $brand, PDO::PARAM_STR);
+        $sentencia->bindParam(':brand_project', $brand_project, PDO::PARAM_STR);
+        $sentencia->bindParam(':part_number', $part_number, PDO::PARAM_STR);
+        $sentencia->bindParam(':part_number_project', $part_number_project, PDO::PARAM_STR);
+        $sentencia->bindParam(':description', $description, PDO::PARAM_STR);
+        $sentencia->bindParam(':description_project', $description_project, PDO::PARAM_STR);
+        $sentencia->bindParam(':quantity', $quantity, PDO::PARAM_STR);
+        $sentencia->bindParam(':comments', $comments, PDO::PARAM_STR);
+        $sentencia->bindParam(':website', $website, PDO::PARAM_STR);
+        $sentencia->bindParam(':id_subitem', $id_subitem, PDO::PARAM_STR);
+        $sentencia->execute();
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
+
+  public static function insertar_calculos($conexion, $unit_price_subitem, $total_price_subitem, $additional_subitem, $id_subitem){
+    if(isset($conexion)){
+      try{
+        $sql = 'UPDATE subitems SET unit_price = :unit_price, total_price = :total_price, additional = :additional WHERE id = :id_subitem';
+        $sentencia = $conexion-> prepare($sql);
+        $sentencia-> bindParam(':unit_price', $unit_price_subitem, PDO::PARAM_STR);
+        $sentencia-> bindParam(':total_price', $total_price_subitem, PDO::PARAM_STR);
+        $sentencia-> bindParam(':additional', $additional_subitem, PDO::PARAM_STR);
+        $sentencia-> bindParam(':id_subitem', $id_subitem, PDO::PARAM_STR);
+        $sentencia-> execute();
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
 }
 ?>

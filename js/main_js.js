@@ -1,4 +1,13 @@
 $(document).ready(function(){
+  /********************************INPUT FILE**********************************/
+  $('#file_input_info_create').change(function(e){
+    var fileName_create = [];
+    for (var i = 0; i < e.target.files.length; i++) {
+      fileName_create.push(e.target.files[i].name);
+    }
+    $('#label_file_create').html(fileName_create.join(', '));
+  });
+  /**********************************************************************************/
   $('#rfq_team_table').DataTable();
   $('#users_table').DataTable();
   /****************************************************************************/
@@ -16,6 +25,32 @@ $(document).ready(function(){
     habilitar_continue_button($(this));
     return false;
   });
+  /***********************************ALERT EN BOTONES PARA BORRAR ITEMS******************/
+  $('.delete_item_button').click(function(){
+    habilitar_continue_button($(this));
+    return false;
+  });
+  /**********************************ALERT EN BOTONES PARA BORRAR SUBITEMS******************/
+  $('.delete_subitem_button').click(function(){
+    habilitar_continue_button($(this));
+    return false;
+  });
+  /******************************ALERT EN BOTONES PARA BORRAR PROVIDER DE ITEMS**************/
+  $('.delete_provider_item_button').click(function(){
+    habilitar_continue_button($(this));
+    return false;
+  });
+  /******************************ALERT EN BOTONES PARA BORRAR PROVIDER SUBITEMS*************/
+  $('.delete_provider_subitem_button').click(function(){
+    habilitar_continue_button($(this));
+    return false;
+  });
+  /*************************************NUEVO COMENTARIO***********************************/
+  if($('#nuevo_comment').length != 0){
+    $('#add_comment').click(function(){
+      $('#nuevo_comment').modal();
+    });
+  }
   /*****************************ITEMS_TABLE*************************************************/
   var monto = [];
   var quantity = [];

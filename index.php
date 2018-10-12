@@ -4,6 +4,9 @@ include_once 'app/ConnectionFullFillment.inc.php';
 include_once 'app/SessionControl.inc.php';
 include_once '../rfp/app/Redirection.inc.php';
 
+include_once '../rfq/app/Comment.inc.php';
+include_once 'app/RepositorioFullFillmentComment.inc.php';
+
 include_once '../rfq/app/Conexion.inc.php';
 
 include_once '../rfq/app/Usuario.inc.php';
@@ -53,6 +56,36 @@ if($parts_route[0] == 'fullfillment'){
       case 'save_edit_user':
         $chosen_route = 'scripts/save_edit_user.php';
         break;
+      case 'save_quote':
+        $chosen_route = 'scripts/save_quote.php';
+        break;
+      case 'save_add_item':
+        $chosen_route = 'scripts/save_add_item.php';
+        break;
+      case 'save_edit_item':
+        $chosen_route = 'scripts/save_edit_item.php';
+        break;
+      case 'save_add_provider':
+        $chosen_route = 'scripts/save_add_provider.php';
+        break;
+      case 'save_edit_provider':
+        $chosen_route = 'scripts/save_edit_provider.php';
+        break;
+      case 'save_add_subitem':
+        $chosen_route = 'scripts/save_add_subitem.php';
+        break;
+      case 'save_edit_subitem':
+        $chosen_route = 'scripts/save_edit_subitem.php';
+        break;
+      case 'save_add_provider_subitem':
+        $chosen_route = 'scripts/save_add_provider_subitem.php';
+        break;
+      case 'save_edit_provider_subitem':
+        $chosen_route = 'scripts/save_edit_provider_subitem.php';
+        break;
+      case 'save_comment':
+        $chosen_route = 'scripts/save_comment.php';
+        break;
       default:
         break;
     }
@@ -82,7 +115,23 @@ if($parts_route[0] == 'fullfillment'){
         $id_user = $parts_route[2];
         $chosen_route = 'scripts/enable_user.php';
         break;
-      default:
+      case 'delete_item':
+        $id_item = $parts_route[2];
+        $chosen_route = 'scripts/delete_item.php';
+        break;
+      case 'delete_provider':
+        $id_provider = $parts_route[2];
+        $chosen_route = 'scripts/delete_provider.php';
+        break;
+      case 'delete_subitem':
+        $id_subitem = $parts_route[2];
+        $chosen_route = 'scripts/delete_subitem.php';
+        break;
+      case 'delete_provider_subitem';
+        $id_provider_subitem = $parts_route[2];
+        $chosen_route = 'scripts/delete_provider_subitem.php';
+        break;
+      default;
         break;
     }
   }else if(count($parts_route) == 4){
@@ -98,10 +147,47 @@ if($parts_route[0] == 'fullfillment'){
             $current_manager = 'edit_quote';
             $id_rfq = $parts_route[3];
             break;
+          case 'add_item':
+            $current_manager = 'add_item';
+            $id_rfq = $parts_route[3];
+            break;
+          case 'edit_item':
+            $current_manager = 'edit_item';
+            $id_item = $parts_route[3];
+            break;
+          case 'add_provider':
+            $current_manager = 'add_provider';
+            $id_item = $parts_route[3];
+            break;
+          case 'edit_provider':
+            $current_manager = 'edit_provider';
+            $id_provider = $parts_route[3];
+            break;
+          case 'add_subitem':
+            $current_manager = 'add_subitem';
+            $id_item = $parts_route[3];
+            break;
+          case 'edit_subitem':
+            $current_manager = 'edit_subitem';
+            $id_subitem = $parts_route[3];
+            break;
+          case 'add_provider_subitem':
+            $current_manager = 'add_provider_subitem';
+            $id_subitem = $parts_route[3];
+            break;
+          case 'edit_provider_subitem':
+            $current_manager = 'edit_provider_subitem';
+            $id_provider_subitem = $parts_route[3];
+            break;
           default:
             break;
         }
         break;
+        case 'delete_document':
+          $id_rfq = $parts_route[2];
+          $archivo = $parts_route[3];
+          $chosen_route = 'scripts/delete_document.php';
+          break;
       default:
         break;
     }
