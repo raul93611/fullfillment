@@ -47,10 +47,10 @@ CREATE TABLE rfq(
   PRIMARY KEY(id)
 );
 
-CREATE TABLE comments(
+CREATE TABLE comments_rfq(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_rfq INT NOT NULL,
-  id_usuario INT NOT NULL,
+  nombre_usuario VARCHAR(255) NOT NULL,
   comment TEXT CHARACTER SET utf8 NOT NULL,
   fecha_comment DATETIME,
   PRIMARY KEY(id),

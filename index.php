@@ -4,8 +4,8 @@ include_once 'app/ConnectionFullFillment.inc.php';
 include_once 'app/SessionControl.inc.php';
 include_once '../rfp/app/Redirection.inc.php';
 
-include_once '../rfq/app/Comment.inc.php';
-include_once 'app/RepositorioFullFillmentComment.inc.php';
+include_once 'app/CommentRfqFullFillment.inc.php';
+include_once 'app/RepositorioRfqFullFillmentComment.inc.php';
 
 include_once '../rfq/app/Conexion.inc.php';
 
