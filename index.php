@@ -83,8 +83,8 @@ if($parts_route[0] == 'fullfillment'){
       case 'save_edit_provider_subitem':
         $chosen_route = 'scripts/save_edit_provider_subitem.php';
         break;
-      case 'save_comment':
-        $chosen_route = 'scripts/save_comment.php';
+      case 'save_comment_rfq':
+        $chosen_route = 'scripts/save_comment_rfq.php';
         break;
       case 'log_out':
         $chosen_route = 'scripts/log_out.php';

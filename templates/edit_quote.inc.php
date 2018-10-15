@@ -48,7 +48,7 @@ ConnectionFullFillment::close_connection();
         </button>
       </div>
       <div class="modal-body">
-        <form id="form_nuevo_comment" method="post" enctype="multipart/form-data" action="<?php echo SAVE_COMMENT; ?>">
+        <form id="form_nuevo_comment" method="post" enctype="multipart/form-data" action="<?php echo SAVE_COMMENT_RFQ; ?>">
           <div class="form-group">
             <label for="comment_rfq">Comment:</label>
             <textarea class="form-control form-control-sm" name="comment_rfq" rows="10" id="comment_rfq" autofocus></textarea>

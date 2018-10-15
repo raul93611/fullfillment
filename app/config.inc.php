@@ -49,7 +49,7 @@ define('DELETE_PROVIDER_SUBITEM', SERVER . 'delete_provider_subitem/');
 /*******************************************************************************/
 define('DELETE_DOCUMENT', SERVER . 'delete_document/');
 /*****************************************************************************/
-define('SAVE_COMMENT', SERVER . 'save_comment');
+define('SAVE_COMMENT_RFQ', SERVER . 'save_comment_rfq');
 /*****************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
