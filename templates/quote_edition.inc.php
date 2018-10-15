@@ -50,6 +50,12 @@
           <input type="text" class="form-control form-control-sm" disabled value="<?php echo $usuario-> obtener_nombre_usuario(); ?>">
         </div>
     </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="contract">Contract:</label>
+        <input type="text" class="form-control form-control-sm" name="contract" id="contract" value="<?php echo $rfq_fullfillment_part-> get_contract(); ?>">
+      </div>
+    </div>
   </div>
   <label>Documents:</label>
   <?php

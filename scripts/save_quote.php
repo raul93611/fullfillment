@@ -37,6 +37,7 @@ if (isset($_POST['guardar_cambios_cotizacion'])) {
       $payment_terms = 'Net 30/CC';
       break;
   }
+  RfqFullFillmentPartRepository::save_contract(ConnectionFullFillment::get_connection(), $_POST['contract'], $_POST['id_rfq']);
   $cotizacion_editada3 = RepositorioRfqFullFillment::actualizar_shipping(ConnectionFullFillment::get_connection(), htmlspecialchars($_POST['shipping']), $_POST['shipping_cost'], $_POST['id_rfq']);
   $cotizacion_editada1 = RepositorioRfqFullFillment::actualizar_taxes_profit(ConnectionFullFillment::get_connection(), $_POST['taxes'], $_POST['profit'], $_POST['total_cost'], $_POST['total_price'], $_POST['additional_general'], $_POST['id_rfq']);
   $cotizacion_editada2 = RepositorioRfqFullFillment::actualizar_payment_terms(ConnectionFullFillment::get_connection(), $payment_terms, $_POST['id_rfq']);

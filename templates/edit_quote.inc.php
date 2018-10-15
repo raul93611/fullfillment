@@ -1,6 +1,7 @@
 <?php
 ConnectionFullFillment::open_connection();
 $quote = RepositorioRfqFullfillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
+$rfq_fullfillment_part = RfqFullFillmentPartRepository::get_rfq_fullfillment_part_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
 ConnectionFullFillment::close_connection();
 ?>
 <div class="content-wrapper">

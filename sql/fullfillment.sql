@@ -47,6 +47,17 @@ CREATE TABLE rfq(
   PRIMARY KEY(id)
 );
 
+CREATE TABLE rfq_fullfillment_part(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_rfq INT NOT NULL,
+  contract VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_rfq)
+    REFERENCES rfq(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
 CREATE TABLE comments_rfq(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_rfq INT NOT NULL,
