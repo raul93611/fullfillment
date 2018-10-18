@@ -1,4 +1,8 @@
 $(document).ready(function(){
+  /*********************************SHOW COMMENTS*******************************/
+  $('#quote_comments').click(function(){
+    $('#todos_commentarios_quote').modal();
+  });
   /********************************INPUT FILE**********************************/
   $('#file_input_info_create').change(function(e){
     var fileName_create = [];

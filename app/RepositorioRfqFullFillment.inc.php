@@ -1,5 +1,5 @@
 <?php
-class RepositorioRfqFullfillment{
+class RepositorioRfqFullFillment{
   public static function insertar_cotizacion_fullfillment($conexion, $cotizacion) {
     $cotizacion_insertada = false;
     if (isset($conexion)) {

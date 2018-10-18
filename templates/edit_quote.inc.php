@@ -1,17 +1,25 @@
 <?php
 ConnectionFullFillment::open_connection();
-$quote = RepositorioRfqFullfillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
+$quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
 $rfq_fullfillment_part = RfqFullFillmentPartRepository::get_rfq_fullfillment_part_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
 ConnectionFullFillment::close_connection();
+echo $quote-> obtener_id();
 ?>
 <div class="content-wrapper">
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
-        <div class="col-sm-4">
+        <div class="col-sm-2">
           <h1>Internal quote</h1>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-8 text-center">
+          <button type="button" id="quote_comments" class="btn btn-primary"><i class="fas fa-comments"></i> Comments(
+            <?php
+            ConnectionFullFillment::open_connection();
+            echo RepositorioRfqFullFillmentComment::contar_todos_comentarios_quote(ConnectionFullFillment::get_connection(), $quote-> obtener_id());
+            ConnectionFullFillment::close_connection();
+            ?>)
+          </button>
         </div>
         <div class="col-sm-2">
         </div>
@@ -60,6 +68,18 @@ ConnectionFullFillment::close_connection();
       <div class="modal-footer">
         <button type="submit" name="guardar_comment" form="form_nuevo_comment" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--*************************************************MODAL TO SHOW COMMENTS*************************************************************-->
+<div class="modal fade" id="todos_commentarios_quote" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <?php
+        RepositorioRfqFullFillmentComment::escribir_comments($quote-> obtener_id());
+        ?>
       </div>
     </div>
   </div>
