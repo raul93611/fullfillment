@@ -50,7 +50,15 @@ CREATE TABLE rfq(
 CREATE TABLE rfq_fullfillment_part(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_rfq INT NOT NULL,
-  contract VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  po_number VARCHAR(255) NOT NULL,
+  business_classification VARCHAR(255) NOT NULL,
+  description TEXT CHARACTER SET utf8 NOT NULL,
+  po_date DATE NOT NULL,
+  eta DATE NOT NULL,
+  consolidate_others DECIMAL(20,2) NOT NULL,
+  fedbid DECIMAL(20,2) NOT NULL,
+  invoice TINYINT NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
