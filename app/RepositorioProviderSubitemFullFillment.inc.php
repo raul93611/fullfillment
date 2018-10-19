@@ -9,10 +9,12 @@ class RepositorioProviderSubitemFullFillment{
         $sentencia-> bindParam(':provider', $provider_subitem-> obtener_provider(), PDO::PARAM_STR);
         $sentencia-> bindParam(':price', $provider_subitem-> obtener_price(), PDO::PARAM_STR);
         $sentencia-> execute();
+        $id = $conexion->lastInsertId();
       } catch (PDOException $ex) {
         print 'ERROR:' . $ex->getMessage() . '<br>';
       }
     }
+    return $id;
   }
 
   public static function obtener_providers_subitem_por_id_subitem($conexion, $id_subitem){

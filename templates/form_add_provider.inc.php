@@ -22,5 +22,5 @@ ConnectionFullFillment::close_connection();
 </div>
 <div class="card-footer">
   <button type="submit" class="btn btn-success" name="guardar_provider"><i class="fa fa-check"></i> Save</button>
-  <a href="<?php echo EDIT_QUOTE . $item-> obtener_id_rfq(); ?>" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</a>
+  <a href="<?php echo EDIT_QUOTE . $item-> obtener_id_rfq() . '#caja_items'; ?>" class="btn btn-danger"><i class="fa fa-times"></i> Cancel</a>
 </div>

@@ -1,7 +1,6 @@
 <?php
 class RepositorioProviderFullFillment{
   public static function insertar_provider($conexion, $provider){
-    $provider_insertado = false;
     if(isset($conexion)){
       try{
         $sql = 'INSERT INTO provider(id_item, provider, price) VALUES(:id_item, :provider, :price)';
@@ -10,14 +9,12 @@ class RepositorioProviderFullFillment{
         $sentencia-> bindParam(':provider', $provider-> obtener_provider(), PDO::PARAM_STR);
         $sentencia-> bindParam(':price', $provider-> obtener_price(), PDO::PARAM_STR);
         $resultado = $sentencia-> execute();
-        if($resultado){
-          $provider_insertado = true;
-        }
+        $id = $conexion->lastInsertId();
       } catch (PDOException $ex) {
         print 'ERROR:' . $ex->getMessage() . '<br>';
       }
     }
-    return $provider_insertado;
+    return $id;
   }
 
   public static function obtener_providers_por_id_item($conexion, $id_item){
