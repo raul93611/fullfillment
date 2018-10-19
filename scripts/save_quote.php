@@ -1,4 +1,5 @@
 <?php
+session_start();
 if (isset($_POST['guardar_cambios_cotizacion'])) {
   ConnectionFullFillment::open_connection();
   $cotizacion_recuperada = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $_POST['id_rfq']);
@@ -50,6 +51,60 @@ if (isset($_POST['guardar_cambios_cotizacion'])) {
   /*****************************************************************************************************************************/
   /*****************************************************************************************************************************/
   RepositorioRfqFullFillment::actualizar_rfq_2(ConnectionFullFillment::get_connection(), $_POST['comments'], $_POST['ship_via'], htmlspecialchars($_POST['address']), htmlspecialchars($_POST['ship_to']), $_POST['id_rfq']);
+  $cambios = [];
+
+  if($_POST['taxes'] != $_POST['taxes_original']){
+    $cambios[] = 'taxes';
+  }
+
+  if($_POST['profit'] != $_POST['profit_original']){
+    $cambios[] = 'profit';
+  }
+
+  if($_POST['additional_general'] != $_POST['additional_general_original']){
+    $cambios[] = 'additional_general';
+  }
+
+  if($_POST['shipping'] != $_POST['shipping_original']){
+    $cambios[] = 'shipping';
+  }
+
+  if($_POST['shipping_cost'] != $_POST['shipping_cost_original']){
+    $cambios[] = 'shipping_cost';
+  }
+
+  if($_POST['address'] != $_POST['addres_original']){
+    $cambios[] = 'address';
+  }
+
+  if($_POST['ship_to'] != $_POST['ship_to_original']){
+    $cambios[] = 'ship_to';
+  }
+
+  if(count($cambios)){
+    $cambios = implode(',', $cambios);
+    $description_comment = 'The quote was modified. The fields: <b>' . $cambios . '</b>';
+    $comment = new CommentRfqFullFillment('', $_POST['id_rfq'], $_SESSION['username'], $description_comment, '');
+    RepositorioRfqFullFillmentComment::insertar_comment(ConnectionFullFillment::get_connection(), $comment);
+    $fullfillment_users = UserFullFillmentRepository::get_all_users_enabled(ConnectionFullFillment::get_connection());
+    foreach ($fullfillment_users as $fullfillment_user) {
+      $to = $fullfillment_user-> get_email();
+      $subject = 'The quote was modified: ' . $_POST['id_rfq'];
+      $headers = "MIME-Version: 1.0\r\n";
+      $headers .= "Content-type: text/html; charset=UTF-8\r\n";
+      $headers .= "From:" .  $_SESSION['username']  . " <elogic@e-logic.us>\r\n";
+      $message = '
+      <html>
+      <body>
+      <h5>Comment:</h5>
+      <p>The quote was modified. The fields: <b>' . $cambios . '</b><br><a href="' . EDIT_QUOTE . $_POST['id_rfq'] . '">Review</a></p>
+      </body>
+      </html>
+      ';
+      mail($to, $subject, $message, $headers);
+    }
+  }
+
   ConnectionFullFillment::close_connection();
   Redirection::redirect(EDIT_QUOTE . $_POST['id_rfq']);
 }

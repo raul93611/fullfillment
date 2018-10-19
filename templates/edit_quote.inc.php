@@ -3,7 +3,6 @@ ConnectionFullFillment::open_connection();
 $quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
 $rfq_fullfillment_part = RfqFullFillmentPartRepository::get_rfq_fullfillment_part_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
 ConnectionFullFillment::close_connection();
-echo $quote-> obtener_id();
 ?>
 <div class="content-wrapper">
   <section class="content-header">
