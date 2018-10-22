@@ -51,6 +51,8 @@ define('DELETE_DOCUMENT', SERVER . 'delete_document/');
 /*****************************************************************************/
 define('SAVE_COMMENT_RFQ', SERVER . 'save_comment_rfq');
 /*****************************************************************************/
+define('SAVE_RFQ_FULLFILLMENT_INFO', SERVER . 'save_rfq_fullfillmet_info');
+/*****************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');

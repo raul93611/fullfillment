@@ -78,5 +78,6 @@
     <?php
   }
   ?>
+  <button type="button" class="btn btn-primary" id="add_rfq_fullfillment_info"><i class="fas fa-plus"></i> Add info</button>
   <a href="#" id="add_comment" class="btn btn-primary add_item_charter"><i class="fas fa-plus"></i> Add comment</a>
 </div>

@@ -1,4 +1,12 @@
 $(document).ready(function(){
+  /**********************************DATEPICKER********************************/
+  $('#po_date, #eta').daterangepicker({
+    singleDatePicker: true
+  });
+  /**************************************SHOW INFO RFQ FULLFILLMENT MODAL********/
+  $('#add_rfq_fullfillment_info').click(function(){
+    $('#info_rfq_fullfillment_modal').modal();
+  });
   /*********************************SHOW COMMENTS*******************************/
   $('#quote_comments').click(function(){
     $('#todos_commentarios_quote').modal();
@@ -214,7 +222,45 @@ $(document).ready(function(){
     $('#total2').html('$ ' + total2);
     $('#total_quantity').html(total_quantity);
     $('#total_additional').html('$ ' + total_additional);
-  }, 500);
+
+    /***********************FULLFILLMENT PART**************/
+    var vendors_estimate = total1;
+    var equipment_amount = total2;
+    $('#vendors_estimate').val(vendors_estimate);
+    $('#equipment_amount').val(equipment_amount);
+    if(!isNaN($('#consolidate_others').val()) && $('#consolidate_others').val() != ''){
+      var consolidate_others = $('#consolidate_others').val();
+    }else{
+      var consolidate_others = 0;
+    }
+    var total_vendor_cost = parseFloat(vendors_estimate) + parseFloat(consolidate_others);
+    total_vendor_cost = total_vendor_cost.toFixed(2);
+    if($('#rfq_fullfillment_part_fedbid').length != 0){
+      if(!isNaN($('#rfq_fullfillment_part_fedbid').val()) && $('#rfq_fullfillment_part_fedbid').val() != ''){
+        var rfq_fullfillment_part_fedbid = $('#rfq_fullfillment_part_fedbid').val();
+      }else{
+        var rfq_fullfillment_part_fedbid = 0;
+      }
+    }else{
+      var rfq_fullfillment_part_fedbid = 0;
+    }
+    var estimated_final_cost = parseFloat(total_vendor_cost) + parseFloat(rfq_fullfillment_part_fedbid);
+    estimated_final_cost = estimated_final_cost.toFixed(2);
+    var estimated_profit_g = parseFloat(equipment_amount) - parseFloat(total_vendor_cost);
+    estimated_profit_g = estimated_profit_g.toFixed(2);
+    var percent_g = (parseFloat(estimated_profit_g)/parseFloat(equipment_amount))*100;
+    percent_g = percent_g.toFixed(2);
+    var estimated_profit_s = parseFloat(equipment_amount) - parseFloat(estimated_final_cost);
+    estimated_profit_s = estimated_profit_s.toFixed(2);
+    var percent_s = (parseFloat(estimated_profit_s)/parseFloat(equipment_amount))*100;
+    percent_s = percent_s.toFixed(2);
+    $('#total_vendor_cost').val(total_vendor_cost);
+    $('#estimated_final_cost').val(estimated_final_cost);
+    $('#estimated_profit_g').val(estimated_profit_g);
+    $('#percent_g').val(percent_g);
+    $('#estimated_profit_s').val(estimated_profit_s);
+    $('#percent_s').val(percent_s);
+  }, 400);
 
 
 

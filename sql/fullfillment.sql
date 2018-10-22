@@ -57,7 +57,13 @@ CREATE TABLE rfq_fullfillment_part(
   po_date DATE NOT NULL,
   eta DATE NOT NULL,
   consolidate_others DECIMAL(20,2) NOT NULL,
+  total_vendor_cost DECIMAL(20,2) NOT NULL,
   fedbid DECIMAL(20,2) NOT NULL,
+  estimated_final_cost DECIMAL(20,2) NOT NULL,
+  estimated_profit_g DECIMAL(20,2) NOT NULL,
+  percent_g DECIMAL(20,2) NOT NULL,
+  estimated_profit_s DECIMAL(20,2) NOT NULL,
+  percent_s DECIMAL(20,2) NOT NULL,
   invoice TINYINT NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
