@@ -49,7 +49,7 @@ if (isset($_POST['guardar_cambios_cotizacion'])) {
   }
   /*****************************************************************************************************************************/
   /*****************************************************************************************************************************/
-  RepositorioRfqFullFillment::actualizar_rfq_2(ConnectionFullFillment::get_connection(), $_POST['comments'], $_POST['ship_via'], htmlspecialchars($_POST['address']), htmlspecialchars($_POST['ship_to']), $_POST['id_rfq']);
+  RepositorioRfqFullFillment::actualizar_rfq_2(ConnectionFullFillment::get_connection(), htmlspecialchars($_POST['address']), htmlspecialchars($_POST['ship_to']), $_POST['id_rfq']);
   $cambios = [];
 
   if($_POST['taxes'] != $_POST['taxes_original']){

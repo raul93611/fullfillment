@@ -205,14 +205,12 @@ class RepositorioRfqFullFillment{
     }
   }
 
-  public static function actualizar_rfq_2($conexion, $comments, $ship_via, $address, $ship_to, $id_rfq) {
+  public static function actualizar_rfq_2($conexion, $address, $ship_to, $id_rfq) {
     $rfq_editado = false;
     if (isset($conexion)) {
       try {
-        $sql = 'UPDATE rfq SET comments = :comments, ship_via = :ship_via, address = :address, ship_to = :ship_to WHERE id = :id_rfq';
+        $sql = 'UPDATE rfq SET address = :address, ship_to = :ship_to WHERE id = :id_rfq';
         $sentencia = $conexion->prepare($sql);
-        $sentencia->bindParam(':comments', $comments, PDO::PARAM_STR);
-        $sentencia->bindParam(':ship_via', $ship_via, PDO::PARAM_STR);
         $sentencia->bindParam(':address', $address, PDO::PARAM_STR);
         $sentencia->bindParam(':ship_to', $ship_to, PDO::PARAM_STR);
         $sentencia->bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);

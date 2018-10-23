@@ -140,6 +140,10 @@ if($parts_route[0] == 'fullfillment'){
         $id_provider_subitem = $parts_route[2];
         $chosen_route = 'scripts/delete_provider_subitem.php';
         break;
+      case 'pdf_items_table':
+        $id_rfq = $parts_route[2];
+        $chosen_route = 'scripts/pdf_items_table.php';
+        break;
       default;
         break;
     }

@@ -53,6 +53,8 @@ define('SAVE_COMMENT_RFQ', SERVER . 'save_comment_rfq');
 /*****************************************************************************/
 define('SAVE_RFQ_FULLFILLMENT_INFO', SERVER . 'save_rfq_fullfillmet_info');
 /*****************************************************************************/
+define('PDF_ITEMS_TABLE', SERVER . 'pdf_items_table/');
+/*****************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');
