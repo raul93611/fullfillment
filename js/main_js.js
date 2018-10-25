@@ -224,8 +224,13 @@ $(document).ready(function(){
     $('#total_additional').html('$ ' + total_additional);
 
     /***********************FULLFILLMENT PART**************/
-    var vendors_estimate = total1;
-    var equipment_amount = total2;
+    if($('#channel').length != 0 && $('#channel').val() == 'FedBid'){
+      var vendors_estimate = $('#total_cost_fedbid').val();
+      var equipment_amount = $('#total_price_fedbid').val();
+    }else{
+      var vendors_estimate = total1;
+      var equipment_amount = total2;
+    }
     $('#vendors_estimate').val(vendors_estimate);
     $('#equipment_amount').val(equipment_amount);
     if(!isNaN($('#consolidate_others').val()) && $('#consolidate_others').val() != ''){

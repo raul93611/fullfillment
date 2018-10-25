@@ -64,7 +64,11 @@ CREATE TABLE rfq_fullfillment_part(
   percent_g DECIMAL(20,2) NOT NULL,
   estimated_profit_s DECIMAL(20,2) NOT NULL,
   percent_s DECIMAL(20,2) NOT NULL,
+  fullfillment_date DATETIME NOT NULL,
+  in_process TINYINT NOT NULL,
+  in_process_date DATETIME NOT NULL,
   invoice TINYINT NOT NULL,
+  invoice_date DATETIME NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)

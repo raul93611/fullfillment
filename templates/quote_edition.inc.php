@@ -36,7 +36,7 @@
     <div class="col">
       <div class="form-group">
         <label>Channel:</label>
-        <input type="text" class="form-control form-control-sm" disabled value="<?php echo $quote-> obtener_canal(); ?>">
+        <input type="text" class="form-control form-control-sm" id="channel" disabled value="<?php echo $quote-> obtener_canal(); ?>">
       </div>
     </div>
     <div class="col">

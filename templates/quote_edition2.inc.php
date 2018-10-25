@@ -2,9 +2,14 @@
   if($quote-> obtener_canal() == 'FedBid'){
     ?>
     <div class="row">
-      <div class="col-12">
-        <label for="total_price">Total price:</label>
-        <input type="number" step=".01" name="total_price_fedbid" class="form-control form-control-sm" value="<?php echo $quote-> obtener_total_price(); ?>">
+      <div class="col-md-6">
+        <label for="total_cost_fedbid">Total cost:</label>
+        <input type="number" step=".01" name="total_cost_fedbid" id="total_cost_fedbid" class="form-control form-control-sm" value="<?php echo $quote-> obtener_total_cost(); ?>">
+        <input type="hidden" name="" value="">
+      </div>
+      <div class="col-md-6">
+        <label for="total_price_fedbid">Total price:</label>
+        <input type="number" step=".01" name="total_price_fedbid" id="total_price_fedbid" class="form-control form-control-sm" value="<?php echo $quote-> obtener_total_price(); ?>">
       </div>
     </div>
     <br>
@@ -67,6 +72,23 @@
         </div>
     </div>
   </div>
+  <?php
+  if($rfq_fullfillment_part-> get_in_process()){
+    ?>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" name="invoice" class="custom-control-input" id="invoice" value="invoice">
+      <label class="custom-control-label" for="invoice">Invoice</label>
+    </div>
+    <?php
+  }else if($quote-> obtener_fullfillment()){
+    ?>
+    <div class="custom-control custom-checkbox">
+      <input type="checkbox" name="in_process" class="custom-control-input" id="in_process" value="in_process">
+      <label class="custom-control-label" for="in_process">In process</label>
+    </div>
+    <?php
+  }
+  ?>
 </div>
 <div class="card-footer footer_item">
   <a class="btn btn-primary" id="go_back" href="<?php echo RFQ_TEAM; ?>"><i class="fa fa-reply"></i></a>

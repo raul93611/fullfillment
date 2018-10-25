@@ -187,12 +187,6 @@ ConnectionFullFillment::close_connection();
               </div>
             </div>
           </div>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="invoice" value="invoice" <?php if($rfq_fullfillment_part-> get_invoice()){echo 'checked';} ?> id="invoice">
-            <label class="form-check-label" for="invoice">
-              Invoice
-            </label>
-          </div>
           <input type="hidden" name="id_rfq_fullfillment_part" value="<?php echo $rfq_fullfillment_part-> get_id(); ?>">
           <input type="hidden" name="id_rfq" value="<?php echo $quote-> obtener_id(); ?>">
         </form>
