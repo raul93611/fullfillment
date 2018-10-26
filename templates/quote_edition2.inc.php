@@ -101,6 +101,12 @@
   }
   ?>
   <button type="button" class="btn btn-primary" id="add_rfq_fullfillment_info"><i class="fas fa-plus"></i> Add info</button>
-  <a href="<?php echo PDF_ITEMS_TABLE . $quote-> obtener_id(); ?>" target="_blank" class="btn btn-primary"><i class="fas fa-file"></i> PDF</a>
   <a href="#" id="add_comment" class="btn btn-primary add_item_charter"><i class="fas fa-plus"></i> Add comment</a>
+  <?php
+  if($quote-> obtener_canal() != 'FedBid'){
+    ?>
+    <a href="<?php echo TRACKING . $quote-> obtener_id(); ?>" class="btn btn-primary"><i class="fas fa-box-open"></i> Tracking</a>
+    <?php
+  }
+  ?>
 </div>

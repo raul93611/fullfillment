@@ -54,6 +54,9 @@ switch ($current_manager) {
   case 'edit_provider_subitem':
     include_once 'templates/edit_provider_subitem.inc.php';
     break;
+  case 'tracking':
+    include_once 'templates/tracking.inc.php';
+    break;
 }
 include_once 'templates/end_document.inc.php';
 ?>

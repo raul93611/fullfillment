@@ -36,6 +36,12 @@ include_once 'app/UserValidator.inc.php';
 include_once 'app/UserLoginValidatorFullFillment.inc.php';
 include_once '../rfp/app/UserSignInValidator.inc.php';
 
+include_once 'app/Tracking.inc.php';
+include_once 'app/TrackingRepository.inc.php';
+
+include_once 'app/TrackingSubitem.inc.php';
+include_once 'app/TrackingSubitemRepository.inc.php';
+
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $route = $url_components['path'];
 
@@ -91,6 +97,12 @@ if($parts_route[0] == 'fullfillment'){
         break;
       case 'save_rfq_fullfillmet_info':
         $chosen_route = 'scripts/save_rfq_fullfillment_info.php';
+        break;
+      case 'save_tracking':
+        $chosen_route = 'scripts/save_tracking.php';
+        break;
+      case 'save_tracking_subitem':
+        $chosen_route = 'scripts/save_tracking_subitem.php';
         break;
       case 'log_out':
         $chosen_route = 'scripts/log_out.php';
@@ -191,6 +203,10 @@ if($parts_route[0] == 'fullfillment'){
           case 'edit_provider_subitem':
             $current_manager = 'edit_provider_subitem';
             $id_provider_subitem = $parts_route[3];
+            break;
+          case 'tracking':
+            $current_manager = 'tracking';
+            $id_rfq = $parts_route[3];
             break;
           default:
             break;

@@ -1,6 +1,24 @@
 $(document).ready(function(){
+  /*********************************TRACKING SUBITEM MODAL*******************************/
+  $('.add_tracking_subitem_button').click(function(){
+    var id_subitem = $(this).attr('name');
+    $('#new_tracking_subitem #id_subitem').val(id_subitem);
+    $('#new_tracking_subitem').modal();
+  });
+  /*********************************TRACKING MODAL*******************************/
+  $('.add_tracking_button').click(function(){
+    var id_item = $(this).attr('name');
+    $('#new_tracking #id_item').val(id_item);
+    $('#new_tracking').modal();
+  });
   /**********************************DATEPICKER********************************/
   $('#po_date, #eta').daterangepicker({
+    singleDatePicker: true
+  });
+  $('#delivery_date').daterangepicker({
+    singleDatePicker: true
+  });
+  $('#delivery_date_subitem').daterangepicker({
     singleDatePicker: true
   });
   /**************************************SHOW INFO RFQ FULLFILLMENT MODAL********/

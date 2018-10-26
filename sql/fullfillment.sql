@@ -113,6 +113,20 @@ CREATE TABLE item(
     ON DELETE RESTRICT
 );
 
+CREATE TABLE trackings(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_item INT NOT NULL,
+  quantity INT NOT NULL,
+  tracking_number TEXT CHARACTER SET utf8 NOT NULL,
+  delivery_date DATE NOT NULL,
+  signed_by VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_item)
+    REFERENCES item(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
 CREATE TABLE provider(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_item INT NOT NULL,
@@ -144,6 +158,20 @@ CREATE TABLE subitems(
   PRIMARY KEY(id),
   FOREIGN KEY(id_item)
     REFERENCES item(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE trackings_subitems(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_subitem INT NOT NULL,
+  quantity INT NOT NULL,
+  tracking_number TEXT CHARACTER SET utf8 NOT NULL,
+  delivery_date DATE NOT NULL,
+  signed_by VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_subitem)
+    REFERENCES subitems(id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
 );

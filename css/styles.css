@@ -399,3 +399,11 @@ END USERS TABLE STYLES
   background-color: #E5F3FA !important;
   color: #39485A !important;
 }
+/**************************************************TRACKING TABLE************************************/
+#tracking_table .thin{
+  width: 30px !important;
+}
+
+#tracking_table .description{
+  width: 200px !important;
+}

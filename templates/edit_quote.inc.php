@@ -14,6 +14,7 @@ ConnectionFullFillment::close_connection();
           <h1>Internal quote</h1>
         </div>
         <div class="col-sm-8 text-center">
+          <a href="<?php echo PDF_ITEMS_TABLE . $quote-> obtener_id(); ?>" target="_blank" class="btn btn-primary"><i class="fas fa-file"></i> PDF</a>
           <button type="button" id="quote_comments" class="btn btn-primary"><i class="fas fa-comments"></i> Comments(
             <?php
             ConnectionFullFillment::open_connection();

@@ -256,6 +256,104 @@ class RepositorioItemFullFillment{
     }
   }
 
+  public static function tracking_list_item($item, $i){
+    if(!isset($item)){
+      return;
+    }
+    ConnectionFullFillment::open_connection();
+    $trackings = TrackingRepository::get_all_trackings_by_id_item(ConnectionFullFillment::get_connection(), $item-> obtener_id());
+    ConnectionFullFillment::close_connection();
+    if(!count($trackings)){
+      $trackings_quantity = 1;
+    }else{
+      $trackings_quantity = count($trackings);
+    }
+    ?>
+    <tr>
+      <td class="align-middle text-center" rowspan="<?php echo $trackings_quantity; ?>">
+        <button type="button" class="add_tracking_button btn btn-warning" name="<?php echo $item-> obtener_id(); ?>"><i class="fas fa-plus"></i></button>
+      </td>
+      <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $i + 1; ?></td>
+      <td rowspan="<?php echo $trackings_quantity; ?>">
+        <?php
+        echo '<b>Brand:</b> ' . $item-> obtener_brand_project() . '<br>';
+        echo '<b>Part #:</b> ' . $item-> obtener_part_number_project() . '<br>';
+        echo '<b>Description:</b> ' . nl2br(mb_substr($item->obtener_description_project(), 0, 100));
+        ?>
+      </td>
+      <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $item-> obtener_quantity(); ?></td>
+      <?php
+  if(count($trackings)){
+        ?>
+        <td class="align-middle text-center">
+          <a href="#" class="btn btn-warning"><i class="fas fa-trash"></i></a>
+        </td>
+        <td><?php echo $trackings[0]-> get_quantity(); ?></td>
+        <td><?php echo $trackings[0]-> get_tracking_number(); ?></td>
+        <td><?php echo RepositorioRfqFullFillmentComment::mysql_date_to_english_format($trackings[0]-> get_delivery_date()); ?></td>
+        <td><?php echo $trackings[0]-> get_signed_by(); ?></td>
+        <?php
+      ?>
+    </tr>
+    <?php
+    for ($j = 1; $j < count($trackings); $j++) {
+      $tracking = $trackings[$j];
+      ?>
+      <tr>
+        <td class="align-middle text-center">
+          <a href="#" class="btn btn-warning"><i class="fas fa-trash"></i></a>
+        </td>
+        <td><?php echo $tracking-> get_quantity(); ?></td>
+        <td><?php echo nl2br($tracking-> get_tracking_number()); ?></td>
+        <td><?php echo RepositorioRfqFullFillmentComment::mysql_date_to_english_format($tracking-> get_delivery_date()); ?></td>
+        <td><?php echo $tracking-> get_signed_by(); ?></td>
+      </tr>
+      <?php
+    }
+  }
+    ConnectionFullFillment::open_connection();
+    $subitems = RepositorioSubitemFullFillment::obtener_subitems_por_id_item(ConnectionFullFillment::get_connection(), $item-> obtener_id());
+    ConnectionFullFillment::close_connection();
+    foreach ($subitems as $subitem) {
+      RepositorioSubitemFullFillment::tracking_list_subitem($subitem);
+    }
+  }
+
+  public static function tracking_list_items($id_rfq){
+    ConnectionFullFillment::open_connection();
+    $quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
+    $items = self::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
+    ConnectionFullFillment::close_connection();
+    if(count($items)){
+      ?>
+      <div class="table-responsive">
+        <table id="tracking_table" class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th class="thin">OPTIONS</th>
+              <th class="thin">#</th>
+              <th class="description">PROJECT SPECIFICATIONS</th>
+              <th class="thin">QTY(ordered)</th>
+              <th class="thin">OPTIONS</th>
+              <th class="thin">QTY(shipped)</th>
+              <th>TRACKING</th>
+              <th>DELIVERY DATE</th>
+              <th>SIGNED BY</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            foreach ($items as $i => $item) {
+              self::tracking_list_item($item, $i);
+            }
+            ?>
+          </tbody>
+        </table>
+      </div>
+      <?php
+    }
+  }
+
   public static function obtener_item_por_id($conexion, $id_item) {
     $item = null;
     if (isset($conexion)) {

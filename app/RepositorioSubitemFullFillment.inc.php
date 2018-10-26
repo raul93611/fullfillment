@@ -221,5 +221,62 @@ class RepositorioSubitemFullFillment{
       }
     }
   }
+
+  public static function tracking_list_subitem($subitem){
+    if(!isset($subitem)){
+      return;
+    }
+    ConnectionFullFillment::open_connection();
+    $trackings_subitems = TrackingSubitemRepository::get_all_trackings_by_id_subitem(ConnectionFullFillment::get_connection(), $subitem-> obtener_id());
+    ConnectionFullFillment::close_connection();
+    if(!count($trackings_subitems)){
+      $trackings_quantity = 1;
+    }else{
+      $trackings_quantity = count($trackings_subitems);
+    }
+    ?>
+    <tr>
+      <td class="align-middle text-center" rowspan="<?php echo $trackings_quantity; ?>">
+        <button type="button" class="add_tracking_subitem_button btn btn-warning" name="<?php echo $subitem-> obtener_id(); ?>"><i class="fas fa-plus"></i></button>
+      </td>
+      <td rowspan="<?php echo $trackings_quantity; ?>"></td>
+      <td rowspan="<?php echo $trackings_quantity; ?>">
+        <?php
+        echo '<b>Brand:</b> ' . $subitem-> obtener_brand_project() . '<br>';
+        echo '<b>Part #:</b> ' . $subitem-> obtener_part_number_project() . '<br>';
+        echo '<b>Description:</b> ' . nl2br(mb_substr($subitem-> obtener_description_project(), 0, 100));
+        ?>
+      </td>
+      <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $subitem-> obtener_quantity(); ?></td>
+      <?php
+    if(count($trackings_subitems)){
+          ?>
+          <td class="align-middle text-center">
+            <a href="#" class="btn btn-warning"><i class="fas fa-trash"></i></a>
+          </td>
+          <td><?php echo $trackings_subitems[0]-> get_quantity(); ?></td>
+          <td><?php echo $trackings_subitems[0]-> get_tracking_number(); ?></td>
+          <td><?php echo RepositorioRfqFullFillmentComment::mysql_date_to_english_format($trackings_subitems[0]-> get_delivery_date()); ?></td>
+          <td><?php echo $trackings_subitems[0]-> get_signed_by(); ?></td>
+          <?php
+        ?>
+      </tr>
+      <?php
+      for ($j = 1; $j < count($trackings_subitems); $j++) {
+        $tracking = $trackings_subitems[$j];
+        ?>
+        <tr>
+          <td class="align-middle text-center">
+            <a href="#" class="btn btn-warning"><i class="fas fa-trash"></i></a>
+          </td>
+          <td><?php echo $tracking-> get_quantity(); ?></td>
+          <td><?php echo nl2br($tracking-> get_tracking_number()); ?></td>
+          <td><?php echo RepositorioRfqFullFillmentComment::mysql_date_to_english_format($tracking-> get_delivery_date()); ?></td>
+          <td><?php echo $tracking-> get_signed_by(); ?></td>
+        </tr>
+        <?php
+      }
+    }
+  }
 }
 ?>
