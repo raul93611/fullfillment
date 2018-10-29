@@ -115,8 +115,14 @@ if($parts_route[0] == 'fullfillment'){
       case 'profile':
         $chosen_route = 'views/profile.php';
         switch ($parts_route[2]) {
-          case 'rfq_team':
-            $current_manager = 'rfq_team';
+          case 'received':
+            $current_manager = 'received';
+            break;
+          case 'in_process':
+            $current_manager = 'in_process';
+            break;
+          case 'invoices':
+            $current_manager = 'invoices';
             break;
           case 'sign_in':
             $current_manager = 'sign_in';

@@ -13,13 +13,18 @@ $level = $user->get_level();
 include_once 'templates/head_document.inc.php';
 include_once 'templates/navbar.inc.php';
 include_once 'templates/sidebar.inc.php';
-
 switch ($current_manager) {
   case '':
     include_once 'templates/dashboard.inc.php';
     break;
-  case 'rfq_team':
-    include_once 'templates/rfq_team.inc.php';
+  case 'received':
+    include_once 'templates/received.inc.php';
+    break;
+  case 'in_process':
+    include_once 'templates/in_process.inc.php';
+    break;
+  case 'invoices':
+    include_once 'templates/invoices.inc.php';
     break;
   case 'sign_in':
     include_once 'templates/sign_in.inc.php';

@@ -62,6 +62,10 @@ define('DELETE_TRACKING', SERVER . 'delete_tracking/');
 define('DELETE_TRACKING_SUBITEM', SERVER . 'delete_tracking_subitem/');
 define('TRACKING_PDF', SERVER . 'tracking_pdf/');
 /******************************************************************************/
+define('RECEIVED_QUOTES', PROFILE . 'received');
+define('IN_PROCESS_QUOTES', PROFILE . 'in_process');
+define('INVOICES', PROFILE . 'invoices');
+/******************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');

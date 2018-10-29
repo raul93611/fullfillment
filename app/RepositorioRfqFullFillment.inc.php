@@ -62,51 +62,167 @@ class RepositorioRfqFullFillment{
     return $quotes;
   }
 
+  public static function get_all_received_quotes($connection){
+    $received_quotes = [];
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.fullfillment_date as quote_date, DATEDIFF(CURDATE(), rfq_fullfillment_part.fullfillment_date) as info FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 0 AND rfq_fullfillment_part.invoice = 0 ORDER BY rfq_fullfillment_part.fullfillment_date DESC';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> execute();
+        $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+        if(count($result)){
+          foreach ($result as $row) {
+            $received_quotes[] = $row;
+          }
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex-> getMessage() . '<br>';
+      }
+    }
+    return $received_quotes;
+  }
+
+  public static function get_all_in_process_quotes($connection){
+    $in_process_quotes = [];
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.in_process_date as quote_date, DATEDIFF(CURDATE(), rfq_fullfillment_part.in_process_date) as info FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.invoice = 0 ORDER BY rfq_fullfillment_part.in_process_date DESC';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> execute();
+        $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+        if(count($result)){
+          foreach ($result as $row) {
+            $in_process_quotes[] = $row;
+          }
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex-> getMessage() . '<br>';
+      }
+    }
+    return $in_process_quotes;
+  }
+
+  public static function get_all_invoices($connection){
+    $invoices = [];
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.invoice_date as quote_date, DATEDIFF(CURDATE(), rfq_fullfillment_part.invoice_date) as info FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.invoice = 1 ORDER BY rfq_fullfillment_part.invoice_date DESC';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> execute();
+        $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+        if(count($result)){
+          foreach ($result as $row) {
+            $invoices[] = $row;
+          }
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex-> getMessage() . '<br>';
+      }
+    }
+    return $invoices;
+  }
+
+  public static function print_received_quotes_table(){
+    ConnectionFullFillment::open_connection();
+    $received_quotes = self::get_all_received_quotes(ConnectionFullFillment::get_connection());
+    ConnectionFullFillment::close_connection();
+    if(count($received_quotes)){
+      ?>
+      <table class="rfq_team_table table table-bordered">
+        <thead>
+          <tr>
+            <th>PROPOSAL</th>
+            <th>CODE</th>
+            <th>TOTAL PRICE</th>
+            <th>RECEIVED DATE</th>
+            <th>INFO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          foreach ($received_quotes as $received_quote) {
+            self::print_quote($received_quote);
+          }
+          ?>
+        </tbody>
+      </table>
+      <?php
+    }
+  }
+
+  public static function print_in_process_quotes_table(){
+    ConnectionFullFillment::open_connection();
+    $in_process_quotes = self::get_all_in_process_quotes(ConnectionFullFillment::get_connection());
+    ConnectionFullFillment::close_connection();
+    if(count($in_process_quotes)){
+      ?>
+      <table class="rfq_team_table table table-bordered">
+        <thead>
+          <tr>
+            <th>PROPOSAL</th>
+            <th>CODE</th>
+            <th>TOTAL PRICE</th>
+            <th>IN PROCESS DATE</th>
+            <th>INFO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          foreach ($in_process_quotes as $in_process_quote) {
+            self::print_quote($in_process_quote);
+          }
+          ?>
+        </tbody>
+      </table>
+      <?php
+    }
+  }
+
+  public static function print_invoices_table(){
+    ConnectionFullFillment::open_connection();
+    $invoices = self::get_all_invoices(ConnectionFullFillment::get_connection());
+    ConnectionFullFillment::close_connection();
+    if(count($invoices)){
+      ?>
+      <table class="rfq_team_table table table-bordered">
+        <thead>
+          <tr>
+            <th>PROPOSAL</th>
+            <th>CODE</th>
+            <th>TOTAL PRICE</th>
+            <th>INVOICE DATE</th>
+            <th>INFO</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          foreach ($invoices as $invoice) {
+            self::print_quote($invoice);
+          }
+          ?>
+        </tbody>
+      </table>
+      <?php
+    }
+  }
+
   public static function print_quote($quote){
     if(!isset($quote)){
       return;
     }
+    $date = RepositorioRfqFullFillmentComment::mysql_datetime_to_english_format($quote['quote_date']);
     ?>
     <tr>
       <td>
-        <a href="<?php echo EDIT_QUOTE . $quote-> obtener_id(); ?>" class="btn-block">
-          <?php echo $quote-> obtener_id(); ?>
+        <a href="<?php echo EDIT_QUOTE . $quote['proposal']; ?>" class="btn-block">
+          <?php echo $quote['proposal']; ?>
         </a>
       </td>
-      <td><?php echo $quote-> obtener_email_code(); ?></td>
-      <td>
-        <?php
-        Conexion::abrir_conexion();
-        $usuario = RepositorioUsuario::obtener_usuario_por_id(Conexion::obtener_conexion(), $quote->obtener_usuario_designado());
-        Conexion::cerrar_conexion();
-        echo $usuario->obtener_nombre_usuario();
-        ?>
-      </td>
+      <td><?php echo $quote['code']; ?></td>
+      <td><?php echo number_format($quote['total_price'], 2); ?></td>
+      <td><?php echo $date; ?></td>
+      <td class="text-danger text-bold"><?php echo $quote['info'] . ' days ago.' ?></td>
     </tr>
-    <?php
-  }
-
-  public static function print_all_quotes(){
-    ConnectionFullFillment::open_connection();
-    $quotes = self::get_all_quotes(ConnectionFullFillment::get_connection());
-    ConnectionFullFillment::close_connection();
-    ?>
-    <table id="rfq_team_table" class="table table-bordered">
-      <thead>
-        <tr>
-          <th>PROPOSAL</th>
-          <th>CODE</th>
-          <th>DESIGNATED USER</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-        foreach ($quotes as $quote) {
-          self::print_quote($quote);
-        }
-        ?>
-      </tbody>
-    </table>
     <?php
   }
   /*********************************************************************************************/

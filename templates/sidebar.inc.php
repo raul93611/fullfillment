@@ -16,6 +16,7 @@
     <nav class="mt-2">
       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li class="nav-item has-treeview menu-open">
+
           <a href="<?php echo PROFILE; ?>" class="nav-link
           <?php
           if ($current_manager == '') {
@@ -45,17 +46,59 @@
         <?php
         }
         ?>
-        <li class="nav-item has-treeview menu-open">
-          <a href="<?php echo RFQ_TEAM; ?>" class="nav-link
+        <li class="nav-item has-treeview
+        <?php
+        if($current_manager == 'received' || $current_manager == 'in_process' || $current_manager == 'invoices'){
+          echo 'menu-open';
+        }
+        ?>
+        ">
+          <a href="#" class="nav-link
             <?php
-            if($current_manager == 'rfq_team'){
+            if($current_manager == 'received' || $current_manager == 'in_process' || $current_manager == 'invoices'){
               echo 'active';
             }
             ?>
             ">
             <i class="fas fa-tag nav-icon"></i>
             <p>RFQ Team</p>
+            <i class="right fa fa-angle-left"></i>
           </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?php echo RECEIVED_QUOTES; ?>" class="nav-link
+                <?php
+                if($current_manager == 'received'){
+                  echo 'active';
+                }
+                ?>
+                ">
+                <p>Received</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo IN_PROCESS_QUOTES; ?>" class="nav-link
+                <?php
+                if($current_manager == 'in_process'){
+                  echo 'active';
+                }
+                ?>
+                ">
+                <p>In process</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="<?php echo INVOICES; ?>" class="nav-link
+                <?php
+                if($current_manager == 'invoices'){
+                  echo 'active';
+                }
+                ?>
+                ">
+                <p>Invoices</p>
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </nav>

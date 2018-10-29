@@ -38,7 +38,7 @@ $(document).ready(function(){
     $('#label_file_create').html(fileName_create.join(', '));
   });
   /**********************************************************************************/
-  $('#rfq_team_table').DataTable();
+  $('.rfq_team_table').DataTable();
   $('#users_table').DataTable();
   /****************************************************************************/
   /***********************************VARIABLES INICIALES PARA EL BORRADO*********************/

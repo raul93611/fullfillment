@@ -16,11 +16,11 @@
         <section class="col-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title"><i class="fas fa-tag"></i> Quotes</h3>
+              <h3 class="card-title"><i class="fas fa-tag"></i> Invoices</h3>
             </div>
             <div class="card-body table-responsive">
               <?php
-              RepositorioRfqFullFillment::print_all_quotes();
+              RepositorioRfqFullFillment::print_invoices_table();
               ?>
             </div>
           </div>
