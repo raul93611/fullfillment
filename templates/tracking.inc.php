@@ -28,6 +28,10 @@ ConnectionFullFillment::close_connection();
               RepositorioItemFullFillment::tracking_list_items($id_rfq);
               ?>
             </div>
+            <div class="card-footer footer_item">
+              <a class="btn btn-primary" id="go_back" href="<?php echo EDIT_QUOTE . $quote-> obtener_id(); ?>"><i class="fa fa-reply"></i></a>
+              <a href="<?php echo TRACKING_PDF . $quote-> obtener_id(); ?>" target="_blank" class="btn btn-primary"><i class="fas fa-file"></i></a>
+            </div>
           </div>
         </div>
       </div>

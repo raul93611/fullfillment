@@ -164,6 +164,10 @@ if($parts_route[0] == 'fullfillment'){
         $id_rfq = $parts_route[2];
         $chosen_route = 'scripts/pdf_items_table.php';
         break;
+      case 'tracking_pdf':
+        $id_rfq = $parts_route[2];
+        $chosen_route = 'scripts/tracking_pdf.php';
+        break;
       default;
         break;
     }

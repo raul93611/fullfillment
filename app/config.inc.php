@@ -60,6 +60,7 @@ define('SAVE_TRACKING', SERVER . 'save_tracking');
 define('SAVE_TRACKING_SUBITEM', SERVER . 'save_tracking_subitem');
 define('DELETE_TRACKING', SERVER . 'delete_tracking/');
 define('DELETE_TRACKING_SUBITEM', SERVER . 'delete_tracking_subitem/');
+define('TRACKING_PDF', SERVER . 'tracking_pdf/');
 /******************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
