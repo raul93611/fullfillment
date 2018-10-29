@@ -286,7 +286,7 @@ class RepositorioItemFullFillment{
   if(count($trackings)){
         ?>
         <td class="align-middle text-center">
-          <a href="#" class="btn btn-warning"><i class="fas fa-trash"></i></a>
+          <a href="<?php echo DELETE_TRACKING . $trackings[0]-> get_id(); ?>" class="btn btn-warning"><i class="fas fa-trash"></i></a>
         </td>
         <td><?php echo $trackings[0]-> get_quantity(); ?></td>
         <td><?php echo $trackings[0]-> get_tracking_number(); ?></td>
@@ -301,7 +301,7 @@ class RepositorioItemFullFillment{
       ?>
       <tr>
         <td class="align-middle text-center">
-          <a href="#" class="btn btn-warning"><i class="fas fa-trash"></i></a>
+          <a href="<?php echo DELETE_TRACKING . $tracking-> get_id(); ?>" class="btn btn-warning"><i class="fas fa-trash"></i></a>
         </td>
         <td><?php echo $tracking-> get_quantity(); ?></td>
         <td><?php echo nl2br($tracking-> get_tracking_number()); ?></td>

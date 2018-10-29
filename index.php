@@ -152,6 +152,14 @@ if($parts_route[0] == 'fullfillment'){
         $id_provider_subitem = $parts_route[2];
         $chosen_route = 'scripts/delete_provider_subitem.php';
         break;
+      case 'delete_tracking':
+        $id_tracking = $parts_route[2];
+        $chosen_route = 'scripts/delete_tracking.php';
+        break;
+      case 'delete_tracking_subitem':
+        $id_tracking_subitem = $parts_route[2];
+        $chosen_route = 'scripts/delete_tracking_subitem.php';
+        break;
       case 'pdf_items_table':
         $id_rfq = $parts_route[2];
         $chosen_route = 'scripts/pdf_items_table.php';

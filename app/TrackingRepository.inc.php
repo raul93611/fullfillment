@@ -37,5 +37,37 @@ class TrackingRepository{
     }
     return $trackings;
   }
+
+  public static function get_tracking_by_id($connection, $id_tracking){
+    $tracking = null;
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT * FROM trackings WHERE id = :id_tracking';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_tracking', $id_tracking, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetch(PDO::FETCH_ASSOC);
+        if(!empty($result)){
+          $tracking = new Tracking($result['id'], $result['id_item'], $result['quantity'], $result['tracking_number'], $result['delivery_date'], $result['signed_by']);
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $tracking;
+  }
+
+  public static function delete_tracking($connection, $id_tracking){
+    if(isset($connection)){
+      try{
+        $sql = 'DELETE FROM trackings WHERE id = :id_tracking';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_tracking', $id_tracking, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
 }
 ?>
