@@ -21,8 +21,9 @@ class RfqFullFillmentPart{
   private $in_process_date;
   private $invoice;
   private $invoice_date;
+  private $payment_terms;
 
-  public function __construct($id, $id_rfq, $name, $po_number, $business_classification, $description, $po_date, $eta, $consolidate_others, $total_vendor_cost, $fedbid, $estimated_final_cost, $estimated_profit_g, $percent_g, $estimated_profit_s, $percent_s, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date){
+  public function __construct($id, $id_rfq, $name, $po_number, $business_classification, $description, $po_date, $eta, $consolidate_others, $total_vendor_cost, $fedbid, $estimated_final_cost, $estimated_profit_g, $percent_g, $estimated_profit_s, $percent_s, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date, $payment_terms){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
     $this-> name = $name;
@@ -44,6 +45,7 @@ class RfqFullFillmentPart{
     $this-> in_process_date = $in_process_date;
     $this-> invoice = $invoice;
     $this-> invoice_date = $invoice_date;
+    $this-> payment_terms = $payment_terms;
   }
 
   public function get_id(){
@@ -128,6 +130,10 @@ class RfqFullFillmentPart{
 
   public function get_invoice_date(){
     return $this-> invoice_date;
+  }
+
+  public function get_payment_terms(){
+    return $this-> payment_terms;
   }
 }
 ?>

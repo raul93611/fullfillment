@@ -188,6 +188,24 @@ ConnectionFullFillment::close_connection();
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="select_payment_terms_fullfillment">Payment terms:</label>
+                <select class="form-control form-control-sm" id="select_payment_terms_fullfillment">
+                  <option value="None">None</option>
+                  <option value="Cash">Cash</option>
+                  <option value="PO">P.O.</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <ul id="payment_terms_list">
+
+              </ul>
+            </div>
+          </div>
+          <input type="hidden" name="payment_terms_fullfillment" id="payment_terms_fullfillment" value="<?php echo $rfq_fullfillment_part-> get_payment_terms(); ?>">
           <input type="hidden" name="id_rfq_fullfillment_part" value="<?php echo $rfq_fullfillment_part-> get_id(); ?>">
           <input type="hidden" name="id_rfq" value="<?php echo $quote-> obtener_id(); ?>">
         </form>

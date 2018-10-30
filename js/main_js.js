@@ -1,4 +1,44 @@
 $(document).ready(function(){
+  /********************************SELECT PAYMENT TERMS FULLFILLMENT***********************************/
+  if($('#info_rfq_fullfillment_form').length != 0){
+    var payment_terms_list = $('#payment_terms_list');
+    if($('#payment_terms_fullfillment').val() != ''){
+      var valor = $('#payment_terms_fullfillment').val().split(',');
+    }else{
+      var valor = [];
+    }
+    valor.forEach(function(element){
+      var single_payment_term = '<a href="#" class="payment_terms d-block">' + element + '</a>';
+      payment_terms_list.append(single_payment_term);
+    });
+    $('#select_payment_terms_fullfillment').click(function(){
+      var elemento = valor.indexOf($(this).val());
+      if(elemento == -1){
+        if($(this).val() != 'None'){
+          valor.push($(this).val());
+          single_payment_term = '<a href="#" class="payment_terms d-block">' + $(this).val() + '</a>';
+          payment_terms_list.append(single_payment_term);
+          $('#payment_terms_fullfillment').val(valor.join(','));
+          $('.payment_terms').click(function(){
+            console.log($(this).text());
+            if(valor.indexOf($(this).text()) > -1){
+              valor.splice(valor.indexOf($(this).text()), 1);
+              $('#payment_terms_fullfillment').val(valor.join(','));
+            }
+            $(this).remove();
+          });
+        }
+      }
+    });
+    $('.payment_terms').click(function(){
+      console.log($(this).text());
+      if(valor.indexOf($(this).text()) > -1){
+        valor .splice(valor.indexOf($(this).text()), 1);
+        $('#payment_terms_fullfillment').val(valor.join(','));
+      }
+      $(this).remove();
+    });
+  }
   /*********************************TRACKING SUBITEM MODAL*******************************/
   $('.add_tracking_subitem_button').click(function(){
     var id_subitem = $(this).attr('name');

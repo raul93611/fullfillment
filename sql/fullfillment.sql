@@ -69,6 +69,7 @@ CREATE TABLE rfq_fullfillment_part(
   in_process_date DATETIME NOT NULL,
   invoice TINYINT NOT NULL,
   invoice_date DATETIME NOT NULL,
+  payment_terms TEXT CHARACTER SET utf8 NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
