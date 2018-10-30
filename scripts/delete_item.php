@@ -10,11 +10,11 @@ if(count($subitems)){
   }
 }
 $description_comment = 'An item was deleted:
-<b>Project Especifications</b>
+<b>ELOGIC PROPOSAL</b>
 <b>Brand:</b>
-' . $item-> obtener_brand_project() . '
+' . $item-> obtener_brand() . '
 <b>Part number:</b>
-' . $item-> obtener_part_number_project() . '
+' . $item-> obtener_part_number() . '
 ';
 $comment = new CommentRfqFullFillment('', $id_rfq, $_SESSION['username'], $description_comment, '');
 RepositorioRfqFullFillmentComment::insertar_comment(ConnectionFullFillment::get_connection(), $comment);
@@ -32,11 +32,11 @@ foreach ($fullfillment_users as $fullfillment_user) {
   <body>
   <h5>Comment:</h5>
   <p>An item was deleted.<br>
-  <b>Project Especifications</b><br>
+  <b>ELOGIC PROPOSAL</b><br>
   <b>Brand:</b><br>
-  ' . $item-> obtener_brand_project() . '<br>
+  ' . $item-> obtener_brand() . '<br>
   <b>Part number:</b><br>
-  ' . $item-> obtener_part_number_project() . '<br>
+  ' . $item-> obtener_part_number() . '<br>
   <a href="' . EDIT_QUOTE . $id_rfq . '">Review</a></p>
   </body>
   </html>

@@ -7,11 +7,11 @@ if(isset($_POST['guardar_provider'])){
   $item = RepositorioItemFullFillment::obtener_item_por_id(ConnectionFullFillment::get_connection(), $provider-> obtener_id_item());
   $id_rfq = $item-> obtener_id_rfq();
   $description_comment = 'A new provider was created for the Item:
-    <b>Project specifications</b>
+    <b>ELOGIC PROPOSAL</b>
     <b>Brand:</b>
-    ' . $item-> obtener_brand_project() . '
+    ' . $item-> obtener_brand() . '
     <b>Part number:</b>
-    ' . $item-> obtener_part_number_project() . '
+    ' . $item-> obtener_part_number() . '
     <a href="' . EDIT_PROVIDER . $id_provider . '">Review</a>';
   $comment = new CommentRfqFullFillment('', $id_rfq, $_SESSION['username'], $description_comment, '');
   RepositorioRfqFullFillmentComment::insertar_comment(ConnectionFullFillment::get_connection(), $comment);
@@ -29,11 +29,11 @@ if(isset($_POST['guardar_provider'])){
     <h5>Comment:</h5>
     <p>A new provider was created for the Item:
       <br>
-      <b>Project specifications</b><br>
+      <b>ELOGIC PROPOSAL</b><br>
       <b>Brand:</b><br>
-      ' . $item-> obtener_brand_project() . '<br>
+      ' . $item-> obtener_brand() . '<br>
       <b>Part number:</b><br>
-      ' . $item-> obtener_part_number_project() . '<br>
+      ' . $item-> obtener_part_number() . '<br>
       <a href="' . EDIT_PROVIDER . $id_provider . '">Review</a></p>
     </body>
     </html>

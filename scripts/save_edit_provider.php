@@ -17,11 +17,11 @@ if (isset($_POST['guardar_cambios_provider'])) {
   if(count($cambios)){
     $cambios = implode(',', $cambios);
     $description_comment = 'A provider was modified. The fields: <b>' . $cambios . '</b>
-    <b>Project specifications</b>
+    <b>ELOGIC PROPOSAL</b>
     <b>Brand:</b>
-    ' . $item-> obtener_brand_project() . '
+    ' . $item-> obtener_brand() . '
     <b>Part number:</b>
-    ' . $item-> obtener_part_number_project() . '
+    ' . $item-> obtener_part_number() . '
     <a href="' . EDIT_PROVIDER . $_POST['id_provider'] . '">Review</a>';
     $comment = new CommentRfqFullFillment('', $_POST['id_rfq'], $_SESSION['username'], $description_comment, '');
     RepositorioRfqFullFillmentComment::insertar_comment(ConnectionFullFillment::get_connection(), $comment);
@@ -37,11 +37,11 @@ if (isset($_POST['guardar_cambios_provider'])) {
       <body>
       <h5>Comment:</h5>
       <p>A provider was modified. The fields: <b>' . $cambios . '</b><br>
-      <b>Project specifications</b><br>
+      <b>ELOGIC PROPOSAL</b><br>
       <b>Brand:</b><br>
-      ' . $item-> obtener_brand_project() . '<br>
+      ' . $item-> obtener_brand() . '<br>
       <b>Part number:</b><br>
-      ' . $item-> obtener_part_number_project() . '<br>
+      ' . $item-> obtener_part_number() . '<br>
       <a href="' . EDIT_PROVIDER . $_POST['id_provider'] . '">Review</a></p>
       </body>
       </html>

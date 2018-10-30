@@ -6,11 +6,11 @@ $subitem = RepositorioSubitemFullFillment::obtener_subitem_por_id(ConnectionFull
 $item = RepositorioItemFullFillment::obtener_item_por_id(ConnectionFullFillment::get_connection(), $subitem-> obtener_id_item());
 RepositorioProviderSubitemFullFillment::delete_provider_subitem(ConnectionFullFillment::get_connection(), $id_provider_subitem);
 $description_comment = 'A subitem\'s provider was deleted:
-<b>Project Especifications</b>
+<b>ELOGIC PROPOSAL</b>
 <b>Brand:</b>
-' . $subitem-> obtener_brand_project() . '
+' . $subitem-> obtener_brand() . '
 <b>Part number:</b>
-' . $subitem-> obtener_part_number_project() . '
+' . $subitem-> obtener_part_number() . '
 ';
 $comment = new CommentRfqFullFillment('', $item-> obtener_id_rfq(), $_SESSION['username'], $description_comment, '');
 RepositorioRfqFullFillmentComment::insertar_comment(ConnectionFullFillment::get_connection(), $comment);
@@ -27,11 +27,11 @@ foreach ($fullfillment_users as $fullfillment_user) {
   <body>
   <h5>Comment:</h5>
   <p>A subitem\'s provider was deleted.<br>
-  <b>Project Especifications</b><br>
+  <b>ELOGIC PROPOSAL</b><br>
   <b>Brand:</b><br>
-  ' . $subitem-> obtener_brand_project() . '<br>
+  ' . $subitem-> obtener_brand() . '<br>
   <b>Part number:</b><br>
-  ' . $subitem-> obtener_part_number_project() . '<br>
+  ' . $subitem-> obtener_part_number() . '<br>
   <a href="' . EDIT_QUOTE . $item-> obtener_id_rfq() . '">Review</a></p>
   </body>
   </html>
