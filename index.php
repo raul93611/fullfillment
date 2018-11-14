@@ -130,6 +130,10 @@ if($parts_route[0] == 'fullfillment'){
           case 'edit_user':
             $current_manager = 'edit_user';
             break;
+          case 'employee_docs_page':
+            $current_manager = 'employee_docs_page';
+            $chosen_route = 'views/profile.php';
+            break;
           default:
             break;
         }

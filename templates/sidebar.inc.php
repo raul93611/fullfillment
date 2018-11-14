@@ -99,6 +99,18 @@
               </a>
             </li>
           </ul>
+          <li class="nav-item has-treeview menu-open">
+            <a href="<?php echo EMPLOYEE_DOCS_PAGE; ?>" class="nav-link
+            <?php
+            if ($current_manager == 'employee_docs_page') {
+              echo 'active';
+            }
+            ?>
+               ">
+              <i class="fas fa-file nav-icon"></i>
+              <p>Employee docs</p>
+            </a>
+          </li>
         </li>
       </ul>
     </nav>

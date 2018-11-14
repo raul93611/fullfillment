@@ -3,7 +3,7 @@ ConnectionFullFillment::open_connection();
 $user = UserFullFillmentRepository::get_user_by_id(ConnectionFullFillment::get_connection(), $id_user);
 ConnectionFullFillment::close_connection();
 if($level != 1){
-  Redireccion::redirigir1(PROFILE);
+  Redirection::redirect1(PROFILE);
 }
 ?>
 <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">

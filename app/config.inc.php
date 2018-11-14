@@ -66,10 +66,13 @@ define('RECEIVED_QUOTES', PROFILE . 'received');
 define('IN_PROCESS_QUOTES', PROFILE . 'in_process');
 define('INVOICES', PROFILE . 'invoices');
 /******************************************************************************/
+define('EMPLOYEE_DOCS_PAGE', PROFILE . 'employee_docs_page/');
+/******************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');
 define('PLUGINS', SERVER . 'plugins/');
 define('DIST', SERVER . 'dist/');
 define('DOCS_RFQ', SERVER . 'documents/rfq_team/');
+define('EMPLOYEE_DOCS', SERVER . 'employee_docs/');
 ?>

@@ -62,6 +62,9 @@ switch ($current_manager) {
   case 'tracking':
     include_once 'templates/tracking.inc.php';
     break;
+  case 'employee_docs_page':
+    include_once 'templates/employee_docs_page.inc.php';
+    break;
 }
 include_once 'templates/end_document.inc.php';
 ?>
