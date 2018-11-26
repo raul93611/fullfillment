@@ -1,4 +1,38 @@
 $(document).ready(function(){
+  if($('#file_input').length != 0){
+    var files = $('#files').val();
+    var array_div_files = [];
+    var array_options = [];
+    if(files != ''){
+      files = files.split(',');
+
+      for (var i = 0; i < files.length; i++) {
+        array_div_files.push('"<h3>' + "<i class='" + "fas fa-file" + "'></i>" + '</h3>"');
+        array_options.push('{"previewAsData": false, "caption": "' + files[i] + '", "url": "' + 'http://' + document.location.hostname + '/fullfillment/delete_document/' + $('input[name="id_rfq"]').val() + '/' + files[i] + '", "downloadUrl": "' + 'http://' + document.location.hostname + '/fullfillment/documents/' + $('input[name="id_rfq"]').val() + '/' + files[i] + '", "key": ' + i + '}');
+      }
+      array_div_files.join(',');
+      array_div_files = '[' + array_div_files + ']';
+      console.log(array_div_files);
+      array_div_files = jQuery.parseJSON(array_div_files);
+      array_options.join(',');
+      array_options = '[' + array_options + ']';
+      array_options = jQuery.parseJSON(array_options);
+      console.log(array_div_files);
+      console.log(array_options);
+    }
+    $('#file_input').fileinput({
+      theme: 'explorer-fas',
+      uploadUrl: 'http://' + document.location.hostname + '/fullfillment/load_img/' + $('input[name="id_rfq"]').val(),
+      overwriteInitial: false,
+      initialPreviewAsData: true,
+      initialPreview: array_div_files,
+      initialPreviewConfig: array_options,
+      fileActionSettings:
+      {
+        showZoom: false
+      }
+    });
+  }
   /********************************SELECT PAYMENT TERMS FULLFILLMENT***********************************/
   if($('#info_rfq_fullfillment_form').length != 0){
     var payment_terms_list = $('#payment_terms_list');

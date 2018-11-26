@@ -49,6 +49,11 @@
 <script src="<?php echo PLUGINS; ?>bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
 <script src="<?php echo PLUGINS; ?>slimScroll/jquery.slimscroll.min.js"></script>
 <script src="<?php echo PLUGINS; ?>fullcalendar/fullcalendar.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/js/plugins/piexif.min.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/js/plugins/sortable.min.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/js/plugins/purify.min.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/themes/explorer-fas/theme.min.js"></script>
 <script src="<?php echo PLUGINS; ?>iCheck/icheck.js"></script>
 <script src="<?php echo JS; ?>main_js.js"></script>
 </body>

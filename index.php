@@ -178,6 +178,10 @@ if($parts_route[0] == 'fullfillment'){
         $id_rfq = $parts_route[2];
         $chosen_route = 'scripts/tracking_pdf.php';
         break;
+      case 'load_img':
+        $id_rfq = $parts_route[2];
+        $chosen_route = 'scripts/load_img.php';
+        break;
       default;
         break;
     }

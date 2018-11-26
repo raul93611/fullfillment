@@ -56,32 +56,25 @@
   $directory = $_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $quote-> obtener_id();
   if (is_dir($directory)) {
     $manager = opendir($directory);
-    echo '<div class="list-group">';
     $folder = @scandir($directory);
     if(count($folder) <= 2){
-      echo '<h3 class="text-center text-danger"><i class="fa fa-times"></i> No files!</h3>';
     }
+    $files = [];
     while (($file = readdir($manager)) !== false) {
-      $completed_directory = $directory . "/" . $file;
+      $complete_directory = $directory . "/" . $file;
       if ($file != "." && $file != "..") {
-        $url_file = str_replace(' ', '%20', $file);
-        $url_file = str_replace('#', '%23', $url_file);
-        echo '<li class="list-group-item"><a download href="' . DOCS_RFQ . $quote-> obtener_id() . '/' . $url_file . '">' . $file . '</a><a href="' . DELETE_DOCUMENT . $quote-> obtener_id() . '/' . $url_file . '" class="delete_document_button close"><span aria-hidden="true">&times;</span></a></li>';
+        $files[] = $file;
       }
     }
-
+    $files = implode(',', $files);
+    ?>
+    <input type="hidden" id="files" value="<?php echo $files; ?>">
+    <?php
     closedir($manager);
-    echo "</div>";
   }
   ?>
+  <input type="file" id="file_input" multiple name="file_input[]">
   <br>
-  <div class="form-group">
-    <label for="documents">Upload documents:</label><br>
-    <div class="custom-file">
-      <input type="file" name="documents[]" multiple class="custom-file-input" id="file_input_info_create">
-      <label id="label_file_create" class="custom-file-label" for="file_input_info_create">Choose file</label>
-    </div>
-  </div>
   <?php
   RepositorioItemFullFillment::escribir_items($quote-> obtener_id());
   ConnectionFullFillment::open_connection();
