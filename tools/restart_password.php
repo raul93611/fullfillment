@@ -1,11 +1,8 @@
 <?php
-if (SessionControl::session_started()) {
-    Redirection::redirect(PROFILE);
-}
-include_once 'templates/validation_login.inc.php';
+include_once 'templates/validation_restart_password.inc.php';
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,7 +14,7 @@ include_once 'templates/validation_login.inc.php';
     <link rel="stylesheet" href="<?php echo PLUGINS; ?>iCheck/square/blue.css">
     <link rel="Shortcut Icon" href="<?php echo IMG; ?>eP_favicon.png" type="image/x-icon" />
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <link rel="stylesheet" id="fondo" href="css/fondo1.css">
+    <link rel="stylesheet" id="fondo" href="<?php echo CSS; ?>fondo1.css">
     <style>
       body{
         font-family: 'Roboto', sans-serif;
@@ -42,47 +39,48 @@ include_once 'templates/validation_login.inc.php';
       }
     </style>
   </head>
-  <body class="hold-transition login-page" style="font-family: 'Roboto', sans-serif;">
+  <body class="hold-transition login-page">
     <div class="login-box">
       <div class="login-logo">
-        <img class="mb-4" src="<?php echo IMG; ?>eP_logo_home.png" alt="logo_home" width="60" height="38">
+        <img class="mb-4" src="<?php echo IMG; ?>eP_logo_home.png" alt="" width="60" height="38">
       </div>
       <hr>
       <div class="card-body login-card-body">
-        <p class="login-box-msg" style="color: #BDC5CF !important;">Please log in</p>
-        <form action="<?php echo SERVER; ?>" method="post">
+        <p class="login-box-msg" style="color: #BDC5CF !important;">Please, provide your password</p>
+        <form action="<?php echo RESTART_PASSWORD . $hash; ?>" method="post">
           <div class="form-group has-feedback">
-            <input type="text" class="form-control <?php if(isset($_POST['log_in'])){echo 'is-invalid';} ?>" name="username" placeholder="Username" autofocus required
-            <?php
-            if (isset($_POST['log_in']) && isset($_POST['username']) && !empty($_POST['username'])) {
-              echo 'value="' . $_POST['username'] . '"';
-            }
-            ?>
-            >
-            <span class="fa fa-user form-control-feedback" style="color: #BDC5CF !important;"></span>
+            <input type="password" class="form-control" name="password1" placeholder="Password" autofocus required>
+            <span class="fa fa-lock form-control-feedback" style="color: #BDC5CF !important;"></span>
           </div>
           <div class="form-group has-feedback">
-            <input type="password" class="form-control <?php if(isset($_POST['log_in'])){echo 'is-invalid';} ?>" name="password" placeholder="Password" required>
+            <input type="password" class="form-control" name="password2" placeholder="Confirm password" required>
             <span class="fa fa-lock form-control-feedback" style="color: #BDC5CF !important;"></span>
             <?php
-            if (isset($_POST['log_in'])) {
-              $validator->show_error();
+            if(isset($_POST['send'])){
+              if($error){
+                ?>
+                <div class="alert alert-danger" role="alert">
+                  Error, try again.
+                </div>
+                <?php
+              }else{
+                ?>
+                <div class="alert alert-success" role="alert">
+                  Successful process!.<a href="<?php echo SERVER; ?>"> Log in.</a>
+                </div>
+                <?php
+              }
             }
             ?>
           </div>
+
+          <input type="hidden" name="hash" value="<?php echo $hash; ?>">
           <div class="row">
             <div class="col-12 text-center">
-              <button type="submit" class="btn btn-primary btn-flat" name="log_in">Log in</button>
+              <button type="submit" class="btn btn-primary btn-flat" name="send">Send</button>
             </div>
           </div>
         </form>
-        <div class="social-auth-links text-center">
-          <p>- OR -</p>
-          <a href="http://www.elogicportal.com" class="btn btn_home btn-flat">Home</a>
-        </div>
-        <div class="social-auth-links text-center">
-          <a href="http://localhost/fullfillment/recover_password_form" class="">Did you forget your password?</a>
-        </div>
       </div>
     </div>
     <script src="<?php echo PLUGINS; ?>jquery/jquery.min.js"></script>
@@ -92,7 +90,7 @@ include_once 'templates/validation_login.inc.php';
       $(document).ready(function(){
         var a = 1;
         var intervalo = setInterval(function(){
-          $('#fondo').attr('href', 'css/fondo' + a + '.css');
+          $('#fondo').attr('href', 'http://localhost/fullfillment/css/fondo' + a + '.css');
           if(a == 3){
             a = 0;
           }

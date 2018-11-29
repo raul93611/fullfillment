@@ -107,6 +107,9 @@ if($parts_route[0] == 'fullfillment'){
       case 'log_out':
         $chosen_route = 'scripts/log_out.php';
         break;
+      case 'recover_password_form':
+        $chosen_route = 'tools/recover_password_form.php';
+        break;
       default:
         break;
     }
@@ -181,6 +184,10 @@ if($parts_route[0] == 'fullfillment'){
       case 'load_img':
         $id_rfq = $parts_route[2];
         $chosen_route = 'scripts/load_img.php';
+        break;
+      case 'restart_password':
+        $hash = $parts_route[2];
+        $chosen_route = 'tools/restart_password.php';
         break;
       default;
         break;

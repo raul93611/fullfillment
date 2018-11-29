@@ -4,7 +4,7 @@ class UserFullFillmentRepository{
     $inserted_user = false;
     if (isset($connection)) {
       try {
-        $sql = 'INSERT INTO users(username, password, names, last_names, level, email, status) VALUES(:username, :password, :names, :last_names, :level, :email, :status)';
+        $sql = 'INSERT INTO users(username, password, names, last_names, level, email, status, hash_recover_password) VALUES(:username, :password, :names, :last_names, :level, :email, :status, :hash_recover_password)';
 
         $sentence = $connection->prepare($sql);
 
@@ -15,6 +15,7 @@ class UserFullFillmentRepository{
         $sentence->bindParam(':level', $user->get_level(), PDO::PARAM_STR);
         $sentence->bindParam(':email', $user->get_email(), PDO::PARAM_STR);
         $sentence->bindParam(':status', $user->get_status(), PDO::PARAM_STR);
+        $sentence-> bindParam(':hash_recover_password', $user-> get_hash_recover_password(), PDO::PARAM_STR);
 
         $result = $sentence->execute();
 
@@ -41,13 +42,84 @@ class UserFullFillmentRepository{
         $result = $sentence->fetch(PDO::FETCH_ASSOC);
 
         if (!empty($result)) {
-          $user = new User($result['id'], $result['username'], $result['password'], $result['names'], $result['last_names'], $result['level'], $result['email'], $result['status']);
+          $user = new User($result['id'], $result['username'], $result['password'], $result['names'], $result['last_names'], $result['level'], $result['email'], $result['status'], $result['hash_recover_password']);
         }
       } catch (PDOException $ex) {
         print 'ERROR:' . $ex->getMessage() . '<br>';
       }
     }
     return $user;
+  }
+
+  public static function get_user_by_email($connection, $email) {
+    $user = null;
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM users WHERE email LIKE :email";
+
+        $sentence = $connection->prepare($sql);
+        $sentence->bindParam(':email', $email, PDO::PARAM_STR);
+        $sentence->execute();
+
+        $result = $sentence->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+          $user = new User($result['id'], $result['username'], $result['password'], $result['names'], $result['last_names'], $result['level'], $result['email'], $result['status'], $result['hash_recover_password']);
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $user;
+  }
+
+  public static function get_user_by_hash($connection, $hash) {
+    $user = null;
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM users WHERE hash_recover_password = :hash";
+
+        $sentence = $connection->prepare($sql);
+        $sentence->bindParam(':hash', $hash, PDO::PARAM_STR);
+        $sentence->execute();
+
+        $result = $sentence->fetch(PDO::FETCH_ASSOC);
+
+        if (!empty($result)) {
+          $user = new User($result['id'], $result['username'], $result['password'], $result['names'], $result['last_names'], $result['level'], $result['email'], $result['status'], $result['hash_recover_password']);
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $user;
+  }
+
+  public static function remove_hash($connection, $id_user){
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE users SET hash_recover_password = "" WHERE id = :id_user';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_user', $id_user, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
+
+  public static function update_password($connection, $password, $id_user){
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE users SET password = :password WHERE id = :id_user';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':password', $password, PDO::PARAM_STR);
+        $sentence-> bindParam(':id_user', $id_user, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
   }
 
   public static function get_user_by_id($connection, $id_user) {
@@ -63,7 +135,7 @@ class UserFullFillmentRepository{
         $result = $sentence->fetch(PDO::FETCH_ASSOC);
 
         if (!empty($result)) {
-          $user = new User($result['id'], $result['username'], $result['password'], $result['names'], $result['last_names'], $result['level'], $result['email'], $result['status']);
+          $user = new User($result['id'], $result['username'], $result['password'], $result['names'], $result['last_names'], $result['level'], $result['email'], $result['status'], $result['hash_recover_password']);
         }
       } catch (PDOException $ex) {
         print 'ERROR:' . $ex->getMessage() . '<br>';
@@ -94,6 +166,66 @@ class UserFullFillmentRepository{
       }
     }
     return $username_exists;
+  }
+
+  public static function email_exists($connection, $email) {
+    $email_exists = true;
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM users WHERE email LIKE :email";
+
+        $sentence = $connection->prepare($sql);
+        $sentence->bindParam(':email', $email, PDO::PARAM_STR);
+        $sentence->execute();
+
+        $result = $sentence->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result)) {
+          $email_exists = true;
+        } else {
+          $email_exists = false;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $email_exists;
+  }
+
+  public static function hash_exists($connection, $hash) {
+    $hash_exists = true;
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM users WHERE hash_recover_password = :hash";
+
+        $sentence = $connection->prepare($sql);
+        $sentence->bindParam(':hash', $hash, PDO::PARAM_STR);
+        $sentence->execute();
+
+        $result = $sentence->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result)) {
+          $hash_exists = true;
+        } else {
+          $hash_exists = false;
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $hash_exists;
+  }
+
+  public static function set_hash($connection, $id_user, $hash){
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE users SET hash_recover_password = :hash WHERE id = :id_user';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':hash', $hash, PDO::PARAM_STR);
+        $sentence-> bindParam(':id_user', $id_user, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
   }
 
   public static function full_name_exists($connection, $last_names, $names) {
@@ -157,7 +289,7 @@ class UserFullFillmentRepository{
 
         if (count($result)) {
           foreach ($result as $row) {
-            $users [] = new User($row['id'], $row['username'], $row['password'], $row['names'], $row['last_names'], $row['level'], $row['email'], $row['status']);
+            $users [] = new User($row['id'], $row['username'], $row['password'], $row['names'], $row['last_names'], $row['level'], $row['email'], $row['status'], $row['hash_recover_password']);
           }
         }
       } catch (PDOException $ex) {
@@ -177,7 +309,7 @@ class UserFullFillmentRepository{
         $result = $sentence->fetchAll(PDO::FETCH_ASSOC);
         if (count($result)) {
           foreach ($result as $row) {
-            $users [] = new User($row['id'], $row['username'], $row['password'], $row['names'], $row['last_names'], $row['level'], $row['email'], $row['status']);
+            $users [] = new User($row['id'], $row['username'], $row['password'], $row['names'], $row['last_names'], $row['level'], $row['email'], $row['status'], $row['hash_recover_password']);
           }
         }
       } catch (PDOException $ex) {
