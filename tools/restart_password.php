@@ -90,7 +90,7 @@ include_once 'templates/validation_restart_password.inc.php';
       $(document).ready(function(){
         var a = 1;
         var intervalo = setInterval(function(){
-          $('#fondo').attr('href', 'http://localhost/fullfillment/css/fondo' + a + '.css');
+          $('#fondo').attr('href', 'http://192.168.1.80/fullfillment/css/fondo' + a + '.css');
           if(a == 3){
             a = 0;
           }

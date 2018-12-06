@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  /**************************************INPUT FILE*************************************/
   if($('#file_input').length != 0){
     var files = $('#files').val();
     var array_div_files = [];
@@ -12,13 +13,10 @@ $(document).ready(function(){
       }
       array_div_files.join(',');
       array_div_files = '[' + array_div_files + ']';
-      console.log(array_div_files);
       array_div_files = jQuery.parseJSON(array_div_files);
       array_options.join(',');
       array_options = '[' + array_options + ']';
       array_options = jQuery.parseJSON(array_options);
-      console.log(array_div_files);
-      console.log(array_options);
     }
     $('#file_input').fileinput({
       theme: 'explorer-fas',
@@ -33,46 +31,30 @@ $(document).ready(function(){
       }
     });
   }
-  /********************************SELECT PAYMENT TERMS FULLFILLMENT***********************************/
-  if($('#info_rfq_fullfillment_form').length != 0){
-    var payment_terms_list = $('#payment_terms_list');
-    if($('#payment_terms_fullfillment').val() != ''){
-      var valor = $('#payment_terms_fullfillment').val().split(',');
-    }else{
-      var valor = [];
-    }
-    valor.forEach(function(element){
-      var single_payment_term = '<a href="#" class="payment_terms d-block">' + element + '</a>';
-      payment_terms_list.append(single_payment_term);
+  /********************************CHECKBOXES PAYMENT TERMS FULLFILLMENT***********************************/
+  $('.payment_terms_item').click(function(){
+    var id_item = $(this).attr('href');
+    console.log('http://' + document.location.hostname + '/fullfillment/load_payment_terms_item/' + id_item);
+    $('#payment_terms_item_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_payment_terms_item/' + id_item, function(){
+      $('#payment_terms_item_modal').modal();
     });
-    $('#select_payment_terms_fullfillment').click(function(){
-      var elemento = valor.indexOf($(this).val());
-      if(elemento == -1){
-        if($(this).val() != 'None'){
-          valor.push($(this).val());
-          single_payment_term = '<a href="#" class="payment_terms d-block">' + $(this).val() + '</a>';
-          payment_terms_list.append(single_payment_term);
-          $('#payment_terms_fullfillment').val(valor.join(','));
-          $('.payment_terms').click(function(){
-            console.log($(this).text());
-            if(valor.indexOf($(this).text()) > -1){
-              valor.splice(valor.indexOf($(this).text()), 1);
-              $('#payment_terms_fullfillment').val(valor.join(','));
-            }
-            $(this).remove();
-          });
-        }
+    return false;
+  });
+  $('#send_payment_terms_item').click(function(){
+    var payment_terms_checkboxes = [];
+    console.log($('#payment_terms_item_form input:checkbox:checked'));
+    $('#payment_terms_item_form input:checkbox:checked').each(function(){
+      payment_terms_checkboxes.push($(this).val());
+    });
+    console.log(payment_terms_checkboxes);
+    $.post('http://' + document.location.hostname + '/fullfillment/save_payment_terms_item', $('#payment_terms_item_form').serialize(), function(res){
+      if(res){
+        $('#payment_terms_item_modal').modal('hide');
       }
     });
-    $('.payment_terms').click(function(){
-      console.log($(this).text());
-      if(valor.indexOf($(this).text()) > -1){
-        valor .splice(valor.indexOf($(this).text()), 1);
-        $('#payment_terms_fullfillment').val(valor.join(','));
-      }
-      $(this).remove();
-    });
-  }
+  });
+/********************************SUBMIT PAYMENT TERMS FORM******************************/
+
   /*********************************TRACKING SUBITEM MODAL*******************************/
   $('.add_tracking_subitem_button').click(function(){
     var id_subitem = $(this).attr('name');

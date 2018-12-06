@@ -18,7 +18,7 @@ $last_names = 'velasco';
 $level = 1;
 $email = 'lvelasco@e-logic.us';
 $activo = 1;
-$user = new User('', $username, $password, $names, $last_names, $level, $email, $activo);
+$user = new User('', $username, $password, $names, $last_names, $level, $email, $activo, '');
 UserFullFillmentRepository::insert_user(ConnectionFullFillment::get_connection(), $user);
 
 $username = 'pepe1234';
@@ -28,7 +28,7 @@ $last_names = 'salazar';
 $level = 2;
 $email = 'jose@salazar';
 $activo = 1;
-$user = new User('', $username, $password, $names, $last_names, $level, $email, $activo);
+$user = new User('', $username, $password, $names, $last_names, $level, $email, $activo, '');
 UserFullFillmentRepository::insert_user(ConnectionFullFillment::get_connection(), $user);
 
 $username = 'pedro1234';
@@ -38,7 +38,7 @@ $last_names = 'palacios';
 $level = 2;
 $email = 'pedro@palacios';
 $activo = 1;
-$user = new User('', $username, $password, $names, $last_names, $level, $email, $activo);
+$user = new User('', $username, $password, $names, $last_names, $level, $email, $activo, '');
 UserFullFillmentRepository::insert_user(ConnectionFullFillment::get_connection(), $user);
 
 $username = 'pablo1234';
@@ -48,7 +48,7 @@ $last_names = 'ramirez';
 $level = 2;
 $email = 'pablo@ramirez';
 $activo = 1;
-$user = new User('', $username, $password, $names, $last_names, $level, $email, $activo);
+$user = new User('', $username, $password, $names, $last_names, $level, $email, $activo, '');
 UserFullFillmentRepository::insert_user(ConnectionFullFillment::get_connection(), $user);
 ConnectionFullFillment::close_connection();
 

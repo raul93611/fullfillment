@@ -217,3 +217,25 @@ ConnectionFullFillment::close_connection();
     </div>
   </div>
 </div>
+<!--***********************************************MODAL PAYMENT TERMS ITEM*******************************-->
+<div class="modal fade" id="payment_terms_item_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Payment terms</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="payment_terms_item_form" method="post">
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="send_payment_terms_item" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

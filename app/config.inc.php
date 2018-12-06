@@ -9,7 +9,7 @@ define('NOMBRE_USUARIO', 'root');
 define('PASSWORD', 'raul93611');
 define('NOMBRE_BD', 'elogic');
 
-define('SERVER', 'http://localhost/fullfillment/');
+define('SERVER', 'http://192.168.1.80/fullfillment/');
 define('PROFILE', SERVER . 'profile/');
 define('LOG_OUT', SERVER . 'log_out');
 /***************************************************************************/
@@ -71,6 +71,8 @@ define('EMPLOYEE_DOCS_PAGE', PROFILE . 'employee_docs_page/');
 define('RECOVER_PASSWORD_FORM', SERVER . 'recover_password_form');
 define('RESTART_PASSWORD', SERVER . 'restart_password/');
 /******************************************************************************/
+define('SAVE_PAYMENT_TERMS_ITEM', SERVER . 'save_payment_terms_item');
+/*******************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');

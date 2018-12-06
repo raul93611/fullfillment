@@ -42,6 +42,11 @@ include_once 'app/TrackingRepository.inc.php';
 include_once 'app/TrackingSubitem.inc.php';
 include_once 'app/TrackingSubitemRepository.inc.php';
 
+include_once 'app/ExtraItem.inc.php';
+include_once 'app/ExtraItemRepository.inc.php';
+include_once 'app/ExtraSubitem.inc.php';
+include_once 'app/ExtraSubitemRepository.inc.php';
+
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $route = $url_components['path'];
 
@@ -109,6 +114,9 @@ if($parts_route[0] == 'fullfillment'){
         break;
       case 'recover_password_form':
         $chosen_route = 'tools/recover_password_form.php';
+        break;
+      case 'save_payment_terms_item':
+        $chosen_route = 'scripts/save_payment_terms_item.php';
         break;
       default:
         break;
@@ -188,6 +196,10 @@ if($parts_route[0] == 'fullfillment'){
       case 'restart_password':
         $hash = $parts_route[2];
         $chosen_route = 'tools/restart_password.php';
+        break;
+      case 'load_payment_terms_item':
+        $id_item = $parts_route[2];
+        $chosen_route = 'scripts/load_payment_terms_item.php';
         break;
       default;
         break;
