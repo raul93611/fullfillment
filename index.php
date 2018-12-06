@@ -118,6 +118,9 @@ if($parts_route[0] == 'fullfillment'){
       case 'save_payment_terms_item':
         $chosen_route = 'scripts/save_payment_terms_item.php';
         break;
+      case 'save_payment_terms_subitem':
+        $chosen_route = 'scripts/save_payment_terms_subitem.php';
+        break;
       default:
         break;
     }
@@ -200,6 +203,10 @@ if($parts_route[0] == 'fullfillment'){
       case 'load_payment_terms_item':
         $id_item = $parts_route[2];
         $chosen_route = 'scripts/load_payment_terms_item.php';
+        break;
+      case 'load_payment_terms_subitem':
+        $id_subitem = $parts_route[2];
+        $chosen_route = 'scripts/load_payment_terms_subitem.php';
         break;
       default;
         break;

@@ -31,7 +31,7 @@ $(document).ready(function(){
       }
     });
   }
-  /********************************CHECKBOXES PAYMENT TERMS FULLFILLMENT***********************************/
+  /********************************CHECKBOXES PAYMENT TERMS ITEM FULLFILLMENT***********************************/
   $('.payment_terms_item').click(function(){
     var id_item = $(this).attr('href');
     console.log('http://' + document.location.hostname + '/fullfillment/load_payment_terms_item/' + id_item);
@@ -41,15 +41,24 @@ $(document).ready(function(){
     return false;
   });
   $('#send_payment_terms_item').click(function(){
-    var payment_terms_checkboxes = [];
-    console.log($('#payment_terms_item_form input:checkbox:checked'));
-    $('#payment_terms_item_form input:checkbox:checked').each(function(){
-      payment_terms_checkboxes.push($(this).val());
-    });
-    console.log(payment_terms_checkboxes);
     $.post('http://' + document.location.hostname + '/fullfillment/save_payment_terms_item', $('#payment_terms_item_form').serialize(), function(res){
       if(res){
         $('#payment_terms_item_modal').modal('hide');
+      }
+    });
+  });
+  /******************************CHECKBOXES PAYMENT TERMS SUBITEM FULLFILLMENT******************/
+  $('.payment_terms_subitem').click(function(){
+    var id_subitem = $(this).attr('href');
+    $('#payment_terms_subitem_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_payment_terms_subitem/' + id_subitem, function(){
+      $('#payment_terms_subitem_modal').modal();
+    });
+    return false;
+  });
+  $('#send_payment_terms_subitem').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_payment_terms_subitem', $('#payment_terms_subitem_form').serialize(), function(res){
+      if(res){
+        $('#payment_terms_subitem_modal').modal('hide');
       }
     });
   });

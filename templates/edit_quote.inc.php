@@ -188,24 +188,6 @@ ConnectionFullFillment::close_connection();
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="select_payment_terms_fullfillment">Payment terms:</label>
-                <select class="form-control form-control-sm" id="select_payment_terms_fullfillment">
-                  <option value="None">None</option>
-                  <option value="Cash">Cash</option>
-                  <option value="PO">P.O.</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <ul id="payment_terms_list">
-
-              </ul>
-            </div>
-          </div>
-          <input type="hidden" name="payment_terms_fullfillment" id="payment_terms_fullfillment" value="<?php echo $rfq_fullfillment_part-> get_payment_terms(); ?>">
           <input type="hidden" name="id_rfq_fullfillment_part" value="<?php echo $rfq_fullfillment_part-> get_id(); ?>">
           <input type="hidden" name="id_rfq" value="<?php echo $quote-> obtener_id(); ?>">
         </form>
@@ -234,6 +216,28 @@ ConnectionFullFillment::close_connection();
       </div>
       <div class="modal-footer">
         <button type="button" id="send_payment_terms_item" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--***********************************************MODAL PAYMENT TERMS SUBITEM*******************************-->
+<div class="modal fade" id="payment_terms_subitem_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Payment terms</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="payment_terms_subitem_form" method="post">
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="send_payment_terms_subitem" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
       </div>
     </div>
