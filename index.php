@@ -47,6 +47,11 @@ include_once 'app/ExtraItemRepository.inc.php';
 include_once 'app/ExtraSubitem.inc.php';
 include_once 'app/ExtraSubitemRepository.inc.php';
 
+include_once 'app/PurchaseOrder.inc.php';
+include_once 'app/PurchaseOrderRepository.inc.php';
+include_once 'app/PurchaseOrderItem.inc.php';
+include_once 'app/PurchaseOrderItemRepository.inc.php';
+
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $route = $url_components['path'];
 
@@ -120,6 +125,18 @@ if($parts_route[0] == 'fullfillment'){
         break;
       case 'save_payment_terms_subitem':
         $chosen_route = 'scripts/save_payment_terms_subitem.php';
+        break;
+      case 'save_new_purchase_order_item':
+        $chosen_route = 'scripts/save_new_purchase_order_item.php';
+        break;
+      case 'save_edit_purchase_order_item':
+        $chosen_route = 'scripts/save_edit_purchase_order_item.php';
+        break;
+      case 'remove_purchase_order_item':
+        $chosen_route = 'scripts/remove_purchase_order_item.php';
+        break;
+      case 'save_edit_shipment_cost':
+        $chosen_route = 'scripts/save_edit_shipment_cost.php';
         break;
       default:
         break;
@@ -208,6 +225,22 @@ if($parts_route[0] == 'fullfillment'){
         $id_subitem = $parts_route[2];
         $chosen_route = 'scripts/load_payment_terms_subitem.php';
         break;
+      case 'new_purchase_order':
+        $id_rfq = $parts_route[2];
+        $chosen_route = 'scripts/new_purchase_order.php';
+        break;
+      case 'load_purchase_order_items':
+        $id_purchase_order = $parts_route[2];
+        $chosen_route = 'scripts/load_purchase_order_items.php';
+        break;
+      case 'load_purchase_order_item':
+        $id_purchase_order_item = $parts_route[2];
+        $chosen_route = 'scripts/load_purchase_order_item.php';
+        break;
+      case 'load_shipment_cost':
+        $id_purchase_order = $parts_route[2];
+        $chosen_route = 'scripts/load_shipment_cost.php';
+        break;
       default;
         break;
     }
@@ -259,6 +292,10 @@ if($parts_route[0] == 'fullfillment'){
           case 'tracking':
             $current_manager = 'tracking';
             $id_rfq = $parts_route[3];
+            break;
+          case 'purchase_order':
+            $current_manager = 'purchase_order';
+            $id_purchase_order = $parts_route[3];
             break;
           default:
             break;

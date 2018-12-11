@@ -76,6 +76,44 @@ CREATE TABLE rfq_fullfillment_part(
     ON DELETE RESTRICT
 );
 
+CREATE TABLE purchase_orders(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_rfq INT NOT NULL,
+  date DATE NOT NULL,
+  purchase_from TEXT CHARACTER SET utf8 NOT NULL,
+  drop_ship_to TEXT CHARACTER SET utf8 NOT NULL,
+  comments TEXT CHARACTER SET utf8 NOT NULL,
+  purchase_order_number VARCHAR(255) NOT NULL,
+  ref_quote VARCHAR(255) NOT NULL,
+  ship_via VARCHAR(255) NOT NULL,
+  order_date DATE NOT NULL,
+  terms VARCHAR(255) NOT NULL,
+  subtotal DECIMAL(20,2) NOT NULL,
+  shipment_cost DECIMAL(20,2) NOT NULL,
+  total DECIMAL(20,2) NOT NULL,
+  message TEXT CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_rfq)
+    REFERENCES rfq(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE purchase_order_items(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_purchase_order INT NOT NULL,
+  part_number VARCHAR(255) NOT NULL,
+  quantity INT NOT NULL,
+  description TEXT CHARACTER SET utf8 NOT NULL,
+  unit_price DECIMAL(20,2) NOT NULL,
+  amount DECIMAL(20,2) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_purchase_order)
+    REFERENCES purchase_orders(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
 CREATE TABLE comments_rfq(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_rfq INT NOT NULL,

@@ -65,6 +65,9 @@ switch ($current_manager) {
   case 'employee_docs_page':
     include_once 'templates/employee_docs_page.inc.php';
     break;
+  case 'purchase_order':
+    include_once 'templates/purchase_order.inc.php';
+    break;
 }
 include_once 'templates/end_document.inc.php';
 ?>

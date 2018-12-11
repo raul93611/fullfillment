@@ -1,4 +1,58 @@
 $(document).ready(function(){
+  /****************************EDIT SHIPMENT COST PURCHASE ORDER***********************/
+  $('#purchase_order_items').on('click', '#edit_shipment_cost', function(){
+    $('#edit_shipment_cost_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_shipment_cost/' + $('#id_purchase_order', this).val(), function(){
+      $('#edit_shipment_cost_modal').modal();
+    });
+  });
+
+  $('#save_edit_shipment_cost').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_shipment_cost', $('#edit_shipment_cost_form').serialize(), function(res){
+      if(res){
+        $('#edit_shipment_cost_modal').modal('hide');
+        $('#purchase_order_items').load('http://' + document.location.hostname + '/fullfillment/load_purchase_order_items/' + res.id_purchase_order);
+      }
+    });
+  });
+  /*********************************REMOVE PURCHASE ORDER ITEM*************************/
+  $('#purchase_order_items').on('click', '.remove_purchase_order_item', function(){
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_purchase_order_item/',
+      data: {
+        id_purchase_order_item: $('.id_purchase_order_item', this).val()
+      },
+      type: 'POST',
+      success: function(res){
+        $('#purchase_order_items').load('http://' + document.location.hostname + '/fullfillment/load_purchase_order_items/' + res.id_purchase_order);
+      }
+    });
+  });
+  /***********************************SAVE EDIT PURCHASE ORDER ITEM**********************/
+  $('#purchase_order_items').on('click', '.edit_purchase_order_item', function(){
+    $('#edit_purchase_order_item_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_purchase_order_item/' + $('.id_purchase_order_item', this).val(), function(){
+      $('#edit_purchase_order_item_modal').modal();
+    });
+    return false;
+  });
+  $('#save_edit_purchase_order_item').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_purchase_order_item', $('#edit_purchase_order_item_form').serialize(), function(res){
+      if(res){
+        $('#edit_purchase_order_item_modal').modal('hide');
+        $('#purchase_order_items').load('http://' + document.location.hostname + '/fullfillment/load_purchase_order_items/' + res.id_purchase_order);
+      }
+    });
+  });
+  /**********************************SAVE PURCHASE ORDER ITEM****************************/
+  $('#new_purchase_order_item').click(function(){
+    $('#new_purchase_order_item_modal').modal();
+  });
+  $('#save_new_purchase_order_item').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_purchase_order_item', $('#new_purchase_order_item_form').serialize(), function(res){
+      $('#new_purchase_order_item_form')[0].reset();
+      $('#new_purchase_order_item_modal').modal('hide');
+      $('#purchase_order_items').load('http://' + document.location.hostname + '/fullfillment/load_purchase_order_items/' + res.id_purchase_order);
+    });
+  });
   /**************************************INPUT FILE*************************************/
   if($('#file_input').length != 0){
     var files = $('#files').val();
@@ -23,6 +77,7 @@ $(document).ready(function(){
       uploadUrl: 'http://' + document.location.hostname + '/fullfillment/load_img/' + $('input[name="id_rfq"]').val(),
       overwriteInitial: false,
       initialPreviewAsData: true,
+      showClose: false,
       initialPreview: array_div_files,
       initialPreviewConfig: array_options,
       fileActionSettings:

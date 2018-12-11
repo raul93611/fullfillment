@@ -102,11 +102,19 @@
   ?>
   <button type="button" class="btn btn-primary" id="add_rfq_fullfillment_info"><i class="fas fa-plus"></i> Add info</button>
   <a href="#" id="add_comment" class="btn btn-primary add_item_charter"><i class="fas fa-plus"></i> Add comment</a>
-  <?php
-  if($quote-> obtener_canal() != 'FedBid'){
-    ?>
-    <a href="<?php echo TRACKING . $quote-> obtener_id(); ?>" class="btn btn-primary"><i class="fas fa-box-open"></i> Tracking</a>
-    <?php
-  }
-  ?>
+  <div class="btn-group dropup">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <i class="fas fa-file"></i> Docs
+    </button>
+    <div class="dropdown-menu">
+      <a href="<?php echo NEW_PURCHASE_ORDER . $quote-> obtener_id(); ?>" class="dropdown-item">New P.O.</a>
+      <?php
+      if($quote-> obtener_canal() != 'FedBid'){
+        ?>
+        <a href="<?php echo TRACKING . $quote-> obtener_id(); ?>" class="dropdown-item">Tracking</a>
+        <?php
+      }
+      ?>
+    </div>
+  </div>
 </div>
