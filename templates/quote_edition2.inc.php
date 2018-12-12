@@ -108,13 +108,6 @@
     </button>
     <div class="dropdown-menu">
       <a href="<?php echo NEW_PURCHASE_ORDER . $quote-> obtener_id(); ?>" class="dropdown-item">New P.O.</a>
-      <?php
-      if($quote-> obtener_canal() != 'FedBid'){
-        ?>
-        <a href="<?php echo TRACKING . $quote-> obtener_id(); ?>" class="dropdown-item">Tracking</a>
-        <?php
-      }
-      ?>
     </div>
   </div>
 </div>

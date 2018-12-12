@@ -51,6 +51,27 @@
         </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-md-3">
+      <a href="<?php echo TRACKING . $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"
+        <?php
+        if($quote-> obtener_canal() != 'FedBid'){
+          echo 'disabled';
+        }
+        ?>
+        ><i class="fas fa-file"></i> Tracking</a>
+    </div>
+    <div class="col-md-3">
+      <button type="button" id="purchase_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Purchase order</button>
+    </div>
+    <div class="col-md-3">
+      <button type="button" id="work_order_button" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Work order</button>
+    </div>
+    <div class="col-md-3">
+      <button type="button" id="packing_slip_button" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Packing slip</button>
+    </div>
+  </div>
+  <br>
   <label>Documents:</label>
   <?php
   $directory = $_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $quote-> obtener_id();

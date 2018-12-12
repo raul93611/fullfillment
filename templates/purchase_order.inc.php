@@ -33,6 +33,7 @@ if($purchase_order-> get_order_date() != '0000-00-00'){
             </div>
             <div class="card-body">
               <form id="purchase_order_form" action="" method="post">
+                <input type="hidden" name="id_purchase_order" value="<?php echo $purchase_order-> get_id(); ?>">
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -94,15 +95,24 @@ if($purchase_order-> get_order_date() != '0000-00-00'){
                       <input type="text" name="terms" id="terms" class="form-control form-control-sm" value="<?php echo $purchase_order-> get_terms(); ?>">
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-12">
-                      <button type="button" name="button" id="new_purchase_order_item" class="btn btn-primary"><i class="fas fa-plus"></i></button>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="message">Message:</label>
+                      <textarea name="message" class="form-control form-control-sm" rows="5"><?php echo $purchase_order-> get_message(); ?></textarea>
                     </div>
                   </div>
                 </div>
+              </form>
                 <br>
                 <div class="row">
                   <div class="col-md-12">
+                    <button type="button" name="button" id="save_purchase_order" class="btn btn-success"><i class="fas fa-check"></i> Save</button>
+                    <br><br>
+                    <button type="button" name="button" id="new_purchase_order_item" class="btn btn-primary"><i class="fas fa-plus"></i></button>
+                    <br>
+                    <br>
                     <div id="purchase_order_items" class="table-responsive">
                       <?php
                       PurchaseOrderItemRepository::print_purchase_order_items($id_purchase_order);
@@ -110,11 +120,10 @@ if($purchase_order-> get_order_date() != '0000-00-00'){
                     </div>
                   </div>
                 </div>
-              </form>
             </div>
             <div class="card-footer footer_item">
-              <a class="btn btn-primary" id="go_back" href="#"><i class="fa fa-reply"></i></a>
-              <a href="#" target="_blank" class="btn btn-primary"><i class="fas fa-file"></i></a>
+              <a class="btn btn-primary" id="go_back" href="<?php echo EDIT_QUOTE . $purchase_order-> get_id_rfq(); ?>"><i class="fa fa-reply"></i></a>
+              <a href="<?php echo PURCHASE_ORDER_PDF . $purchase_order-> get_id(); ?>" target="_blank" class="btn btn-primary"><i class="fas fa-file"></i></a>
             </div>
           </div>
         </div>

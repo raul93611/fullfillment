@@ -138,6 +138,9 @@ if($parts_route[0] == 'fullfillment'){
       case 'save_edit_shipment_cost':
         $chosen_route = 'scripts/save_edit_shipment_cost.php';
         break;
+      case 'save_purchase_order':
+        $chosen_route = 'scripts/save_purchase_order.php';
+        break;
       default:
         break;
     }
@@ -240,6 +243,14 @@ if($parts_route[0] == 'fullfillment'){
       case 'load_shipment_cost':
         $id_purchase_order = $parts_route[2];
         $chosen_route = 'scripts/load_shipment_cost.php';
+        break;
+      case 'purchase_order_pdf':
+        $id_purchase_order = $parts_route[2];
+        $chosen_route = 'scripts/purchase_order_pdf.php';
+        break;
+      case 'load_all_purchase_orders':
+        $id_rfq = $parts_route[2];
+        $chosen_route = 'scripts/load_all_purchase_orders.php';
         break;
       default;
         break;

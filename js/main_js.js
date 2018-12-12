@@ -1,4 +1,23 @@
 $(document).ready(function(){
+  /***********************************OPEN ALL PURCHASE ORDERS MODAL******************************/
+  $('#purchase_orders_button').click(function(){
+    $('#purchase_orders_modal .modal-body').load('http://' + document.location.hostname + '/fullfillment/load_all_purchase_orders/' + $(this).attr('name'), function(){
+      $('#purchase_orders_modal').modal();
+    });
+  });
+  /************************************DATE IN PURCHASE ORDERS*******************************/
+  $('#purchase_order_form #date').daterangepicker({
+    singleDatePicker: true
+  });
+  $('#purchase_order_form #order_date').daterangepicker({
+    singleDatePicker: true
+  });
+  /*****************************SAVE PURCHASE ORDER****************************************/
+  $('#save_purchase_order').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_purchase_order', $('#purchase_order_form').serialize(), function(res){
+      console.log(res);
+    });
+  });
   /****************************EDIT SHIPMENT COST PURCHASE ORDER***********************/
   $('#purchase_order_items').on('click', '#edit_shipment_cost', function(){
     $('#edit_shipment_cost_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_shipment_cost/' + $('#id_purchase_order', this).val(), function(){

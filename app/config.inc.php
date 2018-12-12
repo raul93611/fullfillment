@@ -75,6 +75,7 @@ define('SAVE_PAYMENT_TERMS_ITEM', SERVER . 'save_payment_terms_item');
 /*******************************************************************************/
 define('NEW_PURCHASE_ORDER', SERVER . 'new_purchase_order/');
 define('PURCHASE_ORDER', PROFILE . 'purchase_order/');
+define('PURCHASE_ORDER_PDF', SERVER . 'purchase_order_pdf/');
 /*******************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');

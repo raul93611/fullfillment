@@ -132,7 +132,7 @@ class PurchaseOrderItemRepository{
             <th>Part #</th>
             <th class="narrow">Quantity</th>
             <th>Description</th>
-            <th>Unit price</th>
+            <th class="amount">Unit price</th>
             <th class="amount">Amount</th>
           </tr>
         </thead>
