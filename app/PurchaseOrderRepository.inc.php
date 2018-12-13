@@ -28,6 +28,19 @@ class PurchaseOrderRepository{
     return $id;
   }
 
+  public static function remove_purchase_order($connection, $id_purchase_order){
+    if(isset($connection)){
+      try{
+        $sql = 'DELETE FROM purchase_orders WHERE id = :id_purchase_order';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_purchase_order', $id_purchase_order, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
+
   public static function get_all_purchase_orders_by_id_rfq($connection, $id_rfq){
     $purchase_orders = [];
     if(isset($connection)){

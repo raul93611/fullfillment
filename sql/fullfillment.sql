@@ -76,6 +76,49 @@ CREATE TABLE rfq_fullfillment_part(
     ON DELETE RESTRICT
 );
 
+CREATE TABLE work_orders(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_rfq INT NOT NULL,
+  company VARCHAR(255) NOT NULL,
+  address TEXT CHARACTER SET utf8 NOT NULL,
+  phone VARCHAR(255) NOT NULL,
+  client TEXT CHARACTER SET utf8 NOT NULL,
+  date DATE NOT NULL,
+  po VARCHAR(255) NOT NULL,
+  bpa VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_rfq)
+    REFERENCES rfq(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE work_order_items(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_work_order INT NOT NULL,
+  equipment TEXT CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_work_order)
+    REFERENCES work_orders(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE work_order_item_details(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_work_order_item INT NOT NULL,
+  detail_name VARCHAR(255) NOT NULL,
+  detail VARCHAR(255) NOT NULL,
+  keycode VARCHAR(255) NOT NULL,
+  notes VARCHAR(255) NOT NULL,
+  technitian VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_work_order_item)
+    REFERENCES work_order_items(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
 CREATE TABLE purchase_orders(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_rfq INT NOT NULL,

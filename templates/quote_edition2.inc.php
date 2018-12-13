@@ -108,6 +108,7 @@
     </button>
     <div class="dropdown-menu">
       <a href="<?php echo NEW_PURCHASE_ORDER . $quote-> obtener_id(); ?>" class="dropdown-item">New P.O.</a>
+      <a href="<?php echo NEW_WORK_ORDER . $quote-> obtener_id(); ?>" class="dropdown-item">New work order</a>
     </div>
   </div>
 </div>

@@ -1,11 +1,95 @@
 $(document).ready(function(){
-  /***********************************OPEN ALL PURCHASE ORDERS MODAL******************************/
-  $('#purchase_orders_button').click(function(){
-    $('#purchase_orders_modal .modal-body').load('http://' + document.location.hostname + '/fullfillment/load_all_purchase_orders/' + $(this).attr('name'), function(){
-      $('#purchase_orders_modal').modal();
+  /***********************************OPEN ALL WORK ORDERS MODAL******************************/
+  $('#work_orders_button').click(function(){
+    console.log('asdsa');
+    $('#orders_modal').load('http://' + document.location.hostname + '/fullfillment/load_all_work_orders/' + $(this).attr('name'), function(){
+      $('#orders_modal').modal();
     });
   });
-  /************************************DATE IN PURCHASE ORDERS*******************************/
+  /*************************REMOVE WORK ORDER ITEM*****************************************/
+  $('#work_order_items').on('click', '.delete_work_order_item_button', function(){
+    console.log($(this).attr('name'));
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_work_order_item/',
+      data: {
+        id_work_order_item: $(this).attr('name')
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#work_order_items').load('http://' + document.location.hostname + '/fullfillment/load_work_order_items/' + res.id_work_order);
+      }
+    });
+  });
+  /*********************************REMOVE WORK ORDER DETAIL*************************/
+  $('#work_order_items').on('click', '.delete_work_order_item_detail_button', function(){
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_work_order_item_detail/',
+      data: {
+        id_work_order_item_detail: $(this).attr('name')
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#work_order_items').load('http://' + document.location.hostname + '/fullfillment/load_work_order_items/' + res.id_work_order);
+      }
+    });
+  });
+  /********************************SAVE EDIT WORK ORDER ITEM****************************************/
+  $('#work_order_items').on('click', '.edit_work_order_item_button', function(){
+    $('#edit_work_order_item_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_work_order_item/' + $(this).attr('name'), function(){
+      $('#edit_work_order_item_modal').modal();
+    });
+  });
+
+  $('#save_edit_work_order_item').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_work_order_item', $('#edit_work_order_item_form').serialize(), function(res){
+      console.log(res);
+      $('#edit_work_order_item_modal').modal('hide');
+      $('#work_order_items').load('http://' + document.location.hostname + '/fullfillment/load_work_order_items/' + res.id_work_order);
+    });
+  });
+  /*************************************SAVE NEW WORK ORDER ITEM DETAIL ****************************/
+  $('#work_order_items').on('click', '.new_work_order_item_detail_button', function(){
+    $('#id_work_order_item').val($(this).attr('name'));
+    $('#new_work_order_item_detail_modal').modal();
+  });
+
+  $('#save_new_work_order_item_detail').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_work_order_item_detail', $('#new_work_order_item_detail_form').serialize(), function(res){
+      $('#new_work_order_item_detail_form')[0].reset();
+      $('#new_work_order_item_detail_modal').modal('hide');
+      $('#work_order_items').load('http://' + document.location.hostname + '/fullfillment/load_work_order_items/' + res.id_work_order);
+    });
+  });
+  /***********************************SAVE NEW WORK ORDER ITEM*************************************/
+  $('#new_work_order_item_button').click(function(){
+    $('#new_work_order_item_modal').modal();
+  });
+  $('#save_new_work_order_item').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_work_order_item', $('#new_work_order_item_form').serialize(), function(res){
+      $('#new_work_order_item_form')[0].reset();
+      $('#new_work_order_item_modal').modal('hide');
+      $('#work_order_items').load('http://' + document.location.hostname + '/fullfillment/load_work_order_items/' + res.id_work_order);
+    });
+  });
+  /*********************************SAVE WORK ORDER***********************************************/
+  $('#save_work_order').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_work_order', $('#work_order_form').serialize(), function(res){
+      console.log(res);
+    });
+  });
+  /***********************************OPEN ALL PURCHASE ORDERS MODAL******************************/
+  $('#purchase_orders_button').click(function(){
+    $('#orders_modal').load('http://' + document.location.hostname + '/fullfillment/load_all_purchase_orders/' + $(this).attr('name'), function(){
+      $('#orders_modal').modal();
+    });
+  });
+  /************************************DATE IN PURCHASE WORK ORDERS*******************************/
+  $('#work_order_form #date').daterangepicker({
+    singleDatePicker: true
+  });
+
   $('#purchase_order_form #date').daterangepicker({
     singleDatePicker: true
   });

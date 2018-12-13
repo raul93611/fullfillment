@@ -76,6 +76,12 @@ define('SAVE_PAYMENT_TERMS_ITEM', SERVER . 'save_payment_terms_item');
 define('NEW_PURCHASE_ORDER', SERVER . 'new_purchase_order/');
 define('PURCHASE_ORDER', PROFILE . 'purchase_order/');
 define('PURCHASE_ORDER_PDF', SERVER . 'purchase_order_pdf/');
+define('DELETE_PURCHASE_ORDER', SERVER . 'delete_purchase_order/');
+/*******************************************************************************/
+define('NEW_WORK_ORDER', SERVER . 'new_work_order/');
+define('WORK_ORDER', PROFILE . 'work_order/');
+define('DELETE_WORK_ORDER', SERVER . 'delete_work_order/');
+define('WORK_ORDER_PDF', SERVER . 'work_order_pdf/');
 /*******************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');

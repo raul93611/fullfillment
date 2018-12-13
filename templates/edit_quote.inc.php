@@ -49,25 +49,8 @@ ConnectionFullFillment::close_connection();
   </section>
 </div>
 <!--*************************************************PURCHASE ORDERS MODAL*************************************************************-->
-<div class="modal fade" id="purchase_orders_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Purchase orders</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="list-group">
-          
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
-      </div>
-    </div>
-  </div>
+<div class="modal fade" id="orders_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
 </div>
 <!--*************************************************MODAL COMMENT*************************************************************-->
 <div class="modal fade" id="nuevo_comment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

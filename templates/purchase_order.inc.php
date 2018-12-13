@@ -20,6 +20,9 @@ if($purchase_order-> get_order_date() != '0000-00-00'){
         <div class="col-sm-2">
           <h1>Purchase order</h1>
         </div>
+        <div class="col-sm-10">
+          <a href="<?php echo DELETE_PURCHASE_ORDER . $purchase_order-> get_id(); ?>" class="btn btn-danger float-right"><i class="fas fa-trash"></i></a>
+        </div>
       </div>
     </div>
   </section>
@@ -175,7 +178,7 @@ if($purchase_order-> get_order_date() != '0000-00-00'){
     </div>
   </div>
 </div>
-<!--*************************************************MODAL NEW PURCHASE ORDER ITEM*************************************************************-->
+<!--*************************************************MODAL EDIT PURCHASE ORDER ITEM*************************************************************-->
 <div class="modal fade" id="edit_purchase_order_item_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">

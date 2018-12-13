@@ -68,6 +68,9 @@ switch ($current_manager) {
   case 'purchase_order':
     include_once 'templates/purchase_order.inc.php';
     break;
+  case 'work_order':
+    include_once 'templates/work_order.inc.php';
+    break;
 }
 include_once 'templates/end_document.inc.php';
 ?>

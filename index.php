@@ -52,6 +52,13 @@ include_once 'app/PurchaseOrderRepository.inc.php';
 include_once 'app/PurchaseOrderItem.inc.php';
 include_once 'app/PurchaseOrderItemRepository.inc.php';
 
+include_once 'app/WorkOrder.inc.php';
+include_once 'app/WorkOrderRepository.inc.php';
+include_once 'app/WorkOrderItem.inc.php';
+include_once 'app/WorkOrderItemRepository.inc.php';
+include_once 'app/WorkOrderItemDetail.inc.php';
+include_once 'app/WorkOrderItemDetailRepository.inc.php';
+
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $route = $url_components['path'];
 
@@ -140,6 +147,24 @@ if($parts_route[0] == 'fullfillment'){
         break;
       case 'save_purchase_order':
         $chosen_route = 'scripts/save_purchase_order.php';
+        break;
+      case 'save_work_order':
+        $chosen_route = 'scripts/save_work_order.php';
+        break;
+      case 'save_new_work_order_item':
+        $chosen_route = 'scripts/save_new_work_order_item.php';
+        break;
+      case 'save_new_work_order_item_detail':
+        $chosen_route = 'scripts/save_new_work_order_item_detail.php';
+        break;
+      case 'save_edit_work_order_item':
+        $chosen_route = 'scripts/save_edit_work_order_item.php';
+        break;
+      case 'remove_work_order_item_detail':
+        $chosen_route = 'scripts/remove_work_order_item_detail.php';
+        break;
+      case 'remove_work_order_item':
+        $chosen_route = 'scripts/remove_work_order_item.php';
         break;
       default:
         break;
@@ -252,6 +277,34 @@ if($parts_route[0] == 'fullfillment'){
         $id_rfq = $parts_route[2];
         $chosen_route = 'scripts/load_all_purchase_orders.php';
         break;
+      case 'delete_purchase_order':
+        $id_purchase_order = $parts_route[2];
+        $chosen_route = 'scripts/delete_purchase_order.php';
+        break;
+      case 'new_work_order':
+        $id_rfq = $parts_route[2];
+        $chosen_route = 'scripts/new_work_order.php';
+        break;
+      case 'load_work_order_items':
+        $id_work_order = $parts_route[2];
+        $chosen_route = 'scripts/load_work_order_items.php';
+        break;
+      case 'load_work_order_item':
+        $id_work_order_item = $parts_route[2];
+        $chosen_route = 'scripts/load_work_order_item.php';
+        break;
+      case 'work_order_pdf':
+        $id_work_order = $parts_route[2];
+        $chosen_route = 'scripts/work_order_pdf.php';
+        break;
+      case 'load_all_work_orders':
+        $id_rfq = $parts_route[2];
+        $chosen_route = 'scripts/load_all_work_orders.php';
+        break;
+      case 'delete_work_order';
+        $id_work_order = $parts_route[2];
+        $chosen_route = 'scripts/delete_work_order.php';
+        break;
       default;
         break;
     }
@@ -307,6 +360,10 @@ if($parts_route[0] == 'fullfillment'){
           case 'purchase_order':
             $current_manager = 'purchase_order';
             $id_purchase_order = $parts_route[3];
+            break;
+          case 'work_order':
+            $current_manager = 'work_order';
+            $id_work_order = $parts_route[3];
             break;
           default:
             break;

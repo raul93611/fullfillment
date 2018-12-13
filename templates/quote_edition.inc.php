@@ -65,7 +65,7 @@
       <button type="button" id="purchase_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Purchase order</button>
     </div>
     <div class="col-md-3">
-      <button type="button" id="work_order_button" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Work order</button>
+      <button type="button" id="work_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Work order</button>
     </div>
     <div class="col-md-3">
       <button type="button" id="packing_slip_button" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Packing slip</button>
