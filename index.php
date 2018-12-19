@@ -1,4 +1,6 @@
 <?php
+session_save_path('temp');
+session_start();
 include_once 'app/config.inc.php';
 include_once 'app/ConnectionFullFillment.inc.php';
 include_once 'app/SessionControl.inc.php';
@@ -58,6 +60,13 @@ include_once 'app/WorkOrderItem.inc.php';
 include_once 'app/WorkOrderItemRepository.inc.php';
 include_once 'app/WorkOrderItemDetail.inc.php';
 include_once 'app/WorkOrderItemDetailRepository.inc.php';
+
+include_once 'app/PackingSlip.inc.php';
+include_once 'app/PackingSlipItem.inc.php';
+include_once 'app/PackingSlipSubitem.inc.php';
+include_once 'app/PackingSlipRepository.inc.php';
+include_once 'app/PackingSlipItemRepository.inc.php';
+include_once 'app/PackingSlipSubitemRepository.inc.php';
 
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $route = $url_components['path'];

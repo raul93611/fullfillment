@@ -2,14 +2,14 @@
 define('SERVERNAME_FULLFILLMENT', 'localhost');
 define('BD_NAME_FULLFILLMENT', 'fullfillment');
 define('USERNAME_FULLFILLMENT', 'root');
-define('PASSWORD_FULLFILLMENT', 'raul93611');
+define('PASSWORD_FULLFILLMENT', '');
 
 define('NOMBRE_SERVIDOR', 'localhost');
 define('NOMBRE_USUARIO', 'root');
-define('PASSWORD', 'raul93611');
+define('PASSWORD', '');
 define('NOMBRE_BD', 'elogic');
 
-define('SERVER', 'http://192.168.1.80/fullfillment/');
+define('SERVER', 'http://localhost/fullfillment/');
 define('PROFILE', SERVER . 'profile/');
 define('LOG_OUT', SERVER . 'log_out');
 /***************************************************************************/
