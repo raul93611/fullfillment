@@ -11,6 +11,7 @@ CREATE TABLE users(
   level TINYINT NOT NULL,
   email VARCHAR(100) NOT NULL,
   status TINYINT NOT NULL,
+  hash_recover_password VARCHAR(255) NOT NULL,
   PRIMARY KEY(id)
 );
 
@@ -285,6 +286,55 @@ CREATE TABLE provider_subitems(
   provider VARCHAR(255) NOT NULL,
   price  DECIMAL(10,2) NOT NULL,
   PRIMARY KEY(id),
+  FOREIGN KEY(id_subitem)
+    REFERENCES subitems(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE packing_slips(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_rfq INT NOT NULL,
+  order_date DATE NOT NULL,
+  po VARCHAR(255) NOT NULL,
+  customer_contact TEXT CHARACTER SET utf8 NOT NULL,
+  ship_to TEXT CHARACTER SET utf8 NOT NULL,
+  message TEXT CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_rfq)
+    REFERENCES rfq(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE packing_slip_items(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_packing_slip INT NOT NULL,
+  id_item INT NOT NULL,
+  unit_type VARCHAR(255) NOT NULL,
+  back_order_quantity INT NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_packing_slip)
+    REFERENCES packing_slips(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
+  FOREIGN KEY(id_item)
+    REFERENCES item(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE packing_slip_subitems(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_packing_slip_item INT NOT NULL,
+  id_subitem INT NOT NULL,
+  unit_type VARCHAR(255) NOT NULL,
+  back_order_quantity INT NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_packing_slip_item)
+    REFERENCES packing_slip_items(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT,
   FOREIGN KEY(id_subitem)
     REFERENCES subitems(id)
     ON UPDATE CASCADE
