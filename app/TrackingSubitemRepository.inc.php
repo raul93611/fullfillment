@@ -69,5 +69,24 @@ class TrackingSubitemRepository{
       }
     }
   }
+
+  public static function get_sum_by_subitem($connection, $id_subitem){
+    $sum_tracking_subitem = 0;
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT SUM(quantity) sum_tracking FROM trackings_subitems WHERE id_subitem = :id_subitem';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_subitem', $id_subitem, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetch(PDO::FETCH_ASSOC);
+        if(!empty($result)){
+          $sum_tracking_subitem = $result['sum_tracking'];
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $sum_tracking_subitem;
+  }
 }
 ?>

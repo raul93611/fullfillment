@@ -69,5 +69,24 @@ class TrackingRepository{
       }
     }
   }
+
+  public static function get_sum_by_item($connection, $id_item){
+    $sum_tracking = 0;
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT SUM(quantity) as sum_tracking FROM trackings WHERE id_item = :id_item';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetch(PDO::FETCH_ASSOC);
+        if(!empty($result)){
+          $sum_tracking = $result['sum_tracking'];
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $sum_tracking;
+  }
 }
 ?>

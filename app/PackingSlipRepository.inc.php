@@ -60,6 +60,25 @@ class PackingSlipRepository{
     return $packing_slip;
   }
 
+  public static function get_packing_slip_by_id($connection, $id_packing_slip){
+    $packing_slip = null;
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT * FROM packing_slips WHERE id = :id_packing_slip';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_packing_slip', $id_packing_slip, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetch(PDO::FETCH_ASSOC);
+        if(!empty($result)){
+          $packing_slip = new PackingSlip($result['id'], $result['id_rfq'], $result['order_date'], $result['po'], $result['customer_contact'], $result['ship_to'], $result['message']);
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $packing_slip;
+  }
+
   public static function update_packing_slip($connection, $order_date, $po, $customer_contact, $ship_to, $message, $id_packing_slip){
     if(isset($connection)){
       try{

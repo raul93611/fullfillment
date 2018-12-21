@@ -347,6 +347,10 @@ if($parts_route[0] == 'fullfillment'){
         $id_subitem = $parts_route[2];
         $chosen_route = 'scripts/load_packing_slip_subitem.php';
         break;
+      case 'packing_slip_pdf':
+        $id_packing_slip = $parts_route[2];
+        $chosen_route = 'scripts/packing_slip_pdf.php';
+        break;
       default;
         break;
     }

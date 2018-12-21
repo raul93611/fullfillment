@@ -207,5 +207,26 @@ class PackingSlipItemRepository{
       }
     }
   }
+
+  public static function get_packing_slip_items_by_id_packing_slip($connection, $id_packing_slip){
+    $packing_slip_items = [];
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT * FROM packing_slip_items WHERE id_packing_slip = :id_packing_slip ORDER BY id_item';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_packing_slip', $id_packing_slip, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+        if(count($result)){
+          foreach ($result as $key => $row) {
+            $packing_slip_items[] = new PackingSlipItem($row['id'], $row['id_packing_slip'], $row['id_item'], $row['unit_type'], $row['back_order_quantity']);
+          }
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $packing_slip_items;
+  }
 }
 ?>
