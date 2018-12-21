@@ -175,6 +175,27 @@ if($parts_route[0] == 'fullfillment'){
       case 'remove_work_order_item':
         $chosen_route = 'scripts/remove_work_order_item.php';
         break;
+      case 'save_packing_slip':
+        $chosen_route = 'scripts/save_packing_slip.php';
+        break;
+      case 'save_new_packing_slip_item':
+        $chosen_route = 'scripts/save_new_packing_slip_item.php';
+        break;
+      case 'save_new_packing_slip_subitem':
+        $chosen_route = 'scripts/save_new_packing_slip_subitem.php';
+        break;
+      case 'save_edit_packing_slip_item':
+        $chosen_route = 'scripts/save_edit_packing_slip_item.php';
+        break;
+      case 'save_edit_packing_slip_subitem':
+        $chosen_route = 'scripts/save_edit_packing_slip_subitem.php';
+        break;
+      case 'remove_packing_slip_item':
+        $chosen_route = 'scripts/remove_packing_slip_item.php';
+        break;
+      case 'remove_packing_slip_subitem':
+        $chosen_route = 'scripts/remove_packing_slip_subitem.php';
+        break;
       default:
         break;
     }
@@ -310,9 +331,21 @@ if($parts_route[0] == 'fullfillment'){
         $id_rfq = $parts_route[2];
         $chosen_route = 'scripts/load_all_work_orders.php';
         break;
-      case 'delete_work_order';
+      case 'delete_work_order':
         $id_work_order = $parts_route[2];
         $chosen_route = 'scripts/delete_work_order.php';
+        break;
+      case 'load_packing_slip_items':
+        $id_rfq = $parts_route[2];
+        $chosen_route = 'scripts/load_packing_slip_items.php';
+        break;
+      case 'load_packing_slip_item':
+        $id_item = $parts_route[2];
+        $chosen_route = 'scripts/load_packing_slip_item.php';
+        break;
+      case 'load_packing_slip_subitem':
+        $id_subitem = $parts_route[2];
+        $chosen_route = 'scripts/load_packing_slip_subitem.php';
         break;
       default;
         break;
@@ -364,6 +397,10 @@ if($parts_route[0] == 'fullfillment'){
             break;
           case 'tracking':
             $current_manager = 'tracking';
+            $id_rfq = $parts_route[3];
+            break;
+          case 'packing_slip':
+            $current_manager = 'packing_slip';
             $id_rfq = $parts_route[3];
             break;
           case 'purchase_order':

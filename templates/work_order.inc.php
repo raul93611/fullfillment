@@ -101,7 +101,7 @@ if($work_order-> get_date() != '0000-00-00'){
     </div>
   </section>
 </div>
-<!--*************************************************MODAL NEW PURCHASE ORDER ITEM*************************************************************-->
+<!--*************************************************MODAL EDIT WORK ORDER ITEM*************************************************************-->
 <div class="modal fade" id="edit_work_order_item_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -113,7 +113,7 @@ if($work_order-> get_date() != '0000-00-00'){
       </div>
       <div class="modal-body">
         <form id="edit_work_order_item_form" method="post" action="">
-          
+
         </form>
       </div>
       <div class="modal-footer">
@@ -123,7 +123,7 @@ if($work_order-> get_date() != '0000-00-00'){
     </div>
   </div>
 </div>
-<!--*************************************************MODAL NEW PURCHASE ORDER ITEM DETAIL*************************************************************-->
+<!--*************************************************MODAL NEW WORK ORDER ITEM DETAIL*************************************************************-->
 <div class="modal fade" id="new_work_order_item_detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
@@ -172,7 +172,7 @@ if($work_order-> get_date() != '0000-00-00'){
     </div>
   </div>
 </div>
-<!--*************************************************MODAL NEW PURCHASE ORDER ITEM*************************************************************-->
+<!--*************************************************MODAL NEW WORK ORDER ITEM*************************************************************-->
 <div class="modal fade" id="new_work_order_item_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">

@@ -1,4 +1,90 @@
 $(document).ready(function(){
+  /*************************REMOVE PACKING SLIP SUBITEM*****************************************/
+  $('#packing_slip_items').on('click', '.remove_packing_slip_subitem', function(){
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_packing_slip_subitem/',
+      data: {
+        id_subitem: $(this).attr('name')
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#packing_slip_items').load('http://' + document.location.hostname + '/fullfillment/load_packing_slip_items/' + res.id_rfq);
+      }
+    });
+  });
+  /*************************REMOVE PACKING SLIP ITEM*****************************************/
+  $('#packing_slip_items').on('click', '.remove_packing_slip_item', function(){
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_packing_slip_item/',
+      data: {
+        id_item: $(this).attr('name')
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#packing_slip_items').load('http://' + document.location.hostname + '/fullfillment/load_packing_slip_items/' + res.id_rfq);
+      }
+    });
+  });
+  /*********************************EDIT PACKING SLIP ITEM****************************************/
+  $('#packing_slip_items').on('click', '.edit_packing_slip_subitem', function(){
+    $('#edit_packing_slip_subitem_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_packing_slip_subitem/' + $(this).attr('name'), function(){
+      $('#edit_packing_slip_subitem_modal').modal();
+    });
+  });
+
+  $('#save_edit_packing_slip_subitem').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_packing_slip_subitem', $('#edit_packing_slip_subitem_form').serialize(), function(res){
+      $('#edit_packing_slip_subitem_modal').modal('hide');
+      $('#packing_slip_items').load('http://' + document.location.hostname + '/fullfillment/load_packing_slip_items/' + res.id_rfq);
+    });
+  });
+  /*********************************EDIT PACKING SLIP ITEM****************************************/
+  $('#packing_slip_items').on('click', '.edit_packing_slip_item', function(){
+    $('#edit_packing_slip_item_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_packing_slip_item/' + $(this).attr('name'), function(){
+      $('#edit_packing_slip_item_modal').modal();
+    });
+  });
+
+  $('#save_edit_packing_slip_item').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_packing_slip_item', $('#edit_packing_slip_item_form').serialize(), function(res){
+      $('#edit_packing_slip_item_modal').modal('hide');
+      $('#packing_slip_items').load('http://' + document.location.hostname + '/fullfillment/load_packing_slip_items/' + res.id_rfq);
+    });
+  });
+  /*********************************NEW PACKING SLIP SUBITEMS**************************************/
+  $('#packing_slip_items').on('click', '.new_packing_slip_subitem', function(){
+    $('#new_packing_slip_subitem_form input[name="id_subitem"]').val($(this).attr('name'));
+    $('#new_packing_slip_subitem_modal').modal();
+  });
+
+  $('#save_new_packing_slip_subitem').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_packing_slip_subitem', $('#new_packing_slip_subitem_form').serialize(), function(res){
+      $('#new_packing_slip_subitem_form')[0].reset();
+      $('#new_packing_slip_subitem_modal').modal('hide');
+      $('#packing_slip_items').load('http://' + document.location.hostname + '/fullfillment/load_packing_slip_items/' + res.id_rfq);
+    });
+  });
+  /**********************************NEW PACKING SLIP ITEM*************************************/
+  $('#packing_slip_items').on('click', '.new_packing_slip_item', function(){
+    $('#new_packing_slip_item_form input[name="id_item"]').val($(this).attr('name'));
+    $('#new_packing_slip_item_modal').modal();
+  });
+
+  $('#save_new_packing_slip_item').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_packing_slip_item', $('#new_packing_slip_item_form').serialize(), function(res){
+      $('#new_packing_slip_item_form')[0].reset();
+      $('#new_packing_slip_item_modal').modal('hide');
+      $('#packing_slip_items').load('http://' + document.location.hostname + '/fullfillment/load_packing_slip_items/' + res.id_rfq);
+    });
+  });
+  /**********************************SAVE PACKING SLIP****************************************/
+  $('#save_packing_slip').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_packing_slip', $('#packing_slip_form').serialize(), function(res){
+      console.log(res);
+    });
+  });
   /***********************************OPEN ALL WORK ORDERS MODAL******************************/
   $('#work_orders_button').click(function(){
     console.log('asdsa');
@@ -85,7 +171,11 @@ $(document).ready(function(){
       $('#orders_modal').modal();
     });
   });
-  /************************************DATE IN PURCHASE WORK ORDERS*******************************/
+  /************************************DATE IN PURCHASE WORK ORDERS AND PACKING SLIP*******************************/
+  $('#packing_slip_form #order_date').daterangepicker({
+    singleDatePicker: true
+  });
+
   $('#work_order_form #date').daterangepicker({
     singleDatePicker: true
   });

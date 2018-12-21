@@ -83,6 +83,9 @@ define('WORK_ORDER', PROFILE . 'work_order/');
 define('DELETE_WORK_ORDER', SERVER . 'delete_work_order/');
 define('WORK_ORDER_PDF', SERVER . 'work_order_pdf/');
 /*******************************************************************************/
+define('PACKING_SLIP', PROFILE . 'packing_slip/');
+define('PACKING_SLIP_PDF', SERVER . 'packing_slip_pdf/');
+/*******************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');

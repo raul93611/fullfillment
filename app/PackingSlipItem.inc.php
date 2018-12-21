@@ -15,23 +15,23 @@ class PackingSlipItem{
   }
 
   public function get_id(){
-    $this-> id;
+    return $this-> id;
   }
 
   public function get_id_packing_slip(){
-    $this-> id_packing_slip;
+    return $this-> id_packing_slip;
   }
 
   public function get_id_item(){
-    $this-> id_item;
+    return $this-> id_item;
   }
 
   public function get_unit_type(){
-    $this-> unit_type;
+    return $this-> unit_type;
   }
 
   public function get_back_order_quantity(){
-    $this-> back_order_quantity;
+    return $this-> back_order_quantity;
   }
 }
 ?>

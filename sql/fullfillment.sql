@@ -127,7 +127,7 @@ CREATE TABLE purchase_orders(
   purchase_from TEXT CHARACTER SET utf8 NOT NULL,
   drop_ship_to TEXT CHARACTER SET utf8 NOT NULL,
   comments TEXT CHARACTER SET utf8 NOT NULL,
-  purchase_order_number VARCHAR(255) NOT NULL,
+  po_number VARCHAR(255) NOT NULL,
   ref_quote VARCHAR(255) NOT NULL,
   ship_via VARCHAR(255) NOT NULL,
   order_date DATE NOT NULL,

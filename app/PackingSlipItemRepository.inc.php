@@ -1,7 +1,6 @@
 <?php
 class PackingSlipItemRepository{
   public static function insert_packing_slip_item($connection, $packing_slip_item){
-    echo $packing_slip_item-> get_id_packing_slip();
     if(isset($connection)){
       try{
         $sql = 'INSERT INTO packing_slip_items(id_packing_slip, id_item, unit_type, back_order_quantity) VALUES(:id_packing_slip, :id_item, :unit_type, :back_order_quantity)';
@@ -17,6 +16,196 @@ class PackingSlipItemRepository{
       }
     }
     return $id;
+  }
+
+  public static function packing_slip_item_exists($connection, $id_item){
+    $packing_slip_item_exists = true;
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT * FROM packing_slip_items WHERE id_item = :id_item';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+        if(count($result)){
+          $packing_slip_item_exists = true;
+        }else{
+          $packing_slip_item_exists = false;
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $packing_slip_item_exists;
+  }
+
+  public static function get_packing_slip_item_by_id_item($connection, $id_item){
+    $packing_slip_item = null;
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT * FROM packing_slip_items WHERE id_item = :id_item';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_item', $id_item, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetch(PDO::FETCH_ASSOC);
+        if(!empty($result)){
+          $packing_slip_item = new PackingSlipItem($result['id'], $result['id_packing_slip'], $result['id_item'], $result['unit_type'], $result['back_order_quantity']);
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $packing_slip_item;
+  }
+
+  public static function get_items_for_packing_slip_by_id_rfq($connection, $id_rfq){
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT item.id, item.description, item.quantity, SUM(trackings.quantity) as order_shipped, packing_slip_items.unit_type, packing_slip_items.back_order_quantity FROM item LEFT JOIN trackings ON item.id = trackings.id_item LEFT JOIN packing_slip_items ON item.id = packing_slip_items.id_item WHERE item.id_rfq = :id_rfq GROUP BY item.id';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $result;
+  }
+
+  public static function print_packing_slip_item($item, $i){
+    if(!isset($item)){
+      return ;
+    }
+    ?>
+    <tr <?php if(!(is_null($item['unit_type']) && is_null($item['back_order_quantity']))){echo 'style="background-color: #dfffd6;"';} ?>>
+      <td>
+        <div class="btn-group-vertical">
+        <?php
+        if(is_null($item['unit_type']) && is_null($item['back_order_quantity'])){
+          ?>
+          <button type="button" class="new_packing_slip_item btn btn-warning" name="<?php echo $item['id']; ?>">
+            <i class="fas fa-plus"></i>
+          </button>
+          <?php
+        }else{
+          ?>
+          <button type="button" class="edit_packing_slip_item btn btn-warning" name="<?php echo $item['id']; ?>">
+            <i class="fas fa-pen"></i>
+          </button>
+          <button type="button" class="remove_packing_slip_item btn btn-warning" name="<?php echo $item['id']; ?>">
+            <i class="fas fa-trash"></i>
+          </button>
+          <?php
+        }
+        ?>
+        </div>
+      </td>
+      <td><?php echo $i + 1; ?></td>
+      <td><?php echo nl2br($item['description']); ?></td>
+      <td><?php echo $item['quantity']; ?></td>
+      <td><?php echo $item['order_shipped']; ?></td>
+      <td><?php echo $item['unit_type']; ?></td>
+      <td><?php echo $item['back_order_quantity']; ?></td>
+    </tr>
+    <?php
+    ConnectionFullFillment::open_connection();
+    $subitems = PackingSlipSubitemRepository::get_subitems_for_packing_slip_by_id_item(ConnectionFullFillment::get_connection(), $item['id']);
+    ConnectionFullFillment::close_connection();
+    if(count($subitems)){
+      foreach ($subitems as $key => $subitem) {
+        ?>
+        <tr <?php if(!(is_null($subitem['unit_type']) && is_null($subitem['back_order_quantity']))){echo 'style="background-color: #dfffd6;"';} ?>>
+          <td>
+            <div class="btn-group-vertical">
+              <?php
+              if(is_null($subitem['unit_type']) && is_null($subitem['back_order_quantity'])){
+                ?>
+                <button type="button" class="new_packing_slip_subitem btn btn-warning" name="<?php echo $subitem['id']; ?>">
+                  <i class="fas fa-plus"></i>
+                </button>
+                <?php
+              }else{
+                ?>
+                <button type="button" class="edit_packing_slip_subitem btn btn-warning" name="<?php echo $subitem['id']; ?>">
+                  <i class="fas fa-pen"></i>
+                </button>
+                <button type="button" class="remove_packing_slip_subitem btn btn-warning" name="<?php echo $subitem['id']; ?>">
+                  <i class="fas fa-trash"></i>
+                </button>
+                <?php
+              }
+              ?>
+            </div>
+          </td>
+          <td></td>
+          <td><?php echo nl2br($subitem['description']); ?></td>
+          <td><?php echo $subitem['quantity']; ?></td>
+          <td><?php echo $subitem['order_shipped']; ?></td>
+          <td><?php echo $subitem['unit_type']; ?></td>
+          <td><?php echo $subitem['back_order_quantity']; ?></td>
+        </tr>
+        <?php
+      }
+    }
+  }
+
+  public static function print_packing_slip_items($id_rfq){
+    ConnectionFullFillment::open_connection();
+    $items = PackingSlipItemRepository::get_items_for_packing_slip_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
+    ConnectionFullFillment::close_connection();
+    if(count($items)){
+      ?>
+      <table id="packing_slip_table" class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>Opt.</th>
+            <th>#</th>
+            <th>Description</th>
+            <th>Qty(ordered)</th>
+            <th>Qty(shipped)</th>
+            <th>Unit type</th>
+            <th>Backorder quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          foreach ($items as $key => $item) {
+            self::print_packing_slip_item($item, $key);
+          }
+          ?>
+        </tbody>
+      </table>
+      <?php
+    }
+  }
+
+  public static function update_packing_slip_item($connection, $unit_type, $back_order_quantity, $id_packing_slip_item){
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE packing_slip_items SET unit_type = :unit_type, back_order_quantity = :back_order_quantity WHERE id = :id_packing_slip_item';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':unit_type', $unit_type, PDO::PARAM_STR);
+        $sentence-> bindParam(':back_order_quantity', $back_order_quantity, PDO::PARAM_STR);
+        $sentence-> bindParam(':id_packing_slip_item', $id_packing_slip_item, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
+
+  public static function remove_packing_slip_item($connection, $id_packing_slip_item){
+    if(isset($connection)){
+      try{
+        $sql = 'DELETE FROM packing_slip_items WHERE id = 1';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_packing_slip_item', $id_packing_slip_item, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
   }
 }
 ?>

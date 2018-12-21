@@ -2,7 +2,6 @@
 ConnectionFullFillment::open_connection();
 $quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
 $items = RepositorioItemFullFillment::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
-
 ConnectionFullFillment::close_connection();
 ?>
 <div class="content-wrapper">

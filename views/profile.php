@@ -63,6 +63,9 @@ if(isset($current_manager)){
     case 'tracking':
       include_once 'templates/tracking.inc.php';
       break;
+    case 'packing_slip':
+      include_once 'templates/packing_slip.inc.php';
+      break;
     case 'employee_docs_page':
       include_once 'templates/employee_docs_page.inc.php';
       break;
