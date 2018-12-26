@@ -40,9 +40,11 @@
             </div>
             <div id="content" class="card-body">
               <br>
-              <?php
-              UserFullFillmentRepository::print_users();
-              ?>
+              <div class="table-responsive">
+                <?php
+                UserFullFillmentRepository::print_users();
+                ?>
+              </div>
             </div>
           </div>
         </section>

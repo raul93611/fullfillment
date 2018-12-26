@@ -17,7 +17,7 @@
   }
   ?>
   <div class="row">
-    <div class="col">
+    <div class="col-md-6">
       <div class="form-group">
           <label for="completed_date">Completed date:</label>
           <input type="text" class="form-control form-control-sm" disabled id="completed_date" name="completed_date"
@@ -34,7 +34,7 @@
           ?>>
       </div>
     </div>
-    <div class="col">
+    <div class="col-md-6">
       <div class="form-group">
           <label for="expiration_date">Expiration date:</label>
           <input type="text" class="form-control form-control-sm" disabled id="expiration_date" name="expiration_date"
@@ -57,14 +57,14 @@
     </select>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-md-6">
         <div class="form-group">
           <label for="address">Address:</label>
           <textarea class="form-control form-control-sm" rows="5" placeholder="Enter address ..." id="address" name="address"><?php echo $quote->obtener_address(); ?></textarea>
           <input type="hidden" name="addres_original" value="<?php echo $quote->obtener_address(); ?>">
         </div>
     </div>
-    <div class="col">
+    <div class="col-md-6">
         <div class="form-group">
           <label for="ship_to">Ship to:</label>
           <textarea class="form-control form-control-sm" rows="5" placeholder="Enter ship to ..." id="ship_to" name="ship_to"><?php echo $quote->obtener_ship_to(); ?></textarea>
@@ -90,8 +90,18 @@
   }
   ?>
 </div>
-<div class="card-footer footer_item">
-  <a class="btn btn-primary" id="go_back" href="<?php echo RFQ_TEAM; ?>"><i class="fa fa-reply"></i></a>
+<div class="card-footer footer_item" id="footer_lg">
+  <a class="btn btn-primary" id="go_back" href="
+  <?php
+  if($rfq_fullfillment_part-> get_invoice()){
+    echo INVOICES;
+  }else if($rfq_fullfillment_part-> get_in_process()){
+    echo IN_PROCESS_QUOTES;
+  }else if($quote-> obtener_fullfillment()){
+    echo RECEIVED_QUOTES;
+  }
+  ?>
+  "><i class="fa fa-reply"></i></a>
   <button type="submit" class="btn btn-success" id="save_item" name="guardar_cambios_cotizacion"><i class="fa fa-check"></i> Save</button>
   <?php
   if($quote-> obtener_canal() != 'FedBid'){

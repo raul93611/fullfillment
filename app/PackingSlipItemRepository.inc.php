@@ -159,8 +159,8 @@ class PackingSlipItemRepository{
       <table id="packing_slip_table" class="table table-hover table-bordered">
         <thead>
           <tr>
-            <th>Opt.</th>
-            <th>#</th>
+            <th class="narrow">Opt.</th>
+            <th class="narrow">#</th>
             <th>Description</th>
             <th>Qty(ordered)</th>
             <th>Qty(shipped)</th>

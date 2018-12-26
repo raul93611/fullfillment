@@ -8,7 +8,7 @@ ConnectionFullFillment::close_connection();
 <input type="hidden" name="id_rfq" value="<?php echo $item->obtener_id_rfq(); ?>">
 <div class="card-body">
   <div class="row">
-    <div class="col">
+    <div class="col-md-6">
       <h2>Project specifications</h2>
       <div class="form-group">
         <label for="brand_project">Brand:</label>
@@ -26,7 +26,7 @@ ConnectionFullFillment::close_connection();
         <input type="hidden" name="description_project_original" value="<?php echo $item->obtener_description_project(); ?>">
       </div>
     </div>
-    <div class="col">
+    <div class="col-md-6">
       <h2>E-logic proposal</h2>
       <div class="form-group">
         <label for="brand">Brand:</label>

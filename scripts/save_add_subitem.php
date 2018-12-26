@@ -4,6 +4,8 @@ if(isset($_POST['guardar_subitem'])){
   ConnectionFullFillment::open_connection();
   $subitem = new Subitem('', $_POST['id_item'], 0, $_POST['brand'], $_POST['brand_project'], $_POST['part_number'], $_POST['part_number_project'], htmlspecialchars($_POST['description']), htmlspecialchars($_POST['description_project']), $_POST['quantity'], 0, 0, $_POST['comments'], $_POST['website'], '');
   $id_subitem = RepositorioSubitemFullFillment::insertar_subitem(ConnectionFullFillment::get_connection(), $subitem);
+  $extra_subitem = new ExtraSubitem('', $id_subitem, '');
+  ExtraSubitemRepository::insert_extra_subitem(ConnectionFullFillment::get_connection(), $extra_subitem);
   $item = RepositorioItemFullFillment::obtener_item_por_id(ConnectionFullFillment::get_connection(), $subitem-> obtener_id_item());
   $id_rfq = $item-> obtener_id_rfq();
   $description_comment = 'A new subitem was created for the item:

@@ -4,6 +4,8 @@ if (isset($_POST['guardar_item'])) {
   ConnectionFullFillment::open_connection();
   $item = new Item('', $_POST['id_rfq'], $_SESSION['id_user'], 0, $_POST['brand'], $_POST['brand_project'], $_POST['part_number'], $_POST['part_number_project'], htmlspecialchars($_POST['description']), htmlspecialchars($_POST['description_project']), $_POST['quantity'], 0, 0, $_POST['comments'], $_POST['website'], '');
   $id_item = RepositorioItemFullFillment::insertar_item(ConnectionFullFillment::get_connection(), $item);
+  $extra_item = new ExtraItem('', $id_item, '');
+  ExtraItemRepository::insert_extra_item(ConnectionFullFillment::get_connection(), $extra_item);
   $description_comment = 'A new item was created.<br><a href="' . EDIT_ITEM . $id_item . '">Review</a>';
   $comment = new CommentRfqFullFillment('', $_POST['id_rfq'], $_SESSION['username'], $description_comment, '');
   RepositorioRfqFullFillmentComment::insertar_comment(ConnectionFullFillment::get_connection(), $comment);

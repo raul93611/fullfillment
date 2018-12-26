@@ -1,25 +1,25 @@
 <input type="hidden" name="id_rfq" value="<?php echo $quote-> obtener_id(); ?>">
 <div class="card-body">
   <div class="row">
-    <div class="col">
+    <div class="col-md-3">
       <div class="form-group">
         <label>Code:</label>
         <input type="text" class="form-control form-control-sm" disabled value="<?php echo $quote-> obtener_email_code(); ?>">
       </div>
     </div>
-    <div class="col">
+    <div class="col-md-3">
       <div class="form-group">
         <label>Type of bid:</label>
         <input type="text" class="form-control form-control-sm" disabled value="<?php echo $quote-> obtener_type_of_bid(); ?>">
       </div>
     </div>
-    <div class="col">
+    <div class="col-md-3">
       <div class="form-group">
         <label>Issue date:</label>
         <input type="text" class="form-control form-control-sm" disabled value="<?php echo $quote-> obtener_issue_date(); ?>">
       </div>
     </div>
-    <div class="col">
+    <div class="col-md-3">
       <div class="form-group">
         <label>End date:</label>
         <input type="text" class="form-control form-control-sm" disabled value="<?php echo $quote-> obtener_end_date(); ?>">
@@ -27,19 +27,19 @@
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col-md-4">
       <div class="form-group">
         <label>Proposal:</label>
         <input type="text" class="form-control form-control-sm" disabled value="<?php echo $quote-> obtener_id(); ?>">
       </div>
     </div>
-    <div class="col">
+    <div class="col-md-4">
       <div class="form-group">
         <label>Channel:</label>
         <input type="text" class="form-control form-control-sm" id="channel" disabled value="<?php echo $quote-> obtener_canal(); ?>">
       </div>
     </div>
-    <div class="col">
+    <div class="col-md-4">
       <?php
         Conexion::abrir_conexion();
         $usuario = RepositorioUsuario::obtener_usuario_por_id(Conexion::obtener_conexion(), $quote-> obtener_usuario_designado());
@@ -52,7 +52,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 mb-1 mt-1">
       <a href="<?php echo TRACKING . $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"
         <?php
         if($quote-> obtener_canal() != 'FedBid'){
@@ -61,13 +61,13 @@
         ?>
         ><i class="fas fa-file"></i> Tracking</a>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-1 mt-1">
       <button type="button" id="purchase_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Purchase order</button>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-1 mt-1">
       <button type="button" id="work_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Work order</button>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 mb-2 mt-1">
       <a href="<?php echo PACKING_SLIP . $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Packing slip</a>
     </div>
   </div>
@@ -105,13 +105,13 @@
     ?>
     <br>
     <div class="row">
-      <div class="col">
+      <div class="col-md-6">
         <div class="form-group">
           <textarea class="form-control form-control-sm" rows="3" id="shipping" name="shipping" placeholder="Enter shipping ..."><?php echo $quote->obtener_shipping(); ?></textarea>
           <input type="hidden" name="shipping_original" value="<?php echo $quote->obtener_shipping(); ?>">
         </div>
       </div>
-      <div class="col">
+      <div class="col-md-6">
         <div class="form-group">
           <input type="number" step=".01" class="form-control form-control-sm" id="shipping_cost" name="shipping_cost" value="<?php echo $quote->obtener_shipping_cost(); ?>">
           <input type="hidden" name="shipping_cost_original" value="<?php echo $quote->obtener_shipping_cost(); ?>">

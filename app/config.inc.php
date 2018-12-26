@@ -9,7 +9,7 @@ define('NOMBRE_USUARIO', 'root');
 define('PASSWORD', '');
 define('NOMBRE_BD', 'elogic');
 
-define('SERVER', 'http://localhost/fullfillment/');
+define('SERVER', 'http://192.168.1.80/fullfillment/');
 define('PROFILE', SERVER . 'profile/');
 define('LOG_OUT', SERVER . 'log_out');
 /***************************************************************************/

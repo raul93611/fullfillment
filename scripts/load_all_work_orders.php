@@ -27,7 +27,7 @@
           }
         }else {
           ?>
-          <h3 class="text-danger"><i class="fas fa-times"></i> No work orders!</h3>
+          <h3 class="text-danger text-center"><i class="fas fa-times"></i> No work orders!</h3>
           <?php
         }
         ConnectionFullFillment::close_connection();
