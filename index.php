@@ -196,6 +196,16 @@ if($parts_route[0] == 'fullfillment'){
       case 'remove_packing_slip_subitem':
         $chosen_route = 'scripts/remove_packing_slip_subitem.php';
         break;
+      case 'disable_user':
+        $chosen_route = 'scripts/disable_user.php';
+        break;
+      case 'load_users':
+        $chosen_route = 'scripts/load_users.php';
+        break;
+      case 'enable_user':
+        $id_user = $parts_route[2];
+        $chosen_route = 'scripts/enable_user.php';
+        break;
       default:
         break;
     }
@@ -226,14 +236,6 @@ if($parts_route[0] == 'fullfillment'){
           default:
             break;
         }
-        break;
-      case 'disable_user':
-        $id_user = $parts_route[2];
-        $chosen_route = 'scripts/disable_user.php';
-        break;
-      case 'enable_user':
-        $id_user = $parts_route[2];
-        $chosen_route = 'scripts/enable_user.php';
         break;
       case 'delete_item':
         $id_item = $parts_route[2];

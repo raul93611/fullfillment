@@ -332,13 +332,17 @@ class UserFullFillmentRepository{
       <td>
         <?php
         if($user-> get_status()){
-          echo '<a href="' . DISABLE_USER . $user-> get_id() . '" class="btn btn-block btn-sm btn-danger"><i class="fa fa-ban"></i> Disable</a>';
+          ?>
+          <button type="button" class="disable_user btn btn-sm btn-danger" name="<?php echo $user-> get_id(); ?>"><i class="fa fa-ban"></i></button>
+          <?php
         }else{
-          echo '<a href="' . ENABLE_USER . $user-> get_id() . '" class="btn btn-block btn-sm btn-success"><i class="fa fa-check"></i> Enable</a>';
+          ?>
+          <button type="button" class="enable_user btn btn-sm btn-success" name="<?php echo $user-> get_id(); ?>"><i class="fa fa-check"></i></button>
+          <?php
         }
         ?>
         <br>
-        <a class="btn btn-sm btn-block btn-info" href="<?php echo EDIT_USER . $user-> get_id(); ?>"><i class="fa fa-edit"></i> Edit</a>
+        <a class="btn btn-sm btn-info mt-1" href="<?php echo EDIT_USER . $user-> get_id(); ?>"><i class="fa fa-edit"></i></a>
       </td>
     </tr>
     <?php
@@ -354,11 +358,11 @@ class UserFullFillmentRepository{
       <table id="users_table" class="table table-bordered">
         <thead>
           <tr>
-            <th>ID</th>
+            <th class="narrow">ID</th>
             <th>LEVEL</th>
             <th>FIRST NAMES</th>
             <th>LAST NAMES</th>
-            <th id="disable_user">OPTIONS</th>
+            <th class="narrow">OPT.</th>
           </tr>
         </thead>
         <tbody>

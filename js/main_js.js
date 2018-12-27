@@ -1,4 +1,34 @@
 $(document).ready(function(){
+  /**************************DISABLE USER*********************************************************/
+  $('#users').on('click', '.disable_user', function(){
+    var user_id = $(this).attr('name');
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/disable_user/',
+      data: {
+        id_user: user_id
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#users').load('http://' + document.location.hostname + '/fullfillment/load_users/');
+      }
+    });
+  });
+  /**************************ENABLE USER*********************************************************/
+  $('#users').on('click', '.enable_user', function(){
+    var user_id = $(this).attr('name');
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/enable_user/',
+      data: {
+        id_user: user_id
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#users').load('http://' + document.location.hostname + '/fullfillment/load_users/');
+      }
+    });
+  });
   /*************************REMOVE PACKING SLIP SUBITEM*****************************************/
   $('#packing_slip_items').on('click', '.remove_packing_slip_subitem', function(){
     $.ajax({

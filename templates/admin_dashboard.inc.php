@@ -40,7 +40,7 @@
             </div>
             <div id="content" class="card-body">
               <br>
-              <div class="table-responsive">
+              <div class="table-responsive" id="users">
                 <?php
                 UserFullFillmentRepository::print_users();
                 ?>
