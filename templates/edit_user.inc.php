@@ -15,7 +15,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <form role="form" method="post" action="<?php echo SAVE_EDIT_USER; ?>">
+          <form role="form" id="edit_user_form" method="post" action="">
             <?php
               include_once 'templates/form_edit_user.inc.php';
             ?>

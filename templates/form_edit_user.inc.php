@@ -34,6 +34,6 @@ if($level != 1){
     </div>
   </div>
   <div class="card-footer">
-    <button type="submit" class="btn btn-success" name="edit_user"><i class="fa fa-check"></i> Save</button>
+    <button type="button" class="btn btn-success" id="save_edit_user"><i class="fa fa-check"></i> Save</button>
   </div>
 </div>

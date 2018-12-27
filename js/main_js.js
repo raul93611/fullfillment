@@ -1,4 +1,10 @@
 $(document).ready(function(){
+  /***************************SAVE EDIT USER******************************************************/
+  $('#edit_user_form #save_edit_user').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_user/', $('#edit_user_form').serialize(), function(res){
+      console.log(res);
+    });
+  });
   /**************************DISABLE USER*********************************************************/
   $('#users').on('click', '.disable_user', function(){
     var user_id = $(this).attr('name');
