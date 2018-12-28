@@ -71,40 +71,121 @@ class RepositorioSubitemFullFillment{
     ConnectionFullFillment::open_connection();
     $providers_subitem = RepositorioProviderSubitemFullFillment::obtener_providers_subitem_por_id_subitem(ConnectionFullFillment::get_connection(), $subitem->obtener_id());
     ConnectionFullFillment::close_connection();
-    echo '<tr class="fila_subitem">';
-    echo '<td><a href="' . ADD_PROVIDER_SUBITEM . $subitem->obtener_id() . '" class="btn btn-warning btn-block subitem"><i class="fa fa-plus-circle"></i> Add Provider</a><br><a href="' . EDIT_SUBITEM . $subitem->obtener_id() . '" class="btn btn-warning btn-block subitem"><i class="fa fa-edit"></i> Edit subitem</a><br><a href="' . DELETE_SUBITEM . $subitem-> obtener_id() . '" class="delete_subitem_button btn btn-warning btn-block subitem"><i class="fa fa-trash"></i> Delete</a><br><a href="' . $subitem-> obtener_id() . '"  class="payment_terms_subitem btn btn-warning btn-block subitem"><i class="fas fa-edit"></i> Payment terms</a></td>';
-    echo '<td></td>';
+    ?>
+    <tr class="fila_subitem">
+      <td>
+        <a href="<?php echo ADD_PROVIDER_SUBITEM . $subitem->obtener_id(); ?>" class="btn btn-warning btn-block subitem">
+          <i class="fa fa-plus-circle"></i> Add Provider
+        </a>
+        <br>
+        <a href="<?php echo EDIT_SUBITEM . $subitem->obtener_id(); ?>" class="btn btn-warning btn-block subitem">
+          <i class="fa fa-edit"></i> Edit subitem
+        </a>
+        <br>
+        <a href="<?php echo DELETE_SUBITEM . $subitem-> obtener_id(); ?>" class="delete_subitem_button btn btn-warning btn-block subitem">
+          <i class="fa fa-trash"></i> Delete
+        </a>
+        <br>
+        <a href="<?php echo $subitem-> obtener_id(); ?>"  class="payment_terms_subitem btn btn-warning btn-block subitem">
+          <i class="fas fa-edit"></i> Payment terms
+        </a>
+      </td>
+      <td></td>
+    <?php
     if(strlen($subitem-> obtener_description_project()) >= 100){
-      echo '<td><b>Brand:</b> ' . $subitem->obtener_brand_project() . '<br><b>Part #:</b> ' . $subitem->obtener_part_number_project() . '<br><b>Description:</b> ' . nl2br(mb_substr($subitem->obtener_description_project(), 0, 100)) . ' ...</td>';
+      ?>
+      <td>
+        <b>Brand:</b> <?php echo $subitem->obtener_brand_project(); ?>
+        <br>
+        <b>Part #:</b> <?php echo $subitem->obtener_part_number_project(); ?>
+        <br>
+        <b>Description:</b> <?php echo nl2br(mb_substr($subitem->obtener_description_project(), 0, 100)); ?> ...
+      </td>
+      <?php
     }else{
-      echo '<td><b>Brand:</b> ' . $subitem->obtener_brand_project() . '<br><b>Part #:</b> ' . $subitem->obtener_part_number_project() . '<br><b>Description:</b> ' . nl2br($subitem->obtener_description_project()) . '</td>';
+      ?>
+      <td>
+        <b>Brand:</b> <?php echo $subitem->obtener_brand_project(); ?>
+        <br>
+        <b>Part #:</b> <?php echo $subitem->obtener_part_number_project(); ?>
+        <br>
+        <b>Description:</b> <?php echo nl2br($subitem->obtener_description_project()); ?>
+      </td>
+      <?php
     }
     if(strlen($subitem-> obtener_description()) >= 100){
-      echo '<td><b>Brand:</b> ' . $subitem->obtener_brand() . '<br><b>Part #:</b> ' . $subitem->obtener_part_number() . '<br><b>Description:</b> ' . nl2br(mb_substr($subitem->obtener_description(), 0, 100)) . ' ...</td>';
+      ?>
+      <td>
+        <b>Brand:</b> <?php echo $subitem->obtener_brand(); ?>
+        <br>
+        <b>Part #:</b> <?php echo $subitem->obtener_part_number(); ?>
+        <br>
+        <b>Description:</b> <?php echo nl2br(mb_substr($subitem->obtener_description(), 0, 100)); ?> ...
+      </td>
+      <?php
     }else{
-      echo '<td><b>Brand:</b> ' . $subitem->obtener_brand() . '<br><b>Part #:</b> ' . $subitem->obtener_part_number() . '<br><b>Description:</b> ' . nl2br($subitem->obtener_description()) . '</td>';
+      ?>
+      <td>
+        <b>Brand:</b> <?php echo $subitem->obtener_brand(); ?>
+        <br>
+        <b>Part #:</b> <?php echo $subitem->obtener_part_number(); ?>
+        <br>
+        <b>Description:</b> <?php echo nl2br($subitem->obtener_description()); ?>
+      </td>
+      <?php
     }
-    echo '<td class="estrechar"><a target="_blank" href="'. $subitem-> obtener_website() .'">'. $subitem-> obtener_website() .'</a></td>';
-    echo '<td>' . $subitem->obtener_quantity() . '</td>';
-    echo '<td><div class="row"><div class="col-6">';
-    for ($i = 0; $i < count($providers_subitem); $i++) {
-      $provider_subitem = $providers_subitem[$i];
-      if(strlen($provider_subitem-> obtener_provider()) >= 10){
-        echo '<a href="' . EDIT_PROVIDER_SUBITEM . $provider_subitem->obtener_id() . '"><b>' . mb_substr($provider_subitem->obtener_provider(), 0, 10) . '... :</b></a><br>';
-      }else{
-        echo '<a href="' . EDIT_PROVIDER_SUBITEM . $provider_subitem->obtener_id() . '"><b>' . $provider_subitem->obtener_provider() . ':</b></a><br>';
-      }
-    }
-    echo '</div><div class="col-6">';
-    for ($i = 0; $i < count($providers_subitem); $i++) {
-      $provider_subitem = $providers_subitem[$i];
-      echo '$ ' . $provider_subitem->obtener_price() . '<br>';
-    }
-    echo '</div></div></td>';
+    ?>
+      <td class="estrechar">
+        <a target="_blank" href="<?php echo $subitem-> obtener_website(); ?>"><?php echo $subitem-> obtener_website(); ?></a>
+      </td>
+      <td><?php echo $subitem->obtener_quantity(); ?></td>
+      <td>
+        <div class="row">
+          <div class="col-6">
+            <?php
+            for ($i = 0; $i < count($providers_subitem); $i++) {
+              $provider_subitem = $providers_subitem[$i];
+              if(strlen($provider_subitem-> obtener_provider()) >= 10){
+                ?>
+                <a href="<?php echo EDIT_PROVIDER_SUBITEM . $provider_subitem->obtener_id(); ?>">
+                  <b><?php echo mb_substr($provider_subitem->obtener_provider(), 0, 10); ?>... :</b>
+                </a>
+                <br>
+                <?php
+              }else{
+                ?>
+                <a href="<?php echo EDIT_PROVIDER_SUBITEM . $provider_subitem->obtener_id(); ?>">
+                  <b><?php echo $provider_subitem->obtener_provider(); ?>:</b>
+                </a>
+                <br>
+                <?php
+              }
+            }
+            ?>
+          </div>
+          <div class="col-6">
+            <?php
+            for ($i = 0; $i < count($providers_subitem); $i++) {
+              $provider_subitem = $providers_subitem[$i];
+              echo '$ ' . $provider_subitem->obtener_price() . '<br>';
+            }
+            ?>
+          </div>
+        </div>
+      </td>
+    <?php
     if($subitem-> obtener_additional() != 0){
-      echo '<td><input type="text" class="form-control form-control-sm" id="add_cost'.$j.'" size="10" value="'.$subitem-> obtener_additional().'"></td>';
+      ?>
+      <td>
+        <input type="text" class="form-control form-control-sm" id="add_cost<?php echo $j; ?>" size="10" value="<?php echo $subitem-> obtener_additional(); ?>">
+      </td>
+      <?php
     }else{
-      echo '<td><input type="text" class="form-control form-control-sm" id="add_cost'.$j.'" size="10" value="0"></td>';
+      ?>
+      <td>
+        <input type="text" class="form-control form-control-sm" id="add_cost<?php echo $j; ?>" size="10" value="0">
+      </td>
+      <?php
     }
     echo '<td>';
     for ($i = 0; $i < count($providers_subitem); $i++) {
