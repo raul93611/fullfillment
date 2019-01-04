@@ -616,8 +616,14 @@ $(document).ready(function(){
     }else{
       var rfq_fullfillment_part_fedbid = 0;
     }
-    var estimated_final_cost = parseFloat(total_vendor_cost) + parseFloat(rfq_fullfillment_part_fedbid);
-    estimated_final_cost = estimated_final_cost.toFixed(2);
+    if($('#edit_estimated_final_cost').prop('checked')){
+      $('#estimated_final_cost').removeAttr('readonly');
+      var estimated_final_cost = $('#estimated_final_cost').val();
+    }else{
+      $('#estimated_final_cost').attr('readonly', 'readonly');
+      var estimated_final_cost = parseFloat(total_vendor_cost) + parseFloat(rfq_fullfillment_part_fedbid);
+      estimated_final_cost = estimated_final_cost.toFixed(2);
+    }
     var estimated_profit_g = parseFloat(equipment_amount) - parseFloat(total_vendor_cost);
     estimated_profit_g = estimated_profit_g.toFixed(2);
     var percent_g = (parseFloat(estimated_profit_g)/parseFloat(equipment_amount))*100;

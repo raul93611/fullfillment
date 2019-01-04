@@ -70,6 +70,7 @@ CREATE TABLE rfq_fullfillment_part(
   in_process_date DATETIME NOT NULL,
   invoice TINYINT NOT NULL,
   invoice_date DATETIME NOT NULL,
+  edit_estimated_final_cost TINYINT NOT NULL, 
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)

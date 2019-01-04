@@ -172,6 +172,10 @@ ConnectionFullFillment::close_connection();
             <div class="col-md-6">
               <div class="form-group">
                 <label for="estimated_final_cost">Estimated final cost:</label>
+                <div class="custom-control custom-checkbox custom-control-inline ml-4">
+                  <input type="checkbox" class="custom-control-input" name="edit_estimated_final_cost" value="1" id="edit_estimated_final_cost" <?php echo $rfq_fullfillment_part-> get_edit_estimated_final_cost()? 'checked': ''; ?>>
+                  <label class="custom-control-label" for="edit_estimated_final_cost">Edit</label>
+                </div>
                 <input type="number" step=".01" class="form-control form-control-sm" readonly name="estimated_final_cost" id="estimated_final_cost" value="<?php echo $rfq_fullfillment_part-> get_estimated_final_cost(); ?>">
               </div>
             </div>
