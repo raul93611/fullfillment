@@ -7,7 +7,7 @@ class RfqFullFillmentPart{
   private $business_classification;
   private $description;
   private $po_date;
-  private $eta;
+  private $eta1;
   private $consolidate_others;
   private $total_vendor_cost;
   private $fedbid;
@@ -22,8 +22,11 @@ class RfqFullFillmentPart{
   private $invoice;
   private $invoice_date;
   private $edit_estimated_final_cost;
+  private $eta2;
+  private $eta3;
+  private $comment_consolidate_others;
 
-  public function __construct($id, $id_rfq, $name, $po_number, $business_classification, $description, $po_date, $eta, $consolidate_others, $total_vendor_cost, $fedbid, $estimated_final_cost, $estimated_profit_g, $percent_g, $estimated_profit_s, $percent_s, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date, $edit_estimated_final_cost){
+  public function __construct($id, $id_rfq, $name, $po_number, $business_classification, $description, $po_date, $eta1, $consolidate_others, $total_vendor_cost, $fedbid, $estimated_final_cost, $estimated_profit_g, $percent_g, $estimated_profit_s, $percent_s, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date, $edit_estimated_final_cost, $eta2, $eta3, $comment_consolidate_others){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
     $this-> name = $name;
@@ -31,7 +34,7 @@ class RfqFullFillmentPart{
     $this-> business_classification = $business_classification;
     $this-> description = $description;
     $this-> po_date = $po_date;
-    $this-> eta = $eta;
+    $this-> eta1 = $eta1;
     $this-> consolidate_others = $consolidate_others;
     $this-> total_vendor_cost = $total_vendor_cost;
     $this-> fedbid = $fedbid;
@@ -46,6 +49,9 @@ class RfqFullFillmentPart{
     $this-> invoice = $invoice;
     $this-> invoice_date = $invoice_date;
     $this-> edit_estimated_final_cost = $edit_estimated_final_cost;
+    $this-> eta2 = $eta2;
+    $this-> eta3 = $eta3;
+    $this-> comment_consolidate_others = $comment_consolidate_others;
   }
 
   public function get_id(){
@@ -76,8 +82,8 @@ class RfqFullFillmentPart{
     return $this-> po_date;
   }
 
-  public function get_eta(){
-    return $this-> eta;
+  public function get_eta1(){
+    return $this-> eta1;
   }
 
   public function get_consolidate_others(){
@@ -134,6 +140,18 @@ class RfqFullFillmentPart{
 
   public function get_edit_estimated_final_cost(){
     return $this-> edit_estimated_final_cost;
+  }
+
+  public function get_eta2(){
+    return $this-> eta2;
+  }
+
+  public function get_eta3(){
+    return $this-> eta3;
+  }
+
+  public function get_comment_consolidate_others(){
+    return $this-> comment_consolidate_others;
   }
 }
 ?>

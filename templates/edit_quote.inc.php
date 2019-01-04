@@ -3,7 +3,9 @@ ConnectionFullFillment::open_connection();
 $quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
 $rfq_fullfillment_part = RfqFullFillmentPartRepository::get_rfq_fullfillment_part_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
 $po_date = RepositorioRfqFullFillmentComment::mysql_date_to_english_format($rfq_fullfillment_part-> get_po_date());
-$eta = RepositorioRfqFullFillmentComment::mysql_date_to_english_format($rfq_fullfillment_part-> get_eta());
+$eta1 = RepositorioRfqFullFillmentComment::mysql_date_to_english_format($rfq_fullfillment_part-> get_eta1());
+$eta2 = RepositorioRfqFullFillmentComment::mysql_date_to_english_format($rfq_fullfillment_part-> get_eta2());
+$eta3 = RepositorioRfqFullFillmentComment::mysql_date_to_english_format($rfq_fullfillment_part-> get_eta3());
 ConnectionFullFillment::close_connection();
 ?>
 <div class="content-wrapper">
@@ -108,15 +110,11 @@ ConnectionFullFillment::close_connection();
       </div>
       <div class="modal-body">
         <form id="info_rfq_fullfillment_form" method="post" enctype="multipart/form-data" action="<?php echo SAVE_RFQ_FULLFILLMENT_INFO; ?>">
-          <div class="form-group">
-            <label for="rfq_fullfillment_part_name">Name:</label>
-            <input type="text" class="form-control form-control-sm" name="rfq_fullfillment_part_name" id="rfq_fullfillment_part_name" value="<?php echo $rfq_fullfillment_part-> get_name(); ?>">
-          </div>
           <div class="row">
             <div class="col-md-6">
               <div class="form-group">
-                <label for="po_number">P.O. number:</label>
-                <input type="text" class="form-control form-control-sm" name="po_number" id="po_number" value="<?php echo $rfq_fullfillment_part-> get_po_number(); ?>">
+                <label for="rfq_fullfillment_part_name">Name:</label>
+                <input type="text" class="form-control form-control-sm" name="rfq_fullfillment_part_name" id="rfq_fullfillment_part_name" value="<?php echo $rfq_fullfillment_part-> get_name(); ?>">
               </div>
               <div class="form-group">
                 <label for="po_date">P.O. date:</label>
@@ -124,6 +122,10 @@ ConnectionFullFillment::close_connection();
               </div>
             </div>
             <div class="col-md-6">
+              <div class="form-group">
+                <label for="po_number">P.O. number:</label>
+                <input type="text" class="form-control form-control-sm" name="po_number" id="po_number" value="<?php echo $rfq_fullfillment_part-> get_po_number(); ?>">
+              </div>
               <div class="form-group">
                 <label for="business_classification">Business classification:</label>
                 <select class="form-control form-control-sm" name="business_classification" id="business_classification">
@@ -134,9 +136,25 @@ ConnectionFullFillment::close_connection();
                   <option value="gsa" <?php if($rfq_fullfillment_part-> get_business_classification() == 'gsa'){echo 'selected';} ?>>GSA</option>
                 </select>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
               <div class="form-group">
-                <label for="eta">ETA:</label>
-              <input type="text" class="form-control form-control-sm" name="eta" id="eta" value="<?php if($eta != '00/00/0000'){echo $eta;} ?>">
+                <label for="eta">ETA1:</label>
+                <input type="text" class="eta form-control form-control-sm" name="eta1" value="<?php if($eta1 != '00/00/0000'){echo $eta1;} ?>">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="eta">ETA2:</label>
+                <input type="text" class="eta form-control form-control-sm" name="eta2" value="<?php if($eta2 != '00/00/0000'){echo $eta2;} ?>">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="eta">ETA3:</label>
+                <input type="text" class="eta form-control form-control-sm" name="eta3" value="<?php if($eta3 != '00/00/0000'){echo $eta3;} ?>">
               </div>
             </div>
           </div>
@@ -147,8 +165,8 @@ ConnectionFullFillment::close_connection();
                 <input type="number" step=".01" class="form-control form-control-sm" readonly id="equipment_amount">
               </div>
               <div class="form-group">
-                <label for="consolidate_others">Consolidate & others:</label>
-                <input type="number" step=".01" class="form-control form-control-sm" name="consolidate_others" id="consolidate_others" value="<?php echo $rfq_fullfillment_part-> get_consolidate_others(); ?>">
+                <label for="comment_consolidate_others">Comments:</label>
+                <input type="text" name="comment_consolidate_others" value="<?php echo $rfq_fullfillment_part-> get_comment_consolidate_others(); ?>" class="form-control form-control-sm">
               </div>
             </div>
             <div class="col-md-6">
@@ -156,6 +174,14 @@ ConnectionFullFillment::close_connection();
                 <label for="vendors_estimate">Vendors estimate:</label>
                 <input type="number" step=".01" class="form-control form-control-sm" readonly id="vendors_estimate">
               </div>
+              <div class="form-group">
+                <label for="consolidate_others">Consolidate & others:</label>
+                <input type="number" step=".01" class="form-control form-control-sm" name="consolidate_others" id="consolidate_others" value="<?php echo $rfq_fullfillment_part-> get_consolidate_others(); ?>">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
               <div class="form-group">
                 <label for="total_vendor_cost">Total vendor cost:</label>
                 <input type="number" step=".01" class="form-control form-control-sm" readonly name="total_vendor_cost" id="total_vendor_cost" value="<?php echo $rfq_fullfillment_part-> get_total_vendor_cost(); ?>">

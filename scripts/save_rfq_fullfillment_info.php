@@ -14,8 +14,10 @@ if(isset($_POST['save_rfq_fullfillment_info'])){
     $edit_estimated_final_cost = 1;
   }
   $po_date = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['po_date']);
-  $eta = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['eta']);
-  RfqFullFillmentPartRepository::save_rfq_fullfillmet_info(ConnectionFullFillment::get_connection(), $_POST['rfq_fullfillment_part_name'], $_POST['po_number'], $_POST['business_classification'], $description, $po_date, $eta, $_POST['consolidate_others'], $_POST['total_vendor_cost'], $_POST['rfq_fullfillment_part_fedbid'], $_POST['estimated_final_cost'], $_POST['estimated_profit_g'], $_POST['percent_g'], $_POST['estimated_profit_s'], $_POST['percent_s'], $edit_estimated_final_cost, $_POST['id_rfq_fullfillment_part']);
+  $eta1 = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['eta1']);
+  $eta2 = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['eta2']);
+  $eta3 = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['eta3']);
+  RfqFullFillmentPartRepository::save_rfq_fullfillmet_info(ConnectionFullFillment::get_connection(), $_POST['rfq_fullfillment_part_name'], $_POST['po_number'], $_POST['business_classification'], $description, $po_date, $eta1, $eta2, $eta3, $_POST['comment_consolidate_others'], $_POST['consolidate_others'], $_POST['total_vendor_cost'], $_POST['rfq_fullfillment_part_fedbid'], $_POST['estimated_final_cost'], $_POST['estimated_profit_g'], $_POST['percent_g'], $_POST['estimated_profit_s'], $_POST['percent_s'], $edit_estimated_final_cost, $_POST['id_rfq_fullfillment_part']);
   ConnectionFullFillment::close_connection();
   Redirection::redirect(EDIT_QUOTE . $_POST['id_rfq']);
 }

@@ -361,7 +361,7 @@ $(document).ready(function(){
     $('#new_tracking').modal();
   });
   /**********************************DATEPICKER********************************/
-  $('#po_date, #eta').daterangepicker({
+  $('#po_date, .eta').daterangepicker({
     singleDatePicker: true
   });
   $('#delivery_date').daterangepicker({
