@@ -198,7 +198,7 @@ class PackingSlipItemRepository{
   public static function remove_packing_slip_item($connection, $id_packing_slip_item){
     if(isset($connection)){
       try{
-        $sql = 'DELETE FROM packing_slip_items WHERE id = 1';
+        $sql = 'DELETE FROM packing_slip_items WHERE id = :id_packing_slip_item';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':id_packing_slip_item', $id_packing_slip_item, PDO::PARAM_STR);
         $sentence-> execute();
