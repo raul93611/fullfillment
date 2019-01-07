@@ -38,6 +38,25 @@ if($purchase_order-> get_order_date() != '0000-00-00'){
               <form id="purchase_order_form" action="" method="post">
                 <input type="hidden" name="id_purchase_order" value="<?php echo $purchase_order-> get_id(); ?>">
                 <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="responsible">Responsible:</label>
+                      <select class="form-control form-control-sm" name="responsible">
+                        <?php
+                        ConnectionFullFillment::open_connection();
+                        $users = UserFullFillmentRepository::get_all_users_enabled(ConnectionFullFillment::get_connection());
+                        ConnectionFullFillment::close_connection();
+                        foreach ($users as $key => $user) {
+                          ?>
+                          <option value="<?php echo $user-> get_username(); ?>"><?php echo $user-> get_username(); ?></option>
+                          <?php
+                        }
+                        ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="date">Date:</label>

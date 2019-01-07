@@ -4,6 +4,7 @@ include_once 'vendor/autoload.php';
 ConnectionFullFillment::open_connection();
 $work_order = WorkOrderRepository::get_work_order_by_id(ConnectionFullFillment::get_connection(), $id_work_order);
 $work_order_items = WorkOrderItemRepository::get_all_work_order_items_by_id_work_order(ConnectionFullFillment::get_connection(), $id_work_order);
+$user = UserFullFillmentRepository::get_user_by_username(ConnectionFullFillment::get_connection(), $work_order-> get_responsible());
 ConnectionFullFillment::close_connection();
 try{
   $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
@@ -84,7 +85,7 @@ try{
         <img style="width:350px;height:130px;" src="' . IMG . '/logo_proposal.jpg">
         </td>
         <td align="right">
-          <span class="color letra_grande">WORK ORDER</span>
+          <span class="color letra_grande">WORK ORDER #' . $work_order-> get_id_rfq() . '</span>
         </td>
       </tr>
     </table>
@@ -92,6 +93,7 @@ try{
   $html .= '
   <br>
   <h3 class="color">' . $date . '</h3>
+  <h4 class="color">Responsible: ' . $user-> get_names() . ' ' . $user-> get_last_names() . '</h4>
   <table id="tabla" width="100%">
     <tr>
       <th>COMPANY</th>
@@ -108,13 +110,13 @@ try{
       <th>PHONE</th>
       <th>INVOICE</th>
       <th>BPA</th>
-      <th>P.O.</th>
+      <th>CONTRACT NUMBER</th>
     </tr>
     <tr>
       <td>' . $work_order-> get_phone() . '</td>
       <td>' . $work_order-> get_id_rfq() . '</td>
       <td>' . $work_order-> get_bpa() . '</td>
-      <td>' . $work_order-> get_po() . '</td>
+      <td>' . $work_order-> get_contract_number() . '</td>
     </tr>
   </table>
   <br>';
@@ -184,8 +186,8 @@ try{
   }
   $html .= '</body></html>';
   $mpdf->WriteHTML($html);
-  $mpdf->Output($_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $work_order-> get_id_rfq() . '/' . 'work order-' . $work_order-> get_po() . '.pdf', 'F');
-  $mpdf->Output('work order-' . $work_order-> get_po() . '.pdf', 'I');
+  $mpdf->Output($_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $work_order-> get_id_rfq() . '/' . 'work order-' . $work_order-> get_contract_number() . '.pdf', 'F');
+  $mpdf->Output('work order-' . $work_order-> get_contract_number() . '.pdf', 'I');
 } catch (\Mpdf\MpdfException $e) {
   echo $e->getMessage();
 }

@@ -16,10 +16,10 @@
             ?>
             <a href="<?php echo WORK_ORDER . $work_order-> get_id(); ?>" class="list-group-item list-group-item-action">
               <?php
-              if(empty($work_order-> get_po())){
+              if(empty($work_order-> get_contract_number())){
                 echo 'New';
               }else {
-                echo 'P.O.: ' . $work_order-> get_po();
+                echo 'P.O.: ' . $work_order-> get_contract_number();
               }
               ?>
             </a>

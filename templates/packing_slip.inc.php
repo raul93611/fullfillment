@@ -38,6 +38,25 @@ if($packing_slip-> get_order_date() == '0000-00-00'){
                 <input type="hidden" name="id_rfq" value="<?php echo $packing_slip-> get_id_rfq(); ?>">
                 <input type="hidden" name="id_packing_slip" value="<?php echo $packing_slip-> get_id(); ?>">
                 <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="responsible">Responsible:</label>
+                      <select class="form-control form-control-sm" name="responsible">
+                        <?php
+                        ConnectionFullFillment::open_connection();
+                        $users = UserFullFillmentRepository::get_all_users_enabled(ConnectionFullFillment::get_connection());
+                        ConnectionFullFillment::close_connection();
+                        foreach ($users as $key => $user) {
+                          ?>
+                          <option value="<?php echo $user-> get_username(); ?>"><?php echo $user-> get_username(); ?></option>
+                          <?php
+                        }
+                        ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="order_date">Order date:</label>

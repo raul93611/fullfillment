@@ -35,6 +35,25 @@ if($work_order-> get_date() != '0000-00-00'){
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
+                      <label for="responsible">Responsible:</label>
+                      <select class="form-control form-control-sm" name="responsible">
+                        <?php
+                        ConnectionFullFillment::open_connection();
+                        $users = UserFullFillmentRepository::get_all_users_enabled(ConnectionFullFillment::get_connection());
+                        ConnectionFullFillment::close_connection();
+                        foreach ($users as $key => $user) {
+                          ?>
+                          <option value="<?php echo $user-> get_username(); ?>"><?php echo $user-> get_username(); ?></option>
+                          <?php
+                        }
+                        ?>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
                       <label for="company">Company:</label>
                       <input type="text" name="company" value="<?php echo $work_order-> get_company(); ?>" class="form-control form-control-sm">
                     </div>

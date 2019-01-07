@@ -2,6 +2,7 @@
 class WorkOrder{
   private $id;
   private $id_rfq;
+  private $responsible;
   private $company;
   private $address;
   private $phone;
@@ -10,9 +11,10 @@ class WorkOrder{
   private $contract_number;
   private $bpa;
 
-  public function __construct($id, $id_rfq, $company, $address, $phone, $client, $date, $contract_number, $bpa){
+  public function __construct($id, $id_rfq, $responsible, $company, $address, $phone, $client, $date, $contract_number, $bpa){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
+    $this-> responsible = $responsible;
     $this-> company = $company;
     $this-> address = $address;
     $this-> phone = $phone;
@@ -28,6 +30,10 @@ class WorkOrder{
 
   public function get_id_rfq(){
     return $this-> id_rfq;
+  }
+
+  public function get_responsible(){
+    return $this-> responsible;
   }
 
   public function get_company(){

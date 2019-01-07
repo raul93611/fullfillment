@@ -2,6 +2,7 @@
 class PurchaseOrder{
   private $id;
   private $id_rfq;
+  private $responsible;
   private $date;
   private $purchase_from;
   private $drop_ship_to;
@@ -16,9 +17,10 @@ class PurchaseOrder{
   private $total;
   private $message;
 
-  public function __construct($id, $id_rfq, $date, $purchase_from, $drop_ship_to, $comments, $po_number, $ref_quote, $ship_via, $order_date, $terms, $subtotal, $shipment_cost, $total, $message){
+  public function __construct($id, $id_rfq, $responsible, $date, $purchase_from, $drop_ship_to, $comments, $po_number, $ref_quote, $ship_via, $order_date, $terms, $subtotal, $shipment_cost, $total, $message){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
+    $this-> responsible = $responsible;
     $this-> date = $date;
     $this-> purchase_from = $purchase_from;
     $this-> drop_ship_to = $drop_ship_to;
@@ -40,6 +42,10 @@ class PurchaseOrder{
 
   public function get_id_rfq(){
     return $this-> id_rfq;
+  }
+
+  public function get_responsible(){
+    return $this-> responsible;
   }
 
   public function get_date(){

@@ -4,6 +4,7 @@ include_once 'vendor/autoload.php';
 ConnectionFullFillment::open_connection();
 $packing_slip = PackingSlipRepository::get_packing_slip_by_id(ConnectionFullFillment::get_connection(), $id_packing_slip);
 $packing_slip_items = PackingSlipItemRepository::get_packing_slip_items_by_id_packing_slip(ConnectionFullFillment::get_connection(), $id_packing_slip);
+$user = UserFullFillmentRepository::get_user_by_username(ConnectionFullFillment::get_connection(), $packing_slip-> get_responsible());
 ConnectionFullFillment::close_connection();
 try{
   $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
@@ -90,7 +91,7 @@ try{
     </table>
   ';
   $html .= '
-  <br>
+  <h4 class="color">Responsible: ' . $user-> get_names() . ' ' . $user-> get_last_names() . '</h4>
   <table id="tabla" style="width:100%">
     <tr>
       <th style="width:50%">ORDER DATE</th>

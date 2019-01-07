@@ -4,6 +4,7 @@ include_once 'vendor/autoload.php';
 ConnectionFullFillment::open_connection();
 $purchase_order = PurchaseOrderRepository::get_purchase_order_by_id(ConnectionFullFillment::get_connection(), $id_purchase_order);
 $purchase_order_items = PurchaseOrderItemRepository::get_all_purchase_order_items(ConnectionFullFillment::get_connection(), $id_purchase_order);
+$user = UserFullFillmentRepository::get_user_by_username(ConnectionFullFillment::get_connection(), $purchase_order-> get_responsible());
 ConnectionFullFillment::close_connection();
 try{
   $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
@@ -85,7 +86,7 @@ try{
         <img style="width:350px;height:130px;" src="' . IMG . '/logo_proposal.jpg">
         </td>
         <td align="right">
-          <span class="color letra_grande">PURCHASE ORDER</span>
+          <span class="color letra_grande">PURCHASE ORDER #' . $purchase_order-> get_id_rfq() . '</span>
         </td>
       </tr>
     </table>
@@ -93,6 +94,7 @@ try{
   $html .= '
   <br>
   <h3 class="color">' . $date . '</h3>
+  <h4 class="color">Responsible: ' . $user-> get_names() . ' ' . $user-> get_last_names() . '</h4>
   <table id="tabla" style="width:100%">
     <tr>
       <th style="width:50%">PURCHASE FROM</th>

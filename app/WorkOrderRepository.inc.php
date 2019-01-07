@@ -3,9 +3,10 @@ class WorkOrderRepository{
   public static function insert_work_order($connection, $work_order){
     if(isset($connection)){
       try{
-        $sql = 'INSERT INTO work_orders(id_rfq, company, address, phone, client, date, contract_number, bpa) VALUES(:id_rfq, :company, :address, :phone, :client, :date, :contract_number, :bpa)';
+        $sql = 'INSERT INTO work_orders(id_rfq, responsible, company, address, phone, client, date, contract_number, bpa) VALUES(:id_rfq, :responsible, :company, :address, :phone, :client, :date, :contract_number, :bpa)';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':id_rfq', $work_order-> get_id_rfq(), PDO::PARAM_STR);
+        $sentence-> bindParam(':responsible', $work_order-> get_responsible(), PDO::PARAM_STR);
         $sentence-> bindParam(':company', $work_order-> get_company(), PDO::PARAM_STR);
         $sentence-> bindParam(':address', $work_order-> get_address(), PDO::PARAM_STR);
         $sentence-> bindParam(':phone', $work_order-> get_phone(), PDO::PARAM_STR);
@@ -46,7 +47,7 @@ class WorkOrderRepository{
         $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
         if(count($result)){
           foreach ($result as $key => $row) {
-            $work_orders[] = new WorkOrder($row['id'], $row['id_rfq'], $row['company'], $row['address'], $row['phone'], $row['client'], $row['date'], $row['contract_number'], $row['bpa']);
+            $work_orders[] = new WorkOrder($row['id'], $row['id_rfq'], $row['responsible'], $row['company'], $row['address'], $row['phone'], $row['client'], $row['date'], $row['contract_number'], $row['bpa']);
           }
         }
       }catch(PDOException $ex){
@@ -56,11 +57,12 @@ class WorkOrderRepository{
     return $work_orders;
   }
 
-  public static function set_work_order($connection, $company, $phone, $bpa, $address, $date, $contract_number, $client, $id_work_order){
+  public static function set_work_order($connection, $responsible, $company, $phone, $bpa, $address, $date, $contract_number, $client, $id_work_order){
     if(isset($connection)){
       try{
-        $sql = 'UPDATE work_orders SET company = :company, phone = :phone, bpa = :bpa, address = :address, date = :date, contract_number = :contract_number, client = :client WHERE id = :id_work_order';
+        $sql = 'UPDATE work_orders SET responsible = :responsible, company = :company, phone = :phone, bpa = :bpa, address = :address, date = :date, contract_number = :contract_number, client = :client WHERE id = :id_work_order';
         $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':responsible', $responsible, PDO::PARAM_STR);
         $sentence-> bindParam(':company', $company, PDO::PARAM_STR);
         $sentence-> bindParam(':phone', $phone, PDO::PARAM_STR);
         $sentence-> bindParam(':bpa', $bpa, PDO::PARAM_STR);
@@ -86,7 +88,7 @@ class WorkOrderRepository{
         $sentence-> execute();
         $result = $sentence-> fetch(PDO::FETCH_ASSOC);
         if(!empty($result)){
-          $work_order = new WorkOrder($result['id'], $result['id_rfq'], $result['company'], $result['address'], $result['phone'], $result['client'], $result['date'], $result['contract_number'], $result['bpa']);
+          $work_order = new WorkOrder($result['id'], $result['id_rfq'], $result['responsible'], $result['company'], $result['address'], $result['phone'], $result['client'], $result['date'], $result['contract_number'], $result['bpa']);
         }
       }catch(PDOException $ex){
         print 'ERROR:' . $ex->getMessage() . '<br>';

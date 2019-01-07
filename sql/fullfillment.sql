@@ -81,6 +81,7 @@ CREATE TABLE rfq_fullfillment_part(
 CREATE TABLE work_orders(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_rfq INT NOT NULL,
+  responsible VARCHAR(255) NOT NULL,
   company VARCHAR(255) NOT NULL,
   address TEXT CHARACTER SET utf8 NOT NULL,
   phone VARCHAR(255) NOT NULL,
@@ -124,6 +125,7 @@ CREATE TABLE work_order_item_details(
 CREATE TABLE purchase_orders(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_rfq INT NOT NULL,
+  responsible VARCHAR(255) NOT NULL,
   date DATE NOT NULL,
   purchase_from TEXT CHARACTER SET utf8 NOT NULL,
   drop_ship_to TEXT CHARACTER SET utf8 NOT NULL,
@@ -296,6 +298,7 @@ CREATE TABLE provider_subitems(
 CREATE TABLE packing_slips(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_rfq INT NOT NULL,
+  responsible VARCHAR(255) NOT NULL,
   order_date DATE NOT NULL,
   po VARCHAR(255) NOT NULL,
   customer_contact TEXT CHARACTER SET utf8 NOT NULL,

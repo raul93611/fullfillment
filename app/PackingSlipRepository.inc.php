@@ -3,9 +3,10 @@ class PackingSlipRepository{
   public static function insert_packing_slip($connection, $packing_slip){
     if(isset($connection)){
       try{
-        $sql = 'INSERT INTO packing_slips(id_rfq, order_date, po, customer_contact, ship_to, message) VALUES(:id_rfq, :order_date, :po, :customer_contact, :ship_to, :message)';
+        $sql = 'INSERT INTO packing_slips(id_rfq, responsible, order_date, po, customer_contact, ship_to, message) VALUES(:id_rfq, :responsible, :order_date, :po, :customer_contact, :ship_to, :message)';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':id_rfq', $packing_slip-> get_id_rfq(), PDO::PARAM_STR);
+        $sentence-> bindParam(':responsible', $packing_slip-> get_responsible(), PDO::PARAM_STR);
         $sentence-> bindParam(':order_date', $packing_slip-> get_order_date(), PDO::PARAM_STR);
         $sentence-> bindParam(':po', $packing_slip-> get_po(), PDO::PARAM_STR);
         $sentence-> bindParam(':customer_contact', $packing_slip-> get_customer_contact(), PDO::PARAM_STR);
@@ -51,7 +52,7 @@ class PackingSlipRepository{
         $sentence-> execute();
         $result = $sentence-> fetch(PDO::FETCH_ASSOC);
         if(!empty($result)){
-          $packing_slip = new PackingSlip($result['id'], $result['id_rfq'], $result['order_date'], $result['po'], $result['customer_contact'], $result['ship_to'], $result['message']);
+          $packing_slip = new PackingSlip($result['id'], $result['id_rfq'], $result['responsible'], $result['order_date'], $result['po'], $result['customer_contact'], $result['ship_to'], $result['message']);
         }
       }catch(PDOException $ex){
         print 'ERROR:' . $ex->getMessage() . '<br>';
@@ -70,7 +71,7 @@ class PackingSlipRepository{
         $sentence-> execute();
         $result = $sentence-> fetch(PDO::FETCH_ASSOC);
         if(!empty($result)){
-          $packing_slip = new PackingSlip($result['id'], $result['id_rfq'], $result['order_date'], $result['po'], $result['customer_contact'], $result['ship_to'], $result['message']);
+          $packing_slip = new PackingSlip($result['id'], $result['id_rfq'], $result['responsible'], $result['order_date'], $result['po'], $result['customer_contact'], $result['ship_to'], $result['message']);
         }
       }catch(PDOException $ex){
         print 'ERROR:' . $ex->getMessage() . '<br>';
@@ -79,11 +80,12 @@ class PackingSlipRepository{
     return $packing_slip;
   }
 
-  public static function update_packing_slip($connection, $order_date, $po, $customer_contact, $ship_to, $message, $id_packing_slip){
+  public static function update_packing_slip($connection, $responsible, $order_date, $po, $customer_contact, $ship_to, $message, $id_packing_slip){
     if(isset($connection)){
       try{
-        $sql = 'UPDATE packing_slips SET order_date = :order_date, po = :po, customer_contact = :customer_contact, ship_to = :ship_to, message = :message WHERE id = :id_packing_slip';
+        $sql = 'UPDATE packing_slips SET responsible = :responsible, order_date = :order_date, po = :po, customer_contact = :customer_contact, ship_to = :ship_to, message = :message WHERE id = :id_packing_slip';
         $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':responsible', $responsible, PDO::PARAM_STR);
         $sentence-> bindParam(':order_date', $order_date, PDO::PARAM_STR);
         $sentence-> bindParam(':po', $po, PDO::PARAM_STR);
         $sentence-> bindParam(':customer_contact', $customer_contact, PDO::PARAM_STR);
