@@ -3,7 +3,7 @@ class WorkOrderRepository{
   public static function insert_work_order($connection, $work_order){
     if(isset($connection)){
       try{
-        $sql = 'INSERT INTO work_orders(id_rfq, company, address, phone, client, date, po, bpa) VALUES(:id_rfq, :company, :address, :phone, :client, :date, :po, :bpa)';
+        $sql = 'INSERT INTO work_orders(id_rfq, company, address, phone, client, date, contract_number, bpa) VALUES(:id_rfq, :company, :address, :phone, :client, :date, :contract_number, :bpa)';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':id_rfq', $work_order-> get_id_rfq(), PDO::PARAM_STR);
         $sentence-> bindParam(':company', $work_order-> get_company(), PDO::PARAM_STR);
@@ -11,7 +11,7 @@ class WorkOrderRepository{
         $sentence-> bindParam(':phone', $work_order-> get_phone(), PDO::PARAM_STR);
         $sentence-> bindParam(':client', $work_order-> get_client(), PDO::PARAM_STR);
         $sentence-> bindParam(':date', $work_order-> get_date(), PDO::PARAM_STR);
-        $sentence-> bindParam(':po', $work_order-> get_po(), PDO::PARAM_STR);
+        $sentence-> bindParam(':contract_number', $work_order-> get_contract_number(), PDO::PARAM_STR);
         $sentence-> bindParam(':bpa', $work_order-> get_bpa(), PDO::PARAM_STR);
         $sentence-> execute();
         $id = $connection-> lastInsertId();
@@ -46,7 +46,7 @@ class WorkOrderRepository{
         $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
         if(count($result)){
           foreach ($result as $key => $row) {
-            $work_orders[] = new WorkOrder($row['id'], $row['id_rfq'], $row['company'], $row['address'], $row['phone'], $row['client'], $row['date'], $row['po'], $row['bpa']);
+            $work_orders[] = new WorkOrder($row['id'], $row['id_rfq'], $row['company'], $row['address'], $row['phone'], $row['client'], $row['date'], $row['contract_number'], $row['bpa']);
           }
         }
       }catch(PDOException $ex){
@@ -56,17 +56,17 @@ class WorkOrderRepository{
     return $work_orders;
   }
 
-  public static function set_work_order($connection, $company, $phone, $bpa, $address, $date, $po, $client, $id_work_order){
+  public static function set_work_order($connection, $company, $phone, $bpa, $address, $date, $contract_number, $client, $id_work_order){
     if(isset($connection)){
       try{
-        $sql = 'UPDATE work_orders SET company = :company, phone = :phone, bpa = :bpa, address = :address, date = :date, po = :po, client = :client WHERE id = :id_work_order';
+        $sql = 'UPDATE work_orders SET company = :company, phone = :phone, bpa = :bpa, address = :address, date = :date, contract_number = :contract_number, client = :client WHERE id = :id_work_order';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':company', $company, PDO::PARAM_STR);
         $sentence-> bindParam(':phone', $phone, PDO::PARAM_STR);
         $sentence-> bindParam(':bpa', $bpa, PDO::PARAM_STR);
         $sentence-> bindParam(':address', $address, PDO::PARAM_STR);
         $sentence-> bindParam(':date', $date, PDO::PARAM_STR);
-        $sentence-> bindParam(':po', $po, PDO::PARAM_STR);
+        $sentence-> bindParam(':contract_number', $contract_number, PDO::PARAM_STR);
         $sentence-> bindParam(':client', $client, PDO::PARAM_STR);
         $sentence-> bindParam(':id_work_order', $id_work_order, PDO::PARAM_STR);
         $sentence-> execute();
@@ -86,7 +86,7 @@ class WorkOrderRepository{
         $sentence-> execute();
         $result = $sentence-> fetch(PDO::FETCH_ASSOC);
         if(!empty($result)){
-          $work_order = new WorkOrder($result['id'], $result['id_rfq'], $result['company'], $result['address'], $result['phone'], $result['client'], $result['date'], $result['po'], $result['bpa']);
+          $work_order = new WorkOrder($result['id'], $result['id_rfq'], $result['company'], $result['address'], $result['phone'], $result['client'], $result['date'], $result['contract_number'], $result['bpa']);
         }
       }catch(PDOException $ex){
         print 'ERROR:' . $ex->getMessage() . '<br>';

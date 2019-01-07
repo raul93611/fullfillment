@@ -70,7 +70,7 @@ CREATE TABLE rfq_fullfillment_part(
   in_process_date DATETIME NOT NULL,
   invoice TINYINT NOT NULL,
   invoice_date DATETIME NOT NULL,
-  edit_estimated_final_cost TINYINT NOT NULL, 
+  edit_estimated_final_cost TINYINT NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
@@ -86,7 +86,7 @@ CREATE TABLE work_orders(
   phone VARCHAR(255) NOT NULL,
   client TEXT CHARACTER SET utf8 NOT NULL,
   date DATE NOT NULL,
-  po VARCHAR(255) NOT NULL,
+  contract_number VARCHAR(255) NOT NULL,
   bpa VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)

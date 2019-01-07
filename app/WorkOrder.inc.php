@@ -7,10 +7,10 @@ class WorkOrder{
   private $phone;
   private $client;
   private $date;
-  private $po;
+  private $contract_number;
   private $bpa;
 
-  public function __construct($id, $id_rfq, $company, $address, $phone, $client, $date, $po, $bpa){
+  public function __construct($id, $id_rfq, $company, $address, $phone, $client, $date, $contract_number, $bpa){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
     $this-> company = $company;
@@ -18,7 +18,7 @@ class WorkOrder{
     $this-> phone = $phone;
     $this-> client = $client;
     $this-> date = $date;
-    $this-> po = $po;
+    $this-> contract_number = $contract_number;
     $this-> bpa = $bpa;
   }
 
@@ -50,8 +50,8 @@ class WorkOrder{
     return $this-> date;
   }
 
-  public function get_po(){
-    return $this-> po;
+  public function get_contract_number(){
+    return $this-> contract_number;
   }
 
   public function get_bpa(){

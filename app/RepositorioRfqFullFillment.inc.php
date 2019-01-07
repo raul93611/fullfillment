@@ -219,7 +219,7 @@ class RepositorioRfqFullFillment{
         </a>
       </td>
       <td><?php echo $quote['code']; ?></td>
-      <td><?php echo number_format($quote['total_price'], 2); ?></td>
+      <td>$ <?php echo number_format($quote['total_price'], 2); ?></td>
       <td><?php echo $date; ?></td>
       <td class="text-danger text-bold"><?php echo $quote['info'] . ' days ago.' ?></td>
     </tr>

@@ -61,8 +61,8 @@ if($work_order-> get_date() != '0000-00-00'){
                       <input type="text" name="date" id="date" value="<?php echo $date; ?>" class="form-control form-control-sm">
                     </div>
                     <div class="form-group">
-                      <label for="po">P.O.</label>
-                      <input type="text" name="po" value="<?php echo $work_order-> get_po(); ?>" class="form-control form-control-sm">
+                      <label for="contract_number">Contract number:</label>
+                      <input type="text" name="contract_number" value="<?php echo $work_order-> get_contract_number(); ?>" class="form-control form-control-sm">
                     </div>
                     <div class="form-group">
                       <label for="client">Client:</label>
