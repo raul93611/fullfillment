@@ -155,6 +155,11 @@ class PurchaseOrderItemRepository{
                 <input type="hidden" id="id_purchase_order" value="<?php echo $purchase_order-> get_id(); ?>">
               </button>
             </td>
+            <td colspan="5"><h5>TAXES:</h5></td>
+            <td><?php echo number_format($purchase_order-> get_taxes(), 2); ?> %</td>
+          </tr>
+          <tr>
+            <td></td>
             <td colspan="5"><h5>SHIPMENT COST:</h5></td>
             <td>$ <?php echo number_format($purchase_order-> get_shipment_cost(), 2); ?></td>
           </tr>

@@ -139,6 +139,7 @@ CREATE TABLE purchase_orders(
   shipment_cost DECIMAL(20,2) NOT NULL,
   total DECIMAL(20,2) NOT NULL,
   message TEXT CHARACTER SET utf8 NOT NULL,
+  taxes DECIMAL(20,2) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)

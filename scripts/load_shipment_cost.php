@@ -9,6 +9,11 @@ ConnectionFullFillment::close_connection();
       <label for="shipment_cost">Shipment cost:</label>
       <input type="number" step=".01" class="form-control form-control-sm" name="shipment_cost" value="<?php echo $purchase_order-> get_shipment_cost(); ?>">
     </div>
+    <div class="form-group">
+      <label for="taxes">Taxes:</label>
+      <input type="number" step=".01" class="form-control form-control-sm" name="taxes" value="<?php echo $purchase_order-> get_taxes(); ?>">
+    </div>
+  </div>
   </div>
   <input type="hidden" name="id_purchase_order" value="<?php echo $purchase_order-> get_id(); ?>">
 </div>

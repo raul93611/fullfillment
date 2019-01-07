@@ -16,8 +16,9 @@ class PurchaseOrder{
   private $shipment_cost;
   private $total;
   private $message;
+  private $taxes;
 
-  public function __construct($id, $id_rfq, $responsible, $date, $purchase_from, $drop_ship_to, $comments, $po_number, $ref_quote, $ship_via, $order_date, $terms, $subtotal, $shipment_cost, $total, $message){
+  public function __construct($id, $id_rfq, $responsible, $date, $purchase_from, $drop_ship_to, $comments, $po_number, $ref_quote, $ship_via, $order_date, $terms, $subtotal, $shipment_cost, $total, $message, $taxes){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
     $this-> responsible = $responsible;
@@ -34,6 +35,7 @@ class PurchaseOrder{
     $this-> shipment_cost = $shipment_cost;
     $this-> total = $total;
     $this-> message = $message;
+    $this-> taxes = $taxes;
   }
 
   public function get_id(){
@@ -98,6 +100,10 @@ class PurchaseOrder{
 
   public function get_message(){
     return $this-> message;
+  }
+
+  public function get_taxes(){
+    return $this-> taxes;
   }
 }
 ?>
