@@ -70,5 +70,23 @@ class WorkOrderItemDetailRepository{
       }
     }
   }
+
+  public static function update_work_order_item_detail($connection, $detail_name, $detail, $keycode, $notes, $technitian, $id_work_order_item_detail){
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE work_order_item_details SET detail_name = :detail_name, detail = :detail, keycode = :keycode, notes = :notes, technitian = :technitian WHERE id = :id_work_order_item_detail';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':detail_name', $detail_name, PDO::PARAM_STR);
+        $sentence-> bindParam(':detail', $detail, PDO::PARAM_STR);
+        $sentence-> bindParam(':keycode', $keycode, PDO::PARAM_STR);
+        $sentence-> bindParam(':notes', $notes, PDO::PARAM_STR);
+        $sentence-> bindParam(':technitian', $technitian, PDO::PARAM_STR);
+        $sentence-> bindParam(':id_work_order_item_detail', $id_work_order_item_detail, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
 }
 ?>

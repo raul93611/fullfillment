@@ -157,6 +157,19 @@ $(document).ready(function(){
       }
     });
   });
+  /*******************************EDIT WORK ORDER DETAIL*********************************************/
+  $('#work_order_items').on('click', '.edit_work_order_item_detail_button', function(){
+    $('#edit_work_order_item_detail_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_work_order_item_detail/' + $(this).attr('name'), function(){
+      $('#edit_work_order_item_detail_modal').modal();
+    });
+  });
+
+  $('#save_edit_work_order_item_detail').click(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_work_order_item_detail', $('#edit_work_order_item_detail_form').serialize(), function(res){
+      $('#edit_work_order_item_detail_modal').modal('hide');
+      $('#work_order_items').load('http://' + document.location.hostname + '/fullfillment/load_work_order_items/' + res.id_work_order);
+    });
+  });
   /********************************SAVE EDIT WORK ORDER ITEM****************************************/
   $('#work_order_items').on('click', '.edit_work_order_item_button', function(){
     $('#edit_work_order_item_modal .modal-body form').load('http://' + document.location.hostname + '/fullfillment/load_work_order_item/' + $(this).attr('name'), function(){

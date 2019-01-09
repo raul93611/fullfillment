@@ -143,6 +143,28 @@ if($work_order-> get_date() != '0000-00-00'){
   </div>
 </div>
 <!--*************************************************MODAL NEW WORK ORDER ITEM DETAIL*************************************************************-->
+<div class="modal fade" id="edit_work_order_item_detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="edit_work_order_item_detail_form" method="post" action="">
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="save_edit_work_order_item_detail"><i class="fa fa-check"></i> Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-ban"></i> Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--*************************************************MODAL NEW WORK ORDER ITEM DETAIL*************************************************************-->
 <div class="modal fade" id="new_work_order_item_detail_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">

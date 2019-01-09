@@ -8,10 +8,12 @@ class WorkOrderItemRepository{
         $sentence-> bindParam(':id_work_order', $work_order_item-> get_id_work_order(), PDO::PARAM_STR);
         $sentence-> bindParam(':equipment', $work_order_item-> get_equipment(), PDO::PARAM_STR);
         $sentence-> execute();
+        $id = $connection->lastInsertId();
       }catch(PDOException $ex){
         print 'ERROR:' . $ex->getMessage() . '<br>';
       }
     }
+    return $id;
   }
 
   public static function delete_work_order_item($connection, $id_work_order_item){
@@ -108,9 +110,12 @@ class WorkOrderItemRepository{
       if(count($work_order_item_details)){
         ?>
         <td>
-          <button type="button" class="delete_work_order_item_detail_button btn btn-warning" name="<?php echo $work_order_item_details[0]-> get_id(); ?>"><i class="fas fa-trash"></i></button>
+          <div class="btn-group-vertical">
+            <button type="button" class="delete_work_order_item_detail_button btn btn-warning" name="<?php echo $work_order_item_details[0]-> get_id(); ?>"><i class="fas fa-trash"></i></button>
+            <button type="button" class="edit_work_order_item_detail_button btn btn-warning" name="<?php echo $work_order_item_details[0]-> get_id(); ?>"><i class="fas fa-pen"></i></button>
+          </div>
         </td>
-        <td><?php echo $work_order_item_details[0]-> get_detail_name(); ?></td>
+        <td><b><?php echo $work_order_item_details[0]-> get_detail_name(); ?>:</b></td>
         <td><?php echo $work_order_item_details[0]-> get_detail(); ?></td>
         <td><?php echo $work_order_item_details[0]-> get_keycode(); ?></td>
         <td><?php echo $work_order_item_details[0]-> get_notes(); ?></td>
@@ -125,9 +130,12 @@ class WorkOrderItemRepository{
       ?>
       <tr>
         <td>
-          <button type="button" class="delete_work_order_item_detail_button btn btn-warning" name="<?php echo $work_order_item_detail-> get_id(); ?>"><i class="fas fa-trash"></i></button>
+          <div class="btn-group-vertical">
+            <button type="button" class="delete_work_order_item_detail_button btn btn-warning" name="<?php echo $work_order_item_detail-> get_id(); ?>"><i class="fas fa-trash"></i></button>
+            <button type="button" class="edit_work_order_item_detail_button btn btn-warning" name="<?php echo $work_order_item_detail-> get_id(); ?>"><i class="fas fa-pen"></i></button>
+          </div>
         </td>
-        <td><?php echo $work_order_item_detail-> get_detail_name(); ?></td>
+        <td><b><?php echo $work_order_item_detail-> get_detail_name(); ?>:</b></td>
         <td><?php echo $work_order_item_detail-> get_detail(); ?></td>
         <td><?php echo $work_order_item_detail-> get_keycode(); ?></td>
         <td><?php echo $work_order_item_detail-> get_notes(); ?></td>

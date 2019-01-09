@@ -172,6 +172,9 @@ if($parts_route[0] == 'fullfillment'){
       case 'save_edit_work_order_item':
         $chosen_route = 'scripts/save_edit_work_order_item.php';
         break;
+      case 'save_edit_work_order_item_detail':
+        $chosen_route = 'scripts/save_edit_work_order_item_detail.php';
+        break;
       case 'remove_work_order_item_detail':
         $chosen_route = 'scripts/remove_work_order_item_detail.php';
         break;
@@ -331,6 +334,10 @@ if($parts_route[0] == 'fullfillment'){
       case 'load_work_order_item':
         $id_work_order_item = $parts_route[2];
         $chosen_route = 'scripts/load_work_order_item.php';
+        break;
+      case 'load_work_order_item_detail':
+        $id_work_order_item_detail = $parts_route[2];
+        $chosen_route = 'scripts/load_work_order_item_detail.php';
         break;
       case 'work_order_pdf':
         $id_work_order = $parts_route[2];
