@@ -111,21 +111,21 @@ ConnectionFullFillment::close_connection();
       <div class="modal-body">
         <form id="info_rfq_fullfillment_form" method="post" enctype="multipart/form-data" action="<?php echo SAVE_RFQ_FULLFILLMENT_INFO; ?>">
           <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
               <div class="form-group">
                 <label for="rfq_fullfillment_part_name">Name:</label>
                 <input type="text" class="form-control form-control-sm" name="rfq_fullfillment_part_name" id="rfq_fullfillment_part_name" value="<?php echo $rfq_fullfillment_part-> get_name(); ?>">
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
               <div class="form-group">
                 <label for="po_date">P.O. date:</label>
                 <input type="text" class="form-control form-control-sm" name="po_date" id="po_date" value="<?php if($po_date != '00/00/0000'){echo $po_date;} ?>">
               </div>
             </div>
             <div class="col-md-6">
-              <div class="form-group">
-                <label for="po_number">P.O. number:</label>
-                <input type="text" class="form-control form-control-sm" name="po_number" id="po_number" value="<?php echo $rfq_fullfillment_part-> get_po_number(); ?>">
-              </div>
               <div class="form-group">
                 <label for="business_classification">Business classification:</label>
                 <select class="form-control form-control-sm" name="business_classification" id="business_classification">

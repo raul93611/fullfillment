@@ -4,17 +4,15 @@ class PackingSlip{
   private $id_rfq;
   private $responsible;
   private $order_date;
-  private $po;
   private $customer_contact;
   private $ship_to;
   private $message;
 
-  public function __construct($id, $id_rfq, $responsible, $order_date, $po, $customer_contact, $ship_to, $message){
+  public function __construct($id, $id_rfq, $responsible, $order_date, $customer_contact, $ship_to, $message){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
     $this-> responsible = $responsible;
     $this-> order_date = $order_date;
-    $this-> po = $po;
     $this-> customer_contact = $customer_contact;
     $this-> ship_to = $ship_to;
     $this-> message = $message;
@@ -34,10 +32,6 @@ class PackingSlip{
 
   public function get_order_date(){
     return $this-> order_date;
-  }
-
-  public function get_po(){
-    return $this-> po;
   }
 
   public function get_customer_contact(){

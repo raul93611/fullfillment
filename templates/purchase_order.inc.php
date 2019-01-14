@@ -38,7 +38,7 @@ if($purchase_order-> get_order_date() != '0000-00-00'){
               <form id="purchase_order_form" action="" method="post">
                 <input type="hidden" name="id_purchase_order" value="<?php echo $purchase_order-> get_id(); ?>">
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label for="responsible">Responsible:</label>
                       <select class="form-control form-control-sm" name="responsible">
@@ -48,11 +48,22 @@ if($purchase_order-> get_order_date() != '0000-00-00'){
                         ConnectionFullFillment::close_connection();
                         foreach ($users as $key => $user) {
                           ?>
-                          <option value="<?php echo $user-> get_username(); ?>"><?php echo $user-> get_username(); ?></option>
+                          <option <?php if($purchase_order-> get_responsible() == $user-> get_username()){echo 'selected';} ?> value="<?php echo $user-> get_username(); ?>"><?php echo $user-> get_username(); ?></option>
                           <?php
                         }
                         ?>
                       </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="doc_name">Document name:</label>
+                      <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">PURCHASE ORDER: <?php echo $purchase_order-> get_id_rfq(); ?> - </div>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" name="doc_name" value="<?php echo $purchase_order-> get_doc_name(); ?>">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -93,28 +104,28 @@ if($purchase_order-> get_order_date() != '0000-00-00'){
                   </div>
                 </div>
                 <div class="row">
-                  <div class="col-md-3">
-                    <div class="form-group">
-                      <label for="po_number">P.O.:</label>
-                      <input type="text" name="po_number" id="po_number" class="form-control form-control-sm" value="<?php echo $purchase_order-> get_po_number(); ?>">
-                    </div>
-                  </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="ref_quote">REF-Quote:</label>
                       <input type="text" name="ref_quote" id="ref_quote" class="form-control form-control-sm" value="<?php echo $purchase_order-> get_ref_quote(); ?>">
                     </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="ship_via">Ship via:</label>
                       <input type="text" name="ship_via" id="ship_via" class="form-control form-control-sm" value="<?php echo $purchase_order-> get_ship_via(); ?>">
                     </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                     <div class="form-group">
                       <label for="terms">Terms:</label>
-                      <input type="text" name="terms" id="terms" class="form-control form-control-sm" value="<?php echo $purchase_order-> get_terms(); ?>">
+                      <select class="form-control form-control-sm" name="terms">
+                        <option <?php if($purchase_order-> get_terms() == 'CC'){echo 'selected';} ?>>CC</option>
+                        <option <?php if($purchase_order-> get_terms() == 'Net 30'){echo 'selected';} ?>>Net 30</option>
+                        <option <?php if($purchase_order-> get_terms() == 'Wire transfer'){echo 'selected';} ?>>Wire transfer</option>
+                        <option <?php if($purchase_order-> get_terms() == 'Escrow'){echo 'selected';} ?>>Escrow</option>
+                        <option <?php if($purchase_order-> get_terms() == 'Check'){echo 'selected';} ?>>Check</option>
+                      </select>
                     </div>
                   </div>
                 </div>

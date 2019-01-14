@@ -3,6 +3,7 @@ session_start();
 include_once 'vendor/autoload.php';
 ConnectionFullFillment::open_connection();
 $purchase_order = PurchaseOrderRepository::get_purchase_order_by_id(ConnectionFullFillment::get_connection(), $id_purchase_order);
+$quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $purchase_order-> get_id_rfq());
 $purchase_order_items = PurchaseOrderItemRepository::get_all_purchase_order_items(ConnectionFullFillment::get_connection(), $id_purchase_order);
 $user = UserFullFillmentRepository::get_user_by_username(ConnectionFullFillment::get_connection(), $purchase_order-> get_responsible());
 ConnectionFullFillment::close_connection();
@@ -117,16 +118,14 @@ try{
   <br>
   <table id="tabla" style="width:100%">
     <tr>
-      <th>P.O. No.</th>
-      <th>QUOTE</th>
+      <th>CONTRACT NUMBER</th>
       <th>REF - QUOTE</th>
       <th>SHIP VIA</th>
       <th>ORDER DATE</th>
       <th>TERMS</th>
     </tr>
     <tr>
-      <td style="text-align:center;">' . $purchase_order-> get_po_number() . '</td>
-      <td style="text-align:center;">' . $purchase_order-> get_id_rfq() . '</td>
+      <td style="text-align:center;">' . $quote-> obtener_contract_number() . '</td>
       <td style="text-align:center;">' . $purchase_order-> get_ref_quote() . '</td>
       <td style="text-align:center;">' . $purchase_order-> get_ship_via() . '</td>
       <td style="text-align:center;">' . $order_date . '</td>
@@ -206,8 +205,8 @@ try{
   $html .= '</table>';
   $html .= '</body></html>';
   $mpdf->WriteHTML($html);
-  $mpdf->Output($_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $purchase_order-> get_id_rfq() . '/' . 'purchase order-' . $purchase_order-> get_po_number() . '.pdf', 'F');
-  $mpdf->Output('purchase order-' . $purchase_order-> get_po_number() . '.pdf', 'I');
+  $mpdf->Output($_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $purchase_order-> get_id_rfq() . '/' . 'PURCHASE ORDER:' . $purchase_order-> get_id_rfq() . '-' . $purchase_order-> get_doc_name() . '.pdf', 'F');
+  $mpdf->Output('PURCHASE ORDER:' . $purchase_order-> get_id_rfq() . '-' . $purchase_order-> get_doc_name() . '.pdf', 'I');
 } catch (\Mpdf\MpdfException $e) {
   echo $e->getMessage();
 }

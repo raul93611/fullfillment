@@ -1,6 +1,14 @@
 <input type="hidden" name="id_rfq" value="<?php echo $quote-> obtener_id(); ?>">
 <div class="card-body">
   <div class="row">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="contract_number">Contract number:</label>
+        <input type="text" class="form-control form-control-sm" name="contract_number" value="<?php echo $quote-> obtener_contract_number(); ?>">
+      </div>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-md-3">
       <div class="form-group">
         <label>Code:</label>

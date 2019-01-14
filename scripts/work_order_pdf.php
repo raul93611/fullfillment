@@ -3,6 +3,7 @@ session_start();
 include_once 'vendor/autoload.php';
 ConnectionFullFillment::open_connection();
 $work_order = WorkOrderRepository::get_work_order_by_id(ConnectionFullFillment::get_connection(), $id_work_order);
+$quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $work_order-> get_id_rfq());
 $work_order_items = WorkOrderItemRepository::get_all_work_order_items_by_id_work_order(ConnectionFullFillment::get_connection(), $id_work_order);
 $user = UserFullFillmentRepository::get_user_by_username(ConnectionFullFillment::get_connection(), $work_order-> get_responsible());
 ConnectionFullFillment::close_connection();
@@ -116,7 +117,7 @@ try{
       <td>' . $work_order-> get_phone() . '</td>
       <td>' . $work_order-> get_id_rfq() . '</td>
       <td>' . $work_order-> get_bpa() . '</td>
-      <td>' . $work_order-> get_contract_number() . '</td>
+      <td>' . $quote-> obtener_contract_number() . '</td>
     </tr>
   </table>
   <br>';
@@ -186,8 +187,8 @@ try{
   }
   $html .= '</body></html>';
   $mpdf->WriteHTML($html);
-  $mpdf->Output($_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $work_order-> get_id_rfq() . '/' . 'work order-' . $work_order-> get_contract_number() . '.pdf', 'F');
-  $mpdf->Output('work order-' . $work_order-> get_contract_number() . '.pdf', 'I');
+  $mpdf->Output($_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $work_order-> get_id_rfq() . '/' . 'WORK ORDER:' . $work_order-> get_id_rfq() . '-' . $work_order-> get_doc_name() . '.pdf', 'F');
+  $mpdf->Output('WORK ORDER:' . $work_order-> get_id_rfq() . '-' . $work_order-> get_doc_name() . '.pdf', 'I');
 } catch (\Mpdf\MpdfException $e) {
   echo $e->getMessage();
 }

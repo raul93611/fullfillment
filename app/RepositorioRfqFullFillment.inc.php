@@ -4,7 +4,7 @@ class RepositorioRfqFullFillment{
     $cotizacion_insertada = false;
     if (isset($conexion)) {
       try {
-        $sql = 'INSERT INTO rfq(id, id_usuario, usuario_designado, canal, email_code, type_of_bid, issue_date, end_date, status, completado, total_cost, total_price, comments, award, fecha_completado, fecha_submitted, fecha_award, payment_terms, address, ship_to, expiration_date, ship_via, taxes, profit, additional, shipping, shipping_cost, rfp, fullfillment) VALUES(:id, :id_usuario, :usuario_designado, :canal, :email_code, :type_of_bid, :issue_date, :end_date, :status, :completado, :total_cost, :total_price, :comments, :award, :fecha_completado, :fecha_submitted, :fecha_award, :payment_terms, :address, :ship_to, :expiration_date, :ship_via, :taxes, :profit, :additional, :shipping, :shipping_cost, :rfp, :fullfillment)';
+        $sql = 'INSERT INTO rfq(id, id_usuario, usuario_designado, canal, email_code, type_of_bid, issue_date, end_date, status, completado, total_cost, total_price, comments, award, fecha_completado, fecha_submitted, fecha_award, payment_terms, address, ship_to, expiration_date, ship_via, taxes, profit, additional, shipping, shipping_cost, rfp, fullfillment, contract_number) VALUES(:id, :id_usuario, :usuario_designado, :canal, :email_code, :type_of_bid, :issue_date, :end_date, :status, :completado, :total_cost, :total_price, :comments, :award, :fecha_completado, :fecha_submitted, :fecha_award, :payment_terms, :address, :ship_to, :expiration_date, :ship_via, :taxes, :profit, :additional, :shipping, :shipping_cost, :rfp, :fullfillment, :contract_number)';
         $sentencia = $conexion->prepare($sql);
         $sentencia-> bindParam(':id', $cotizacion-> obtener_id(), PDO::PARAM_STR);
         $sentencia-> bindParam(':id_usuario', $cotizacion->obtener_id_usuario(), PDO::PARAM_STR);
@@ -35,6 +35,7 @@ class RepositorioRfqFullFillment{
         $sentencia-> bindParam(':shipping_cost', $cotizacion->obtener_shipping_cost(), PDO::PARAM_STR);
         $sentencia-> bindParam(':rfp', $cotizacion-> obtener_rfp(), PDO::PARAM_STR);
         $sentencia-> bindParam(':fullfillment', $cotizacion-> obtener_fullfillment(), PDO::PARAM_STR);
+        $sentencia-> bindParam(':contract_number', $cotizacion-> obtener_contract_number(), PDO::PARAM_STR);
         $resultado = $sentencia-> execute();
       } catch (PDOException $ex) {
         print 'ERROR:' . $ex-> getMessage() . '<br>';
@@ -52,7 +53,7 @@ class RepositorioRfqFullFillment{
         $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
         if(count($result)){
           foreach ($result as $row) {
-            $quotes[] = new Rfq($row['id'], $row['id_usuario'], $row['usuario_designado'], $row['canal'], $row['email_code'], $row['type_of_bid'], $row['issue_date'], $row['end_date'], $row['status'], $row['completado'], $row['total_cost'], $row['total_price'], $row['comments'], $row['award'], $row['fecha_completado'], $row['fecha_submitted'], $row['fecha_award'], $row['payment_terms'], $row['address'], $row['ship_to'], $row['expiration_date'], $row['ship_via'], $row['taxes'], $row['profit'], $row['additional'], $row['shipping'], $row['shipping_cost'], $row['rfp'], $row['fullfillment']);
+            $quotes[] = new Rfq($row['id'], $row['id_usuario'], $row['usuario_designado'], $row['canal'], $row['email_code'], $row['type_of_bid'], $row['issue_date'], $row['end_date'], $row['status'], $row['completado'], $row['total_cost'], $row['total_price'], $row['comments'], $row['award'], $row['fecha_completado'], $row['fecha_submitted'], $row['fecha_award'], $row['payment_terms'], $row['address'], $row['ship_to'], $row['expiration_date'], $row['ship_via'], $row['taxes'], $row['profit'], $row['additional'], $row['shipping'], $row['shipping_cost'], $row['rfp'], $row['fullfillment'], $row['contract_number']);
           }
         }
       }catch(PDOException $ex){
@@ -236,7 +237,7 @@ class RepositorioRfqFullFillment{
         $sentencia->execute();
         $resultado = $sentencia->fetch(PDO::FETCH_ASSOC);
         if (!empty($resultado)) {
-          $cotizacion_recuperada = new Rfq($resultado['id'], $resultado['id_usuario'], $resultado['usuario_designado'], $resultado['canal'], $resultado['email_code'], $resultado['type_of_bid'], $resultado['issue_date'], $resultado['end_date'], $resultado['status'], $resultado['completado'], $resultado['total_cost'], $resultado['total_price'], $resultado['comments'], $resultado['award'], $resultado['fecha_completado'], $resultado['fecha_submitted'], $resultado['fecha_award'], $resultado['payment_terms'], $resultado['address'], $resultado['ship_to'], $resultado['expiration_date'], $resultado['ship_via'], $resultado['taxes'], $resultado['profit'], $resultado['additional'], $resultado['shipping'], $resultado['shipping_cost'], $resultado['rfp'], $resultado['fullfillment']);
+          $cotizacion_recuperada = new Rfq($resultado['id'], $resultado['id_usuario'], $resultado['usuario_designado'], $resultado['canal'], $resultado['email_code'], $resultado['type_of_bid'], $resultado['issue_date'], $resultado['end_date'], $resultado['status'], $resultado['completado'], $resultado['total_cost'], $resultado['total_price'], $resultado['comments'], $resultado['award'], $resultado['fecha_completado'], $resultado['fecha_submitted'], $resultado['fecha_award'], $resultado['payment_terms'], $resultado['address'], $resultado['ship_to'], $resultado['expiration_date'], $resultado['ship_via'], $resultado['taxes'], $resultado['profit'], $resultado['additional'], $resultado['shipping'], $resultado['shipping_cost'], $resultado['rfp'], $resultado['fullfillment'], $resultado['contract_number']);
         }
       } catch (PDOException $ex) {
         print 'ERROR:' . $ex->getMessage() . '<br>';
@@ -322,14 +323,15 @@ class RepositorioRfqFullFillment{
     }
   }
 
-  public static function actualizar_rfq_2($conexion, $address, $ship_to, $id_rfq) {
+  public static function actualizar_rfq_2($conexion, $address, $ship_to, $contract_number, $id_rfq) {
     $rfq_editado = false;
     if (isset($conexion)) {
       try {
-        $sql = 'UPDATE rfq SET address = :address, ship_to = :ship_to WHERE id = :id_rfq';
+        $sql = 'UPDATE rfq SET address = :address, ship_to = :ship_to, contract_number = :contract_number WHERE id = :id_rfq';
         $sentencia = $conexion->prepare($sql);
         $sentencia->bindParam(':address', $address, PDO::PARAM_STR);
         $sentencia->bindParam(':ship_to', $ship_to, PDO::PARAM_STR);
+        $sentencia-> bindParam(':contract_number', $contract_number, PDO::PARAM_STR);
         $sentencia->bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
         $sentencia->execute();
         if ($sentencia) {

@@ -66,7 +66,7 @@ if (isset($_POST['guardar_cambios_cotizacion'])) {
       move_uploaded_file($tmp_path, $new_path);
     }
   }
-  RepositorioRfqFullFillment::actualizar_rfq_2(ConnectionFullFillment::get_connection(), htmlspecialchars($_POST['address']), htmlspecialchars($_POST['ship_to']), $_POST['id_rfq']);
+  RepositorioRfqFullFillment::actualizar_rfq_2(ConnectionFullFillment::get_connection(), htmlspecialchars($_POST['address']), htmlspecialchars($_POST['ship_to']), $_POST['contract_number'], $_POST['id_rfq']);
   if($_POST['address'] != $_POST['addres_original']){
     $cambios[] = 'address';
   }

@@ -3,6 +3,7 @@ session_start();
 include_once 'vendor/autoload.php';
 ConnectionFullFillment::open_connection();
 $packing_slip = PackingSlipRepository::get_packing_slip_by_id(ConnectionFullFillment::get_connection(), $id_packing_slip);
+$quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $packing_slip-> get_id_rfq());
 $packing_slip_items = PackingSlipItemRepository::get_packing_slip_items_by_id_packing_slip(ConnectionFullFillment::get_connection(), $id_packing_slip);
 $user = UserFullFillmentRepository::get_user_by_username(ConnectionFullFillment::get_connection(), $packing_slip-> get_responsible());
 ConnectionFullFillment::close_connection();
@@ -95,11 +96,11 @@ try{
   <table id="tabla" style="width:100%">
     <tr>
       <th style="width:50%">ORDER DATE</th>
-      <th style="width:50%">P.O.</th>
+      <th style="width:50%">CONTRACT NUMBER</th>
     </tr>
     <tr>
       <td>' . $order_date . '</td>
-      <td>' . $packing_slip-> get_po() . '</td>
+      <td>' . $quote-> obtener_contract_number() . '</td>
     </tr>
   </table>
   <br>
@@ -259,8 +260,8 @@ try{
   $html .= '</table>';
   $html .= '</body></html>';
   $mpdf->WriteHTML($html);
-  $mpdf->Output($_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $packing_slip-> get_id_rfq() . '/' . 'packing-slip-' . $packing_slip-> get_po() . '.pdf', 'F');
-  $mpdf->Output('packing-slip-' . $packing_slip-> get_po() . '.pdf', 'I');
+  $mpdf->Output($_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $packing_slip-> get_id_rfq() . '/' . 'PACKING SLIP:' . $packing_slip-> get_id_rfq() . '-' . date('l jS \of F Y h:i:s A') . '.pdf', 'F');
+  $mpdf->Output('PACKING SLIP:' . $packing_slip-> get_id_rfq() . '-' . date('l jS \of F Y h:i:s A') . '.pdf', 'I');
 } catch (\Mpdf\MpdfException $e) {
   echo $e->getMessage();
 }

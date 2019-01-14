@@ -33,7 +33,7 @@ if($work_order-> get_date() != '0000-00-00'){
               <form id="work_order_form" action="" method="post">
                 <input type="hidden" name="id_work_order" value="<?php echo $work_order-> get_id(); ?>">
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label for="responsible">Responsible:</label>
                       <select class="form-control form-control-sm" name="responsible">
@@ -43,19 +43,22 @@ if($work_order-> get_date() != '0000-00-00'){
                         ConnectionFullFillment::close_connection();
                         foreach ($users as $key => $user) {
                           ?>
-                          <option value="<?php echo $user-> get_username(); ?>"><?php echo $user-> get_username(); ?></option>
+                          <option <?php if($work_order-> get_responsible() == $user-> get_username()){echo 'selected';} ?>  value="<?php echo $user-> get_username(); ?>"><?php echo $user-> get_username(); ?></option>
                           <?php
                         }
                         ?>
                       </select>
                     </div>
                   </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                     <div class="form-group">
-                      <label for="company">Company:</label>
-                      <input type="text" name="company" value="<?php echo $work_order-> get_company(); ?>" class="form-control form-control-sm">
+                      <label for="doc_name">Document name:</label>
+                      <div class="input-group input-group-sm">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">WORK ORDER: <?php echo $work_order-> get_id_rfq(); ?> - </div>
+                        </div>
+                        <input type="text" class="form-control form-control-sm" name="doc_name" value="<?php echo $work_order-> get_doc_name(); ?>">
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -76,12 +79,12 @@ if($work_order-> get_date() != '0000-00-00'){
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="date">Date:</label>
-                      <input type="text" name="date" id="date" value="<?php echo $date; ?>" class="form-control form-control-sm">
+                      <label for="company">Company:</label>
+                      <input type="text" name="company" value="<?php echo $work_order-> get_company(); ?>" class="form-control form-control-sm">
                     </div>
                     <div class="form-group">
-                      <label for="contract_number">Contract number:</label>
-                      <input type="text" name="contract_number" value="<?php echo $work_order-> get_contract_number(); ?>" class="form-control form-control-sm">
+                      <label for="date">Date:</label>
+                      <input type="text" name="date" id="date" value="<?php echo $date; ?>" class="form-control form-control-sm">
                     </div>
                     <div class="form-group">
                       <label for="client">Client:</label>

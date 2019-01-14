@@ -16,10 +16,10 @@
             ?>
             <a href="<?php echo PURCHASE_ORDER . $purchase_order-> get_id(); ?>" class="list-group-item list-group-item-action">
               <?php
-              if(empty($purchase_order-> get_po_number())){
-                echo 'New';
+              if(empty($purchase_order-> get_doc_name())){
+                echo 'No name';
               }else {
-                echo 'P.O.: ' . $purchase_order-> get_po_number();
+                echo 'PURCHASE ORDER:' . $purchase_order-> get_id_rfq() . '-' . $purchase_order-> get_doc_name();
               }
               ?>
             </a>

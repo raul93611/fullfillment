@@ -3,7 +3,6 @@ class RfqFullFillmentPart{
   private $id;
   private $id_rfq;
   private $name;
-  private $po_number;
   private $business_classification;
   private $description;
   private $po_date;
@@ -26,11 +25,10 @@ class RfqFullFillmentPart{
   private $eta3;
   private $comment_consolidate_others;
 
-  public function __construct($id, $id_rfq, $name, $po_number, $business_classification, $description, $po_date, $eta1, $consolidate_others, $total_vendor_cost, $fedbid, $estimated_final_cost, $estimated_profit_g, $percent_g, $estimated_profit_s, $percent_s, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date, $edit_estimated_final_cost, $eta2, $eta3, $comment_consolidate_others){
+  public function __construct($id, $id_rfq, $name, $business_classification, $description, $po_date, $eta1, $consolidate_others, $total_vendor_cost, $fedbid, $estimated_final_cost, $estimated_profit_g, $percent_g, $estimated_profit_s, $percent_s, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date, $edit_estimated_final_cost, $eta2, $eta3, $comment_consolidate_others){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
     $this-> name = $name;
-    $this-> po_number = $po_number;
     $this-> business_classification = $business_classification;
     $this-> description = $description;
     $this-> po_date = $po_date;
@@ -64,10 +62,6 @@ class RfqFullFillmentPart{
 
   public function get_name(){
     return $this-> name;
-  }
-
-  public function get_po_number(){
-    return $this-> po_number;
   }
 
   public function get_business_classification(){

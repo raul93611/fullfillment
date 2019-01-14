@@ -7,7 +7,6 @@ class PurchaseOrder{
   private $purchase_from;
   private $drop_ship_to;
   private $comments;
-  private $po_number;
   private $ref_quote;
   private $ship_via;
   private $order_date;
@@ -17,8 +16,9 @@ class PurchaseOrder{
   private $total;
   private $message;
   private $taxes;
+  private $doc_name;
 
-  public function __construct($id, $id_rfq, $responsible, $date, $purchase_from, $drop_ship_to, $comments, $po_number, $ref_quote, $ship_via, $order_date, $terms, $subtotal, $shipment_cost, $total, $message, $taxes){
+  public function __construct($id, $id_rfq, $responsible, $date, $purchase_from, $drop_ship_to, $comments, $ref_quote, $ship_via, $order_date, $terms, $subtotal, $shipment_cost, $total, $message, $taxes, $doc_name){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
     $this-> responsible = $responsible;
@@ -26,7 +26,6 @@ class PurchaseOrder{
     $this-> purchase_from = $purchase_from;
     $this-> drop_ship_to = $drop_ship_to;
     $this-> comments = $comments;
-    $this-> po_number = $po_number;
     $this-> ref_quote = $ref_quote;
     $this-> ship_via = $ship_via;
     $this-> order_date = $order_date;
@@ -36,6 +35,7 @@ class PurchaseOrder{
     $this-> total = $total;
     $this-> message = $message;
     $this-> taxes = $taxes;
+    $this-> doc_name = $doc_name;
   }
 
   public function get_id(){
@@ -64,10 +64,6 @@ class PurchaseOrder{
 
   public function get_comments(){
     return $this-> comments;
-  }
-
-  public function get_po_number(){
-    return $this-> po_number;
   }
 
   public function get_ref_quote(){
@@ -104,6 +100,10 @@ class PurchaseOrder{
 
   public function get_taxes(){
     return $this-> taxes;
+  }
+
+  public function get_doc_name(){
+    return $this-> doc_name;
   }
 }
 ?>

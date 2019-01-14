@@ -45,6 +45,7 @@ CREATE TABLE rfq(
   shipping VARCHAR(100) NOT NULL,
   rfp INT NOT NULL,
   fullfillment TINYINT NOT NULL,
+  contract_number VARCHAR(255) NOT NULL,
   PRIMARY KEY(id)
 );
 
@@ -52,7 +53,6 @@ CREATE TABLE rfq_fullfillment_part(
   id INT NOT NULL AUTO_INCREMENT UNIQUE,
   id_rfq INT NOT NULL,
   name VARCHAR(255) NOT NULL,
-  po_number VARCHAR(255) NOT NULL,
   business_classification VARCHAR(255) NOT NULL,
   description TEXT CHARACTER SET utf8 NOT NULL,
   po_date DATE NOT NULL,
@@ -87,8 +87,8 @@ CREATE TABLE work_orders(
   phone VARCHAR(255) NOT NULL,
   client TEXT CHARACTER SET utf8 NOT NULL,
   date DATE NOT NULL,
-  contract_number VARCHAR(255) NOT NULL,
   bpa VARCHAR(255) NOT NULL,
+  doc_name VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
@@ -130,7 +130,6 @@ CREATE TABLE purchase_orders(
   purchase_from TEXT CHARACTER SET utf8 NOT NULL,
   drop_ship_to TEXT CHARACTER SET utf8 NOT NULL,
   comments TEXT CHARACTER SET utf8 NOT NULL,
-  po_number VARCHAR(255) NOT NULL,
   ref_quote VARCHAR(255) NOT NULL,
   ship_via VARCHAR(255) NOT NULL,
   order_date DATE NOT NULL,
@@ -140,6 +139,7 @@ CREATE TABLE purchase_orders(
   total DECIMAL(20,2) NOT NULL,
   message TEXT CHARACTER SET utf8 NOT NULL,
   taxes DECIMAL(20,2) NOT NULL,
+  doc_name VARCHAR(255) NOT NULL;
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
@@ -301,7 +301,6 @@ CREATE TABLE packing_slips(
   id_rfq INT NOT NULL,
   responsible VARCHAR(255) NOT NULL,
   order_date DATE NOT NULL,
-  po VARCHAR(255) NOT NULL,
   customer_contact TEXT CHARACTER SET utf8 NOT NULL,
   ship_to TEXT CHARACTER SET utf8 NOT NULL,
   message TEXT CHARACTER SET utf8 NOT NULL,

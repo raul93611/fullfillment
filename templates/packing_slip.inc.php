@@ -2,7 +2,7 @@
 ConnectionFullFillment::open_connection();
 $packing_slip_exists = PackingSlipRepository::packing_slip_exists(ConnectionFullFillment::get_connection(), $id_rfq);
 if(!$packing_slip_exists){
-  $packing_slip = new PackingSlip('', $id_rfq, '', '', '', '', '');
+  $packing_slip = new PackingSlip('', $id_rfq, '', '', '', '', '', '');
   $id_packing_slip = PackingSlipRepository::insert_packing_slip(ConnectionFullFillment::get_connection(), $packing_slip);
 }
 $packing_slip = PackingSlipRepository::get_packing_slip_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
@@ -38,7 +38,13 @@ if($packing_slip-> get_order_date() == '0000-00-00'){
                 <input type="hidden" name="id_rfq" value="<?php echo $packing_slip-> get_id_rfq(); ?>">
                 <input type="hidden" name="id_packing_slip" value="<?php echo $packing_slip-> get_id(); ?>">
                 <div class="row">
-                  <div class="col-md-12">
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="order_date">Order date:</label>
+                      <input type="text" name="order_date" id="order_date" class="form-control form-control-sm" value="<?php echo $order_date; ?>">
+                    </div>
+                  </div>
+                  <div class="col-md-6">
                     <div class="form-group">
                       <label for="responsible">Responsible:</label>
                       <select class="form-control form-control-sm" name="responsible">
@@ -48,25 +54,11 @@ if($packing_slip-> get_order_date() == '0000-00-00'){
                         ConnectionFullFillment::close_connection();
                         foreach ($users as $key => $user) {
                           ?>
-                          <option value="<?php echo $user-> get_username(); ?>"><?php echo $user-> get_username(); ?></option>
+                          <option <?php if($packing_slip-> get_responsible() == $user-> get_username()){echo 'selected';} ?> value="<?php echo $user-> get_username(); ?>"><?php echo $user-> get_username(); ?></option>
                           <?php
                         }
                         ?>
                       </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="order_date">Order date:</label>
-                      <input type="text" name="order_date" id="order_date" class="form-control form-control-sm" value="<?php echo $order_date; ?>">
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="form-group">
-                      <label for="po">P.O.:</label>
-                      <input type="text" name="po" class="form-control form-control-sm" value="<?php echo $packing_slip-> get_po(); ?>">
                     </div>
                   </div>
                 </div>
