@@ -56,7 +56,7 @@ CREATE TABLE rfq_fullfillment_part(
   business_classification VARCHAR(255) NOT NULL,
   description TEXT CHARACTER SET utf8 NOT NULL,
   po_date DATE NOT NULL,
-  eta DATE NOT NULL,
+  eta1 DATE NOT NULL,
   consolidate_others DECIMAL(20,2) NOT NULL,
   total_vendor_cost DECIMAL(20,2) NOT NULL,
   fedbid DECIMAL(20,2) NOT NULL,
@@ -71,6 +71,9 @@ CREATE TABLE rfq_fullfillment_part(
   invoice TINYINT NOT NULL,
   invoice_date DATETIME NOT NULL,
   edit_estimated_final_cost TINYINT NOT NULL,
+  eta2 DATE NOT NULL,
+  eta3 DATE NOT NULL,
+  comment_consolidate_others VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
