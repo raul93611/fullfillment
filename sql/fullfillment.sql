@@ -144,7 +144,7 @@ CREATE TABLE purchase_orders(
   taxes DECIMAL(20,2) NOT NULL,
   doc_name VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(id_rfq)
+  FOREIGN KEY(id_rfq) 
     REFERENCES rfq(id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
