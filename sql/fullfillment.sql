@@ -139,7 +139,7 @@ CREATE TABLE purchase_orders(
   total DECIMAL(20,2) NOT NULL,
   message TEXT CHARACTER SET utf8 NOT NULL,
   taxes DECIMAL(20,2) NOT NULL,
-  doc_name VARCHAR(255) NOT NULL;
+  doc_name VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
