@@ -141,6 +141,16 @@ START BUTTON STYLES
 .btn-warning{
     font-size: 0.9em !important;
 }
+
+.subitem{
+  background-color: #acce33 !important;
+  border-color: #acce33 !important;
+}
+
+.subitem:hover{
+  background-color: #d0e585 !important;
+  border-color: #d0e585 !important;
+}
 /**************************************START GOBACK BUTTON STYLES**********************************************************/
 #go_back{
   border-radius: 25px !important;
@@ -277,10 +287,28 @@ a.text-primary:hover, a.text-primary:focus {
   color: #0062cc !important;
 }
 /***********************************************************END PRIMARY INDICATOR STYLES*******************************************************************/
+/***********************************************PURCHASE ORDER ITEMS TABLE******************************/
+#purchase_order_items .narrow{
+  width: 50px !important;
+}
 
+#purchase_order_items .amount{
+  min-width: 150px !important;
+}
+/*********************************************WORK ORDERS ITEMS TABLE********************************/
+#work_order_items .narrow{
+  width: 50px !important;
+}
+#packing_slip_items .narrow{
+  width: 50px !important;
+}
 /******************************************************************************************************************************************************
 START TABLE ITEM STYLES
 ********************************************************************************************************************************************************/
+#users_table .narrow{
+  width: 10px;
+}
+
 table{
   font-size: 0.8em;
 }
@@ -309,6 +337,37 @@ table{
   width: 20px !important;
 }
 
+#tabla_items .description{
+  width: 150px !important;
+}
+
+#tabla_items .options{
+  min-width: 130px !important;
+}
+
+#tabla_items .qty{
+  min-width: 80px !important;
+}
+
+.estrechar{
+  word-break: break-all !important;
+}
+
+#tabla_items #numeracion{
+  min-width: 20px !important;
+}
+
+#users #id{
+  width: 20px !important;
+}
+
+#users #options{
+  width: 140px !important;
+}
+#tabla_items #provider{
+  min-width: 250px !important;
+}
+
 /****************************************************************************************************************************************************
 END TABLE ITEM STYLES
 *******************************************************************************************************************************************************/
@@ -333,7 +392,17 @@ END USERS TABLE STYLES
 .footer{
   position: fixed !important;
   bottom: 0 !important;
-  z-index: 2;
+  z-index: 3;
+  width: auto;
+  background-color: #E7E9EB;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.footer_item{
+  position: fixed !important;
+  bottom: 0 !important;
+  z-index: 3;
   width: auto;
   background-color: #E7E9EB;
   border: 1px solid rgba(0, 0, 0, 0.125);
@@ -347,4 +416,39 @@ END USERS TABLE STYLES
 .fc-today{
   background-color: #E5F3FA !important;
   color: #39485A !important;
+}
+/**************************************************TRACKING TABLE************************************/
+#tracking_table .thin{
+  width: 30px !important;
+}
+
+#tracking_table .description{
+  width: 200px !important;
+}
+/******************************************************************************************/
+.card-documents{
+  height: 500px !important;
+}
+
+.card-documents .list-group-item{
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 1px solid #ccc !important;
+  margin-bottom: 1px !important;
+}
+
+.card-documents .close{
+  color: #13A8F0 !important;
+}
+
+@media only screen and (max-width: 1000px){
+  #footer_lg .btn{
+    display: block !important;
+    width: 100% !important;
+    margin-bottom: 5px;
+  }
+  #footer_lg{
+    position: static !important;
+  }
 }

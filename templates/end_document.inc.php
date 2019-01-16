@@ -1,0 +1,60 @@
+<div class="modal fade" id="alert_delete_system" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title text-danger"><i class="fa fa-exclamation-triangle"></i> ALERT</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="alert_delete_body">
+        <h4 class="text-center text-danger">Do you want to continue the action?</h4>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-success" id="continue_button"><i class="fas fa-check"></i> Continue</a>
+      </div>
+    </div>
+  </div>
+</div>
+<footer class="main-footer">
+    <strong>Copyright &copy; 2018.</strong>
+    <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0
+    </div>
+</footer>
+</div>
+<script src="<?php echo PLUGINS; ?>jquery/jquery.min.js"></script>
+<script src="<?php echo PLUGINS; ?>bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="<?php echo PLUGINS; ?>chart.js/Chart.min.js"></script>
+<script src="<?php echo DIST; ?>js/adminlte.js"></script>
+<script src="<?php echo DIST; ?>js/demo.js"></script>
+<script src="<?php echo PLUGINS; ?>jQueryUI/jquery-ui.min.js"></script>
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<script src="<?php echo JS; ?>raphael-min.js"></script>
+<script src="<?php echo PLUGINS; ?>sparkline/jquery.sparkline.min.js"></script>
+<script src="<?php echo PLUGINS; ?>jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
+<script src="<?php echo PLUGINS; ?>jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="<?php echo PLUGINS; ?>knob/jquery.knob.js"></script>
+<script src="<?php echo PLUGINS; ?>input-mask/jquery.inputmask.js"></script>
+<script src="<?php echo PLUGINS; ?>input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="<?php echo PLUGINS; ?>input-mask/jquery.inputmask.extensions.js"></script>
+<script src="<?php echo JS; ?>moment.min.js"></script>
+<script src="<?php echo PLUGINS; ?>daterangepicker/daterangepicker.js"></script>
+<script src="<?php echo PLUGINS; ?>datepicker/bootstrap-datepicker.js"></script>
+<script src="<?php echo PLUGINS; ?>datatables/jquery.dataTables.js"></script>
+<script src="<?php echo PLUGINS; ?>datatables/dataTables.bootstrap4.min.js"></script>
+<script src="<?php echo PLUGINS; ?>ckeditor/ckeditor.js"></script>
+<script src="<?php echo PLUGINS; ?>bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="<?php echo PLUGINS; ?>slimScroll/jquery.slimscroll.min.js"></script>
+<script src="<?php echo PLUGINS; ?>fullcalendar/fullcalendar.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/js/plugins/piexif.min.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/js/plugins/sortable.min.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/js/plugins/purify.min.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/js/fileinput.min.js"></script>
+<script src="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/themes/explorer-fas/theme.min.js"></script>
+<script src="<?php echo PLUGINS; ?>iCheck/icheck.js"></script>
+<script src="<?php echo JS; ?>main_js.js"></script>
+</body>
+</html>

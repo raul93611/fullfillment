@@ -40,6 +40,11 @@ include_once 'templates/validation_login.inc.php';
           width: 35% !important;
         }
       }
+      @media only screen and (max-width: 1000px){
+        .login-box{
+          width: 95% !important;
+        }
+      }
     </style>
   </head>
   <body class="hold-transition login-page" style="font-family: 'Roboto', sans-serif;">
@@ -79,6 +84,9 @@ include_once 'templates/validation_login.inc.php';
         <div class="social-auth-links text-center">
           <p>- OR -</p>
           <a href="http://www.elogicportal.com" class="btn btn_home btn-flat">Home</a>
+        </div>
+        <div class="social-auth-links text-center">
+          <a href="http://localhost/fullfillment/recover_password_form" class="">Did you forget your password?</a>
         </div>
       </div>
     </div>
