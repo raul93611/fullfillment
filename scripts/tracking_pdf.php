@@ -127,44 +127,41 @@ try{
       ConnectionFullFillment::open_connection();
       $subitems = RepositorioSubitemFullFillment::obtener_subitems_por_id_item(ConnectionFullFillment::get_connection(), $item-> obtener_id());
       ConnectionFullFillment::close_connection();
-      if(!count($trackings_subitems)){
-        $trackings_quantity = 1;
-      }else{
-        $trackings_quantity = count($trackings_subitems);
-      }
-      for($k = 0; $k < count($subitems); $k++){
-        $subitem = $subitems[$k];
-        ConnectionFullFillment::open_connection();
-        $trackings_subitems = TrackingSubitemRepository::get_all_trackings_by_id_subitem(ConnectionFullFillment::get_connection(), $subitem-> obtener_id());
-        ConnectionFullFillment::close_connection();
-        if(!count($trackings_subitems)){
-          $trackings_subitems_quantity = 1;
-        }else{
-          $trackings_subitems_quantity = count($trackings_subitems);
-        }
-        $html .= '
-        <tr>
-        <td rowspan="' . $trackings_subitems_quantity . '"></td>
-        <td rowspan="' . $trackings_subitems_quantity . '"><b>Brand name:</b> ' . $subitem-> obtener_brand_project() . '<br><b>Part number:</b> ' . $subitem-> obtener_part_number_project() . '<br><b>Item description:</b><br> ' . nl2br(wordwrap(mb_substr($subitem->obtener_description_project(), 0, 150), 70, '<br>', true)) . '</td>}
-        <td rowspan="' . $trackings_subitems_quantity . '" style="text-align:right;">' . $subitem-> obtener_quantity() . '</td>';
-        if(count($trackings_subitems)){
+      if(count($subitems)){
+        for($k = 0; $k < count($subitems); $k++){
+          $subitem = $subitems[$k];
+          ConnectionFullFillment::open_connection();
+          $trackings_subitems = TrackingSubitemRepository::get_all_trackings_by_id_subitem(ConnectionFullFillment::get_connection(), $subitem-> obtener_id());
+          ConnectionFullFillment::close_connection();
+          if(!count($trackings_subitems)){
+            $trackings_subitems_quantity = 1;
+          }else{
+            $trackings_subitems_quantity = count($trackings_subitems);
+          }
           $html .= '
-          <td>' . $trackings_subitems[0]-> get_quantity() . '</td>
-          <td>' . $trackings_subitems[0]-> get_tracking_number() . '</td>
-          <td>' . RepositorioRfqFullFillmentComment::mysql_date_to_english_format($trackings_subitems[0]-> get_delivery_date()) . '</td>
-          <td>' . $trackings_subitems[0]-> get_signed_by() . '</td>
-          </tr>
-          ';
-          for ($l = 1; $l < count($trackings_subitems); $l++) {
-            $tracking_subitem = $trackings_subitems[$l];
+          <tr>
+          <td rowspan="' . $trackings_subitems_quantity . '"></td>
+          <td rowspan="' . $trackings_subitems_quantity . '"><b>Brand name:</b> ' . $subitem-> obtener_brand_project() . '<br><b>Part number:</b> ' . $subitem-> obtener_part_number_project() . '<br><b>Item description:</b><br> ' . nl2br(wordwrap(mb_substr($subitem->obtener_description_project(), 0, 150), 70, '<br>', true)) . '</td>}
+          <td rowspan="' . $trackings_subitems_quantity . '" style="text-align:right;">' . $subitem-> obtener_quantity() . '</td>';
+          if(count($trackings_subitems)){
             $html .= '
-            <tr>
-            <td>' . $tracking_subitem-> get_quantity() . '</td>
-            <td>' . nl2br($tracking_subitem-> get_tracking_number()) . '</td>
-            <td>' . RepositorioRfqFullFillmentComment::mysql_date_to_english_format($tracking_subitem-> get_delivery_date()) . '</td>
-            <td>' . $tracking_subitem-> get_signed_by() . '</td>
+            <td>' . $trackings_subitems[0]-> get_quantity() . '</td>
+            <td>' . $trackings_subitems[0]-> get_tracking_number() . '</td>
+            <td>' . RepositorioRfqFullFillmentComment::mysql_date_to_english_format($trackings_subitems[0]-> get_delivery_date()) . '</td>
+            <td>' . $trackings_subitems[0]-> get_signed_by() . '</td>
             </tr>
             ';
+            for ($l = 1; $l < count($trackings_subitems); $l++) {
+              $tracking_subitem = $trackings_subitems[$l];
+              $html .= '
+              <tr>
+              <td>' . $tracking_subitem-> get_quantity() . '</td>
+              <td>' . nl2br($tracking_subitem-> get_tracking_number()) . '</td>
+              <td>' . RepositorioRfqFullFillmentComment::mysql_date_to_english_format($tracking_subitem-> get_delivery_date()) . '</td>
+              <td>' . $tracking_subitem-> get_signed_by() . '</td>
+              </tr>
+              ';
+            }
           }
         }
       }
