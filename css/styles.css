@@ -442,6 +442,10 @@ END USERS TABLE STYLES
   color: #13A8F0 !important;
 }
 
+#final_quote_toggle, #final_re_quote_toggle{
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 1000px){
   #footer_lg .btn{
     display: block !important;

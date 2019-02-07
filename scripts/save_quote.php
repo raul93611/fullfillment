@@ -6,6 +6,18 @@ if (isset($_POST['guardar_cambios_cotizacion'])) {
   if($cotizacion_recuperada-> obtener_canal() == 'FedBid'){
     RepositorioRfqFullFillment::guardar_total_price_total_cost_fedbid(ConnectionFullFillment::get_connection(), $_POST['total_cost_fedbid'], $_POST['total_price_fedbid'], $_POST['id_rfq']);
   }else{
+    if($cotizacion_recuperada -> obtener_canal() != 'FedBid'){
+      $items = RepositorioItemFullFillment::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $_POST['id_rfq']);
+      $description = mb_substr($items[0]-> obtener_description_project(), 0, 100);
+    }else{
+      $description = '';
+    }
+    $po_date = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['po_date']);
+    $eta1 = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['eta1']);
+    $eta2 = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['eta2']);
+    $eta3 = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['eta3']);
+    RfqFullFillmentPartRepository::save_rfq_fullfillmet_info(ConnectionFullFillment::get_connection(), $_POST['rfq_fullfillment_part_name'], $_POST['business_classification'], $description, $po_date, $eta1, $eta2, $eta3, $_POST['comment_consolidate_others'], $_POST['consolidate_others'], $_POST['total_vendor_cost'], $_POST['rfq_fullfillment_part_fedbid'], $_POST['estimated_final_cost'], $_POST['estimated_profit_g'], $_POST['percent_g'], $_POST['estimated_profit_s'], $_POST['percent_s'], $_POST['id_rfq_fullfillment_part']);
+
     $id_items = explode(',', $_POST['id_items']);
     $id_subitems = explode(',', $_POST['id_subitems']);
     $partes_total_price = explode(',', $_POST['partes_total_price']);

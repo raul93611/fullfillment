@@ -9,27 +9,51 @@ include_once '../rfp/app/Redirection.inc.php';
 include_once 'app/CommentRfqFullFillment.inc.php';
 include_once 'app/RepositorioRfqFullFillmentComment.inc.php';
 
+
 include_once 'app/RfqFullFillmentPart.inc.php';
 include_once 'app/RfqFullFillmentPartRepository.inc.php';
 
 include_once '../rfq/app/Conexion.inc.php';
 
+include_once '../rfq/app/Comment.inc.php';
+include_once '../rfq/app/RepositorioComment.inc.php';
+
 include_once '../rfq/app/Usuario.inc.php';
 include_once '../rfq/app/RepositorioUsuario.inc.php';
 
 include_once '../rfq/app/Rfq.inc.php';
+include_once '../rfq/app/RepositorioRfq.inc.php';
 include_once 'app/RepositorioRfqFullFillment.inc.php';
 
+include_once '../rfq/app/ReQuote.inc.php';
+include_once '../rfq/app/ReQuoteRepository.inc.php';
+
+include_once '../rfq/app/ReQuoteItem.inc.php';
+include_once '../rfq/app/ReQuoteItemRepository.inc.php';
+
+include_once '../rfq/app/RequoteProvider.inc.php';
+include_once '../rfq/app/ReQuoteProviderRepository.inc.php';
+
+include_once '../rfq/app/ReQuoteSubitem.inc.php';
+include_once '../rfq/app/ReQuoteSubitemRepository.inc.php';
+
+include_once '../rfq/app/ReQuoteSubitemProvider.inc.php';
+include_once '../rfq/app/ReQuoteSubitemProviderRepository.inc.php';
+
 include_once '../rfq/app/Item.inc.php';
+include_once '../rfq/app/RepositorioItem.inc.php';
 include_once 'app/RepositorioItemFullFillment.inc.php';
 
 include_once '../rfq/app/Provider.inc.php';
+include_once '../rfq/app/RepositorioProvider.inc.php';
 include_once 'app/RepositorioProviderFullFillment.inc.php';
 
 include_once '../rfq/app/Subitem.inc.php';
+include_once '../rfq/app/RepositorioSubitem.inc.php';
 include_once 'app/RepositorioSubitemFullFillment.inc.php';
 
 include_once '../rfq/app/ProviderSubitem.inc.php';
+include_once '../rfq/app/RepositorioProviderSubitem.inc.php';
 include_once 'app/RepositorioProviderSubitemFullFillment.inc.php';
 
 include_once '../rfp/app/User.inc.php';

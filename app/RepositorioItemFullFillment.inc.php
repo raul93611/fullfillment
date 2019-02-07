@@ -229,12 +229,11 @@ class RepositorioItemFullFillment{
   public static function escribir_items($id_rfq) {
     ConnectionFullFillment::open_connection();
     $cotizacion = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
+    $rfq_fullfillment_part = RfqFullFillmentPartRepository::get_rfq_fullfillment_part_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
     $items = self::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
     ConnectionFullFillment::close_connection();
     if (count($items)) {
       ?>
-      <br>
-      <h2 id="caja_items">Items:</h2>
       <div class="row">
         <div class="col-md-3">
         <?php
@@ -385,6 +384,35 @@ class RepositorioItemFullFillment{
       <input type="hidden" id="unit_prices_subitems" name="unit_prices_subitems" value="">
       <input type="hidden" id="total_cost" name="total_cost" value="">
       <input type="hidden" id="total_price" name="total_price" value="">
+      <br>
+      <label>Shipping:</label>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <textarea class="form-control form-control-sm" rows="1" id="shipping" name="shipping" placeholder="Enter shipping ..."><?php echo $cotizacion->obtener_shipping(); ?></textarea>
+            <input type="hidden" name="shipping_original" value="<?php echo $cotizacion->obtener_shipping(); ?>">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="number" step=".01" class="form-control form-control-sm" id="shipping_cost" name="shipping_cost" value="<?php echo $cotizacion->obtener_shipping_cost(); ?>">
+            <input type="hidden" name="shipping_cost_original" value="<?php echo $cotizacion->obtener_shipping_cost(); ?>">
+          </div>
+        </div>
+      </div>
+      <label>Consolidate & others:</label>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <textarea class="form-control form-control-sm" rows="1" name="comment_consolidate_others" ><?php echo $rfq_fullfillment_part-> get_comment_consolidate_others(); ?></textarea>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <input type="number" step=".01" class="form-control form-control-sm" id="consolidate_others" name="consolidate_others" value="<?php echo $rfq_fullfillment_part-> get_consolidate_others(); ?>">
+          </div>
+        </div>
+      </div>
       <?php
     }
   }

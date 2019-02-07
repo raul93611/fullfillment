@@ -12,7 +12,6 @@ class WorkOrderRepository{
         $sentence-> bindParam(':phone', $work_order-> get_phone(), PDO::PARAM_STR);
         $sentence-> bindParam(':client', $work_order-> get_client(), PDO::PARAM_STR);
         $sentence-> bindParam(':date', $work_order-> get_date(), PDO::PARAM_STR);
-        $sentence-> bindParam(':contract_number', $work_order-> get_contract_number(), PDO::PARAM_STR);
         $sentence-> bindParam(':bpa', $work_order-> get_bpa(), PDO::PARAM_STR);
         $sentence-> bindParam(':doc_name', $work_order-> get_doc_name(), PDO::PARAM_STR);
         $sentence-> execute();

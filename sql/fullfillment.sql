@@ -70,7 +70,6 @@ CREATE TABLE rfq_fullfillment_part(
   in_process_date DATETIME NOT NULL,
   invoice TINYINT NOT NULL,
   invoice_date DATETIME NOT NULL,
-  edit_estimated_final_cost TINYINT NOT NULL,
   eta2 DATE NOT NULL,
   eta3 DATE NOT NULL,
   comment_consolidate_others VARCHAR(255) NOT NULL,
@@ -144,7 +143,7 @@ CREATE TABLE purchase_orders(
   taxes DECIMAL(20,2) NOT NULL,
   doc_name VARCHAR(255) NOT NULL,
   PRIMARY KEY(id),
-  FOREIGN KEY(id_rfq) 
+  FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT

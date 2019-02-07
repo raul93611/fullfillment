@@ -20,12 +20,11 @@ class RfqFullFillmentPart{
   private $in_process_date;
   private $invoice;
   private $invoice_date;
-  private $edit_estimated_final_cost;
   private $eta2;
   private $eta3;
   private $comment_consolidate_others;
 
-  public function __construct($id, $id_rfq, $name, $business_classification, $description, $po_date, $eta1, $consolidate_others, $total_vendor_cost, $fedbid, $estimated_final_cost, $estimated_profit_g, $percent_g, $estimated_profit_s, $percent_s, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date, $edit_estimated_final_cost, $eta2, $eta3, $comment_consolidate_others){
+  public function __construct($id, $id_rfq, $name, $business_classification, $description, $po_date, $eta1, $consolidate_others, $total_vendor_cost, $fedbid, $estimated_final_cost, $estimated_profit_g, $percent_g, $estimated_profit_s, $percent_s, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date, $eta2, $eta3, $comment_consolidate_others){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
     $this-> name = $name;
@@ -46,7 +45,6 @@ class RfqFullFillmentPart{
     $this-> in_process_date = $in_process_date;
     $this-> invoice = $invoice;
     $this-> invoice_date = $invoice_date;
-    $this-> edit_estimated_final_cost = $edit_estimated_final_cost;
     $this-> eta2 = $eta2;
     $this-> eta3 = $eta3;
     $this-> comment_consolidate_others = $comment_consolidate_others;
@@ -130,10 +128,6 @@ class RfqFullFillmentPart{
 
   public function get_invoice_date(){
     return $this-> invoice_date;
-  }
-
-  public function get_edit_estimated_final_cost(){
-    return $this-> edit_estimated_final_cost;
   }
 
   public function get_eta2(){

@@ -1,4 +1,14 @@
 $(document).ready(function(){
+  /*********************************************FINAL QUOTE MANAGEMENT*************************/
+  $('#final_quote').hide();
+  $('#final_re_quote').hide();
+
+  $('#final_quote_toggle').click(function(){
+    $('#final_quote').toggle('fade');
+  });
+  $('#final_re_quote_toggle').click(function(){
+    $('#final_re_quote').toggle('fade');
+  });
   /***************************SAVE EDIT USER******************************************************/
   $('#edit_user_form #save_edit_user').click(function(){
     $.post('http://' + document.location.hostname + '/fullfillment/save_edit_user/', $('#edit_user_form').serialize(), function(res){
@@ -383,10 +393,6 @@ $(document).ready(function(){
   $('#delivery_date_subitem').daterangepicker({
     singleDatePicker: true
   });
-  /**************************************SHOW INFO RFQ FULLFILLMENT MODAL********/
-  $('#add_rfq_fullfillment_info').click(function(){
-    $('#info_rfq_fullfillment_modal').modal();
-  });
   /*********************************SHOW COMMENTS*******************************/
   $('#quote_comments').click(function(){
     $('#todos_commentarios_quote').modal();
@@ -478,10 +484,16 @@ $(document).ready(function(){
     }else{
       var shipping_cost = 0;
     }
+
+    if(!isNaN($('#consolidate_others').val()) && $('#consolidate_others').val() != ''){
+      var consolidate_others = $('#consolidate_others').val();
+    }else{
+      var consolidate_others = 0;
+    }
     var contador_subitems = 0;
     var i = 0;
     var j = 1;
-    var total1 = 0;
+    var total1 = 0 + parseFloat(consolidate_others);
     var total2 = 0 + parseFloat(shipping_cost);
     var partes_total_price = '';
     var partes_total_price_subitems = '';
@@ -602,55 +614,6 @@ $(document).ready(function(){
     $('#total2').html('$ ' + total2);
     $('#total_quantity').html(total_quantity);
     $('#total_additional').html('$ ' + total_additional);
-
-    /***********************FULLFILLMENT PART**************/
-    if($('#channel').length != 0 && $('#channel').val() == 'FedBid'){
-      var vendors_estimate = $('#total_cost_fedbid').val();
-      var equipment_amount = $('#total_price_fedbid').val();
-    }else{
-      var vendors_estimate = total1;
-      var equipment_amount = total2;
-    }
-    $('#vendors_estimate').val(vendors_estimate);
-    $('#equipment_amount').val(equipment_amount);
-    if(!isNaN($('#consolidate_others').val()) && $('#consolidate_others').val() != ''){
-      var consolidate_others = $('#consolidate_others').val();
-    }else{
-      var consolidate_others = 0;
-    }
-    var total_vendor_cost = parseFloat(vendors_estimate) + parseFloat(consolidate_others);
-    total_vendor_cost = total_vendor_cost.toFixed(2);
-    if($('#rfq_fullfillment_part_fedbid').length != 0){
-      if(!isNaN($('#rfq_fullfillment_part_fedbid').val()) && $('#rfq_fullfillment_part_fedbid').val() != ''){
-        var rfq_fullfillment_part_fedbid = $('#rfq_fullfillment_part_fedbid').val();
-      }else{
-        var rfq_fullfillment_part_fedbid = 0;
-      }
-    }else{
-      var rfq_fullfillment_part_fedbid = 0;
-    }
-    if($('#edit_estimated_final_cost').prop('checked')){
-      $('#estimated_final_cost').removeAttr('readonly');
-      var estimated_final_cost = $('#estimated_final_cost').val();
-    }else{
-      $('#estimated_final_cost').attr('readonly', 'readonly');
-      var estimated_final_cost = parseFloat(total_vendor_cost) + parseFloat(rfq_fullfillment_part_fedbid);
-      estimated_final_cost = estimated_final_cost.toFixed(2);
-    }
-    var estimated_profit_g = parseFloat(equipment_amount) - parseFloat(total_vendor_cost);
-    estimated_profit_g = estimated_profit_g.toFixed(2);
-    var percent_g = (parseFloat(estimated_profit_g)/parseFloat(equipment_amount))*100;
-    percent_g = percent_g.toFixed(2);
-    var estimated_profit_s = parseFloat(equipment_amount) - parseFloat(estimated_final_cost);
-    estimated_profit_s = estimated_profit_s.toFixed(2);
-    var percent_s = (parseFloat(estimated_profit_s)/parseFloat(equipment_amount))*100;
-    percent_s = percent_s.toFixed(2);
-    $('#total_vendor_cost').val(total_vendor_cost);
-    $('#estimated_final_cost').val(estimated_final_cost);
-    $('#estimated_profit_g').val(estimated_profit_g);
-    $('#percent_g').val(percent_g);
-    $('#estimated_profit_s').val(estimated_profit_s);
-    $('#percent_s').val(percent_s);
   }, 400);
 
 
@@ -676,10 +639,17 @@ $(document).ready(function(){
     }else{
       var shipping_cost = 0;
     }
+
+    if(!isNaN($('#consolidate_others').val()) && $('#consolidate_others').val() != ''){
+      var consolidate_others = $('#consolidate_others').val();
+    }else{
+      var consolidate_others = 0;
+    }
+
     var contador_subitems = 0;
     var i = 0;
     var j = 1;
-    var total1 = 0;
+    var total1 = 0 + parseFloat(consolidate_others);
     var total2 = 0 + parseFloat(shipping_cost);
     var partes_total_price = '';
     var partes_total_price_subitems = '';
