@@ -4,7 +4,7 @@ switch ($level) {
     include_once 'templates/admin_dashboard.inc.php';
     break;
   case 2:
-    include_once 'templates/user_dashboard.inc.php';
+    Redirection::redirect1(RECEIVED_QUOTES);
   default:
     break;
 }
