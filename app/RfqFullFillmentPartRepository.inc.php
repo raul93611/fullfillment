@@ -52,10 +52,10 @@ class RfqFullFillmentPartRepository{
     return $rfq_fullfillment_part;
   }
 
-  public static function save_rfq_fullfillmet_info($connection, $name, $business_classification, $description, $po_date, $eta1, $eta2, $eta3, $comment_consolidate_others, $consolidate_others, $total_vendor_cost, $fedbid, $estimated_final_cost, $estimated_profit_g, $percent_g, $estimated_profit_s, $percent_s, $id_rfq_fullfillment_part){
+  public static function save_rfq_fullfillmet_info($connection, $name, $business_classification, $description, $po_date, $eta1, $eta2, $eta3, $comment_consolidate_others, $consolidate_others, $id_rfq_fullfillment_part){
     if(isset($connection)){
       try{
-        $sql = 'UPDATE rfq_fullfillment_part SET name = :name, business_classification = :business_classification, description = :description, po_date = :po_date, eta1 = :eta1, eta2 = :eta2, eta3 = :eta3, comment_consolidate_others = :comment_consolidate_others, consolidate_others = :consolidate_others, total_vendor_cost = :total_vendor_cost, fedbid = :fedbid, estimated_final_cost = :estimated_final_cost, estimated_profit_g = :estimated_profit_g, percent_g = :percent_g, estimated_profit_s = :estimated_profit_s, percent_s = :percent_s WHERE id = :id_rfq_fullfillment_part';
+        $sql = 'UPDATE rfq_fullfillment_part SET name = :name, business_classification = :business_classification, description = :description, po_date = :po_date, eta1 = :eta1, eta2 = :eta2, eta3 = :eta3, comment_consolidate_others = :comment_consolidate_others, consolidate_others = :consolidate_others WHERE id = :id_rfq_fullfillment_part';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':name', $name, PDO::PARAM_STR);
         $sentence-> bindParam(':business_classification', $business_classification, PDO::PARAM_STR);
@@ -66,13 +66,6 @@ class RfqFullFillmentPartRepository{
         $sentence-> bindParam(':eta3', $eta3, PDO::PARAM_STR);
         $sentence-> bindParam(':comment_consolidate_others', $comment_consolidate_others, PDO::PARAM_STR);
         $sentence-> bindParam(':consolidate_others', $consolidate_others, PDO::PARAM_STR);
-        $sentence-> bindParam(':total_vendor_cost', $total_vendor_cost, PDO::PARAM_STR);
-        $sentence-> bindParam(':fedbid', $fedbid, PDO::PARAM_STR);
-        $sentence-> bindParam(':estimated_final_cost', $estimated_final_cost, PDO::PARAM_STR);
-        $sentence-> bindParam(':estimated_profit_g', $estimated_profit_g, PDO::PARAM_STR);
-        $sentence-> bindParam(':percent_g', $percent_g, PDO::PARAM_STR);
-        $sentence-> bindParam(':estimated_profit_s', $estimated_profit_s, PDO::PARAM_STR);
-        $sentence-> bindParam(':percent_s', $percent_s, PDO::PARAM_STR);
         $sentence-> bindParam(':id_rfq_fullfillment_part', $id_rfq_fullfillment_part, PDO::PARAM_STR);
         $sentence-> execute();
       }catch(PDOException $ex){
@@ -100,6 +93,20 @@ class RfqFullFillmentPartRepository{
         $sql = 'UPDATE rfq_fullfillment_part SET in_process = 1, in_process_date = NOW() WHERE id_rfq = :id_rfq';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
+
+  public function set_fedbid($connection, $fedbid, $id_rfq_fullfillment_part){
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE rfq_fullfillment_part SET fedbid = :fedbid WHERE id = :id_rfq_fullfillment_part';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':fedbid', $fedbid, PDO::PARAM_STR);
+        $sentence-> bindParam(':id_rfq_fullfillment_part', $id_rfq_fullfillment_part, PDO::PARAM_STR);
         $sentence-> execute();
       }catch(PDOException $ex){
         print 'ERROR:' . $ex->getMessage() . '<br>';
