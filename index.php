@@ -31,7 +31,7 @@ include_once '../rfq/app/ReQuoteRepository.inc.php';
 include_once '../rfq/app/ReQuoteItem.inc.php';
 include_once '../rfq/app/ReQuoteItemRepository.inc.php';
 
-include_once '../rfq/app/RequoteProvider.inc.php';
+include_once '../rfq/app/ReQuoteProvider.inc.php';
 include_once '../rfq/app/ReQuoteProviderRepository.inc.php';
 
 include_once '../rfq/app/ReQuoteSubitem.inc.php';
