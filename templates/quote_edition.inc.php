@@ -7,33 +7,18 @@
     <input type="hidden" name="id_rfq_fullfillment_part" value="<?php echo $rfq_fullfillment_part-> get_id(); ?>">
     <div class="card-body">
       <div class="row">
-        <?php
-        if($quote-> obtener_canal() == 'FedBid'){
-          ?>
-          <div class="col-md-6 mb-1 mt-1">
-            <button type="button" id="purchase_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Purchase order</button>
-          </div>
-          <div class="col-md-6 mb-1 mt-1">
-            <button type="button" id="work_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Work order</button>
-          </div>
-          <?php
-        }else{
-          ?>
-          <div class="col-md-3 mb-1 mt-1">
-            <a href="<?php echo TRACKING . $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Tracking</a>
-          </div>
-          <div class="col-md-3 mb-1 mt-1">
-            <button type="button" id="purchase_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Purchase order</button>
-          </div>
-          <div class="col-md-3 mb-1 mt-1">
-            <button type="button" id="work_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Work order</button>
-          </div>
-          <div class="col-md-3 mb-2 mt-1">
-            <a href="<?php echo PACKING_SLIP . $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Packing slip</a>
-          </div>
-          <?php
-        }
-        ?>
+        <div class="col-md-3 mb-1 mt-1">
+          <a href="<?php echo TRACKING . $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Tracking</a>
+        </div>
+        <div class="col-md-3 mb-1 mt-1">
+          <button type="button" id="purchase_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Purchase order</button>
+        </div>
+        <div class="col-md-3 mb-1 mt-1">
+          <button type="button" id="work_orders_button" name="<?php echo $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Work order</button>
+        </div>
+        <div class="col-md-3 mb-2 mt-1">
+          <a href="<?php echo PACKING_SLIP . $quote-> obtener_id(); ?>" class="btn btn-primary btn-block"><i class="fas fa-file"></i> Packing slip</a>
+        </div>
       </div>
       <div class="row">
         <div class="col-md-6">
@@ -175,33 +160,7 @@
     </div>
     <div class="card-body">
       <?php
-      if($quote-> obtener_canal() == 'FedBid'){
-        ?>
-        <div class="row">
-          <div class="col-md-6">
-            <label for="total_cost_fedbid">Total cost:</label>
-            <input type="number" step=".01" name="total_cost_fedbid" id="total_cost_fedbid" class="form-control form-control-sm" value="<?php echo $quote-> obtener_total_cost(); ?>">
-            <input type="hidden" name="" value="">
-          </div>
-          <div class="col-md-6">
-            <label for="total_price_fedbid">Total price:</label>
-            <input type="number" step=".01" name="total_price_fedbid" id="total_price_fedbid" class="form-control form-control-sm" value="<?php echo $quote-> obtener_total_price(); ?>">
-          </div>
-        </div>
-        <br>
-        <label>FedBid:</label>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <input type="number" step=".01" class="form-control form-control-sm" id="fedbid" name="fedbid" value="<?php echo $rfq_fullfillment_part-> get_fedbid(); ?>">
-            </div>
-          </div>
-        </div>
-        <br>
-        <?php
-      }else{
-        RepositorioItemFullFillment::escribir_items($quote-> obtener_id());
-      }
+      RepositorioItemFullFillment::escribir_items($quote-> obtener_id());
       ?>
     </div>
   </div>
@@ -265,13 +224,7 @@
     ?>
     "><i class="fa fa-reply"></i></a>
     <button type="submit" class="btn btn-success" id="save_item" name="guardar_cambios_cotizacion"><i class="fa fa-check"></i> Save</button>
-    <?php
-    if($quote-> obtener_canal() != 'FedBid'){
-      ?>
-      <a class="btn btn-primary add_item_charter" href="<?php echo ADD_ITEM . $quote->obtener_id(); ?>"><i class="fa fa-plus-circle"></i> Add item</a>
-      <?php
-    }
-    ?>
+    <a class="btn btn-primary add_item_charter" href="<?php echo ADD_ITEM . $quote->obtener_id(); ?>"><i class="fa fa-plus-circle"></i> Add item</a>
     <a href="#" id="add_comment" class="btn btn-primary add_item_charter"><i class="fas fa-plus"></i> Add comment</a>
     <div class="btn-group dropup">
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

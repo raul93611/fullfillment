@@ -7,62 +7,56 @@ if (isset($_POST['guardar_cambios_cotizacion'])) {
   $eta2 = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['eta2']);
   $eta3 = RepositorioRfqFullFillmentComment::english_format_to_mysql_date($_POST['eta3']);
   $cotizacion_recuperada = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $_POST['id_rfq']);
-  if($cotizacion_recuperada-> obtener_canal() == 'FedBid'){
-    RepositorioRfqFullFillment::guardar_total_price_total_cost_fedbid(ConnectionFullFillment::get_connection(), $_POST['total_cost_fedbid'], $_POST['total_price_fedbid'], $_POST['id_rfq']);
-    RfqFullFillmentPartRepository::set_fedbid(ConnectionFullFillment::get_connection(), $_POST['fedbid'], $_POST['id_rfq_fullfillment_part']);
-    RfqFullFillmentPartRepository::save_rfq_fullfillmet_info(ConnectionFullFillment::get_connection(), $_POST['rfq_fullfillment_part_name'], $_POST['business_classification'], '', $po_date, $eta1, $eta2, $eta3, '', 0, $_POST['id_rfq_fullfillment_part']);
-  }else{
-    $items = RepositorioItemFullFillment::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $_POST['id_rfq']);
-    $description = mb_substr($items[0]-> obtener_description_project(), 0, 100);
-    RfqFullFillmentPartRepository::save_rfq_fullfillmet_info(ConnectionFullFillment::get_connection(), $_POST['rfq_fullfillment_part_name'], $_POST['business_classification'], $description, $po_date, $eta1, $eta2, $eta3, $_POST['comment_consolidate_others'], $_POST['consolidate_others'], $_POST['id_rfq_fullfillment_part']);
+  $items = RepositorioItemFullFillment::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $_POST['id_rfq']);
+  $description = mb_substr($items[0]-> obtener_description_project(), 0, 100);
+  RfqFullFillmentPartRepository::save_rfq_fullfillmet_info(ConnectionFullFillment::get_connection(), $_POST['rfq_fullfillment_part_name'], $_POST['business_classification'], $description, $po_date, $eta1, $eta2, $eta3, $_POST['comment_consolidate_others'], $_POST['consolidate_others'], $_POST['id_rfq_fullfillment_part']);
 
-    $id_items = explode(',', $_POST['id_items']);
-    $id_subitems = explode(',', $_POST['id_subitems']);
-    $partes_total_price = explode(',', $_POST['partes_total_price']);
-    $partes_total_price_subitems = explode(',', $_POST['partes_total_price_subitems']);
-    $unit_prices = explode(',', $_POST['unit_prices']);
-    $unit_prices_subitems = explode(',', $_POST['unit_prices_subitems']);
-    $additional = explode(',', $_POST['additional']);
-    $additional_subitems = explode(',', $_POST['additional_subitems']);
-    for ($i = 0; $i < count($id_items); $i++) {
-      RepositorioItemFullFillment::insertar_calculos(ConnectionFullFillment::get_connection(), $unit_prices[$i], $partes_total_price[$i], $additional[$i], $id_items[$i]);
-    }
+  $id_items = explode(',', $_POST['id_items']);
+  $id_subitems = explode(',', $_POST['id_subitems']);
+  $partes_total_price = explode(',', $_POST['partes_total_price']);
+  $partes_total_price_subitems = explode(',', $_POST['partes_total_price_subitems']);
+  $unit_prices = explode(',', $_POST['unit_prices']);
+  $unit_prices_subitems = explode(',', $_POST['unit_prices_subitems']);
+  $additional = explode(',', $_POST['additional']);
+  $additional_subitems = explode(',', $_POST['additional_subitems']);
+  for ($i = 0; $i < count($id_items); $i++) {
+    RepositorioItemFullFillment::insertar_calculos(ConnectionFullFillment::get_connection(), $unit_prices[$i], $partes_total_price[$i], $additional[$i], $id_items[$i]);
+  }
 
-    for($j = 0; $j < count($id_subitems); $j++){
-      RepositorioSubitemFullFillment::insertar_calculos(ConnectionFullFillment::get_connection(), $unit_prices_subitems[$j], $partes_total_price_subitems[$j], $additional_subitems[$j], $id_subitems[$j]);
-    }
-    switch($_POST['payment_terms']){
-      case 'Net 30':
-      $payment_terms = 'Net 30';
-      break;
-      case 'Net 30/CC':
-      $payment_terms = 'Net 30/CC';
-      break;
-    }
-    $cotizacion_editada3 = RepositorioRfqFullFillment::actualizar_shipping(ConnectionFullFillment::get_connection(), htmlspecialchars($_POST['shipping']), $_POST['shipping_cost'], $_POST['id_rfq']);
-    $cotizacion_editada1 = RepositorioRfqFullFillment::actualizar_taxes_profit(ConnectionFullFillment::get_connection(), $_POST['taxes'], $_POST['profit'], $_POST['total_cost'], $_POST['total_price'], $_POST['additional_general'], $_POST['id_rfq']);
-    $cotizacion_editada2 = RepositorioRfqFullFillment::actualizar_payment_terms(ConnectionFullFillment::get_connection(), $payment_terms, $_POST['id_rfq']);
-    $cambios = [];
+  for($j = 0; $j < count($id_subitems); $j++){
+    RepositorioSubitemFullFillment::insertar_calculos(ConnectionFullFillment::get_connection(), $unit_prices_subitems[$j], $partes_total_price_subitems[$j], $additional_subitems[$j], $id_subitems[$j]);
+  }
+  switch($_POST['payment_terms']){
+    case 'Net 30':
+    $payment_terms = 'Net 30';
+    break;
+    case 'Net 30/CC':
+    $payment_terms = 'Net 30/CC';
+    break;
+  }
+  $cotizacion_editada3 = RepositorioRfqFullFillment::actualizar_shipping(ConnectionFullFillment::get_connection(), htmlspecialchars($_POST['shipping']), $_POST['shipping_cost'], $_POST['id_rfq']);
+  $cotizacion_editada1 = RepositorioRfqFullFillment::actualizar_taxes_profit(ConnectionFullFillment::get_connection(), $_POST['taxes'], $_POST['profit'], $_POST['total_cost'], $_POST['total_price'], $_POST['additional_general'], $_POST['id_rfq']);
+  $cotizacion_editada2 = RepositorioRfqFullFillment::actualizar_payment_terms(ConnectionFullFillment::get_connection(), $payment_terms, $_POST['id_rfq']);
+  $cambios = [];
 
-    if($_POST['taxes'] != $_POST['taxes_original']){
-      $cambios[] = 'taxes';
-    }
+  if($_POST['taxes'] != $_POST['taxes_original']){
+    $cambios[] = 'taxes';
+  }
 
-    if($_POST['profit'] != $_POST['profit_original']){
-      $cambios[] = 'profit';
-    }
+  if($_POST['profit'] != $_POST['profit_original']){
+    $cambios[] = 'profit';
+  }
 
-    if($_POST['additional_general'] != $_POST['additional_general_original']){
-      $cambios[] = 'additional_general';
-    }
+  if($_POST['additional_general'] != $_POST['additional_general_original']){
+    $cambios[] = 'additional_general';
+  }
 
-    if($_POST['shipping'] != $_POST['shipping_original']){
-      $cambios[] = 'shipping';
-    }
+  if($_POST['shipping'] != $_POST['shipping_original']){
+    $cambios[] = 'shipping';
+  }
 
-    if($_POST['shipping_cost'] != $_POST['shipping_cost_original']){
-      $cambios[] = 'shipping_cost';
-    }
+  if($_POST['shipping_cost'] != $_POST['shipping_cost_original']){
+    $cambios[] = 'shipping_cost';
   }
   $directorio = $_SERVER['DOCUMENT_ROOT'] . '/fullfillment/documents/rfq_team/' . $_POST['id_rfq'];
   $documentos = array_filter($_FILES['documents']['name']);
