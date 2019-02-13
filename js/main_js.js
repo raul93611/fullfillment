@@ -312,10 +312,10 @@ $(document).ready(function(){
     var array_options = [];
     if(files != ''){
       files = files.split(',');
-
+      console.log(files);
       for (var i = 0; i < files.length; i++) {
         array_div_files.push('"<h3>' + "<i class='" + "fas fa-file" + "'></i>" + '</h3>"');
-        array_options.push('{"previewAsData": false, "caption": "' + files[i] + '", "url": "' + 'http://' + document.location.hostname + '/fullfillment/delete_document/' + $('input[name="id_rfq"]').val() + '/' + files[i] + '", "downloadUrl": "' + 'http://' + document.location.hostname + '/fullfillment/documents/' + $('input[name="id_rfq"]').val() + '/' + files[i] + '", "key": ' + i + '}');
+        array_options.push('{"previewAsData": false, "caption": "' + files[i] + '", "url": "' + 'http://' + document.location.hostname + '/fullfillment/delete_document/' + $('input[name="id_rfq"]').val() + '/' + files[i] + '", "downloadUrl": "' + 'http://' + document.location.hostname + '/fullfillment/documents/rfq_team/' + $('input[name="id_rfq"]').val() + '/' + files[i] + '", "key": ' + i + '}');
       }
       array_div_files.join(',');
       array_div_files = '[' + array_div_files + ']';
