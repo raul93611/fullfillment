@@ -111,6 +111,18 @@
               <p>Employee docs</p>
             </a>
           </li>
+          <li class="nav-item has-treeview menu-open">
+            <a href="<?php echo EXCEL_REPORTS; ?>" class="nav-link
+            <?php
+            if ($current_manager == 'excel_reports') {
+              echo 'active';
+            }
+            ?>
+               ">
+              <i class="fas fa-file-excel nav-icon"></i>
+              <p>Excel reports</p>
+            </a>
+          </li>
         </li>
       </ul>
     </nav>

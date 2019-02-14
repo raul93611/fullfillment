@@ -233,8 +233,10 @@ if($parts_route[0] == 'fullfillment'){
         $chosen_route = 'scripts/load_users.php';
         break;
       case 'enable_user':
-        $id_user = $parts_route[2];
         $chosen_route = 'scripts/enable_user.php';
+        break;
+      case 'generate_excel_report':
+        $chosen_route = 'scripts/generate_excel_report.php';
         break;
       default:
         break;
@@ -261,7 +263,9 @@ if($parts_route[0] == 'fullfillment'){
             break;
           case 'employee_docs_page':
             $current_manager = 'employee_docs_page';
-            $chosen_route = 'views/profile.php';
+            break;
+          case 'excel_reports':
+            $current_manager = 'excel_reports';
             break;
           default:
             break;

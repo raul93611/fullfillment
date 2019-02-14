@@ -75,11 +75,12 @@ if(isset($current_manager)){
     case 'work_order':
       include_once 'templates/work_order.inc.php';
       break;
+    case 'excel_reports':
+      include_once 'templates/excel_reports.inc.php';
+      break;
     default:
       break;
   }
-}else{
-  //Redirection::redirect1(SERVER . 'sadsadsadsadsa');
 }
 include_once 'templates/end_document.inc.php';
 ?>

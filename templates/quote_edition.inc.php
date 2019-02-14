@@ -193,7 +193,9 @@
       <input type="file" id="file_input" multiple name="file_input[]">
       <br>
       <?php
-      if($rfq_fullfillment_part-> get_in_process()){
+      if($rfq_fullfillment_part-> get_invoice()){
+        
+      }else if($rfq_fullfillment_part-> get_in_process()){
         ?>
         <div class="custom-control custom-checkbox">
           <input type="checkbox" name="invoice" class="custom-control-input" id="invoice" value="invoice">

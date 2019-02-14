@@ -86,6 +86,9 @@ define('WORK_ORDER_PDF', SERVER . 'work_order_pdf/');
 define('PACKING_SLIP', PROFILE . 'packing_slip/');
 define('PACKING_SLIP_PDF', SERVER . 'packing_slip_pdf/');
 /*******************************************************************************/
+define('EXCEL_REPORTS', PROFILE . 'excel_reports');
+define('GENERATE_EXCEL_REPORT', SERVER . 'generate_excel_report');
+/********************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');

@@ -235,7 +235,7 @@ $(document).ready(function(){
     singleDatePicker: true
   });
 
-  $('#work_order_form #date').daterangepicker({
+  $('#work_order_form #date, .date').daterangepicker({
     singleDatePicker: true
   });
 
