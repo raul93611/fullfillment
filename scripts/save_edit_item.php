@@ -45,7 +45,7 @@ if (isset($_POST['guardar_cambios_item'])) {
     $description_comment = 'An item was modified. The fields: <b>' . $cambios . '</b><br><a href="' . EDIT_ITEM . $_POST['id_item'] . '">Review</a>';
     $comment = new CommentRfqFullFillment('', $_POST['id_rfq'], $_SESSION['username'], $description_comment, '');
     RepositorioRfqFullFillmentComment::insertar_comment(ConnectionFullFillment::get_connection(), $comment);
-    $fullfillment_users = UserFullFillmentRepository::get_all_users_enabled(ConnectionFullFillment::get_connection());
+    $fullfillment_users = UserFullFillmentRepository::get_all_fullfillment_users(ConnectionFullFillment::get_connection());
     foreach ($fullfillment_users as $fullfillment_user) {
       $to = $fullfillment_user-> get_email();
       $subject = 'An item was modified in proposal: ' . $_POST['id_rfq'];

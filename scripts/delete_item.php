@@ -19,7 +19,7 @@ $description_comment = 'An item was deleted:
 $comment = new CommentRfqFullFillment('', $id_rfq, $_SESSION['username'], $description_comment, '');
 RepositorioRfqFullFillmentComment::insertar_comment(ConnectionFullFillment::get_connection(), $comment);
 RepositorioItemFullFillment::delete_item(ConnectionFullFillment::get_connection(), $id_item);
-$fullfillment_users = UserFullFillmentRepository::get_all_users_enabled(ConnectionFullFillment::get_connection());
+$fullfillment_users = UserFullFillmentRepository::get_all_fullfillment_users(ConnectionFullFillment::get_connection());
 ConnectionFullFillment::close_connection();
 foreach ($fullfillment_users as $fullfillment_user) {
   $to = $fullfillment_user-> get_email();
