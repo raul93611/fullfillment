@@ -46,7 +46,9 @@ ConnectionFullFillment::open_connection();
 Conexion::abrir_conexion();
 $date_from = RepositorioComment::english_format_to_mysql_date($_POST['date_from']);
 $date_to = RepositorioComment::english_format_to_mysql_date($_POST['date_to']);
-if($_POST['quote_type'] == 'in_process'){
+if($_POST['quote_type'] == 'received'){
+  $quotes = RfqFullfillmentPartRepository::get_all_received_quotes_between_dates(ConnectionFullFillment::get_connection(), $date_from, $date_to);
+}else if($_POST['quote_type'] == 'in_process'){
   $quotes = RfqFullfillmentPartRepository::get_all_in_process_quotes_between_dates(ConnectionFullFillment::get_connection(), $date_from, $date_to);
 }else if($_POST['quote_type'] == 'invoices'){
   $quotes = RfqFullfillmentPartRepository::get_all_invoice_quotes_between_dates(ConnectionFullFillment::get_connection(), $date_from, $date_to);

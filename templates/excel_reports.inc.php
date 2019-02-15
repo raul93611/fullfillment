@@ -24,6 +24,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <select class="form-control form-control-sm" name="quote_type">
+                      <option value="received">Received</option>
                       <option value="in_process">In process</option>
                       <option value="invoices">Invoices</option>
                     </select>

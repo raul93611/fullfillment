@@ -67,7 +67,7 @@ class RfqFullFillmentPartRepository{
     }
   }
 
-  public function set_status_invoice($connection, $id_rfq){
+  public static function set_status_invoice($connection, $id_rfq){
     if(isset($connection)){
       try{
         $sql = 'UPDATE rfq_fullfillment_part SET invoice = 1, invoice_date = NOW() WHERE id_rfq = :id_rfq';
@@ -80,7 +80,7 @@ class RfqFullFillmentPartRepository{
     }
   }
 
-  public function set_status_in_process($connection, $id_rfq){
+  public static function set_status_in_process($connection, $id_rfq){
     if(isset($connection)){
       try{
         $sql = 'UPDATE rfq_fullfillment_part SET in_process = 1, in_process_date = NOW() WHERE id_rfq = :id_rfq';
@@ -93,7 +93,7 @@ class RfqFullFillmentPartRepository{
     }
   }
 
-  public function set_fedbid($connection, $fedbid, $id_rfq_fullfillment_part){
+  public  static function set_fedbid($connection, $fedbid, $id_rfq_fullfillment_part){
     if(isset($connection)){
       try{
         $sql = 'UPDATE rfq_fullfillment_part SET fedbid = :fedbid WHERE id = :id_rfq_fullfillment_part';
@@ -107,7 +107,7 @@ class RfqFullFillmentPartRepository{
     }
   }
 
-  public function get_all_in_process_quotes_between_dates($connection, $date_from, $date_to){
+  public static function get_all_in_process_quotes_between_dates($connection, $date_from, $date_to){
     if(isset($connection)){
       try{
         $sql = 'SELECT rfq.id, rfq.usuario_designado, rfq.canal, rfq.email_code, rfq.type_of_bid, rfq.fecha_submitted, rfq.fecha_award, rfq_fullfillment_part.fullfillment_date, rfq_fullfillment_part.in_process_date, rfq_fullfillment_part.invoice_date, rfq.total_price, rfq.total_cost, rfq.rfp FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.in_process_date BETWEEN :date_from AND :date_to';
@@ -123,10 +123,26 @@ class RfqFullFillmentPartRepository{
     return $quotes;
   }
 
-  public function get_all_invoice_quotes_between_dates($connection, $date_from, $date_to){
+  public static function get_all_invoice_quotes_between_dates($connection, $date_from, $date_to){
     if(isset($connection)){
       try{
         $sql = 'SELECT rfq.id, rfq.usuario_designado, rfq.canal, rfq.email_code, rfq.type_of_bid, rfq.fecha_submitted, rfq.fecha_award, rfq_fullfillment_part.fullfillment_date, rfq_fullfillment_part.in_process_date, rfq_fullfillment_part.invoice_date, rfq.total_price, rfq.total_cost, rfq.rfp FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.invoice = 1 AND rfq_fullfillment_part.invoice_date BETWEEN :date_from AND :date_to';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':date_from', $date_from, PDO::PARAM_STR);
+        $sentence-> bindParam(':date_to', $date_to, PDO::PARAM_STR);
+        $sentence-> execute();
+        $quotes = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $quotes;
+  }
+
+  public static function get_all_received_quotes_between_dates($connection, $date_from, $date_to){
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT rfq.id, rfq.usuario_designado, rfq.canal, rfq.email_code, rfq.type_of_bid, rfq.fecha_submitted, rfq.fecha_award, rfq_fullfillment_part.fullfillment_date, rfq_fullfillment_part.in_process_date, rfq_fullfillment_part.invoice_date, rfq.total_price, rfq.total_cost, rfq.rfp FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.fullfillment_date != "0000-00-00" AND rfq_fullfillment_part.fullfillment_date BETWEEN :date_from AND :date_to';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':date_from', $date_from, PDO::PARAM_STR);
         $sentence-> bindParam(':date_to', $date_to, PDO::PARAM_STR);
