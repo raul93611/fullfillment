@@ -48,14 +48,14 @@
         ?>
         <li class="nav-item has-treeview
         <?php
-        if($current_manager == 'received' || $current_manager == 'in_process' || $current_manager == 'invoices'){
+        if($current_manager == 'received' || $current_manager == 'in_process' || $current_manager == 'invoices' || $current_manager == 'accounting_completed'){
           echo 'menu-open';
         }
         ?>
         ">
           <a href="#" class="nav-link
             <?php
-            if($current_manager == 'received' || $current_manager == 'in_process' || $current_manager == 'invoices'){
+            if($current_manager == 'received' || $current_manager == 'in_process' || $current_manager == 'invoices' || $current_manager == 'accounting_completed'){
               echo 'active';
             }
             ?>
@@ -65,28 +65,35 @@
             <i class="right fa fa-angle-left"></i>
           </a>
           <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?php echo RECEIVED_QUOTES; ?>" class="nav-link
-                <?php
-                if($current_manager == 'received'){
-                  echo 'active';
-                }
-                ?>
-                ">
-                <p>Received</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="<?php echo IN_PROCESS_QUOTES; ?>" class="nav-link
-                <?php
-                if($current_manager == 'in_process'){
-                  echo 'active';
-                }
-                ?>
-                ">
-                <p>In process</p>
-              </a>
-            </li>
+            <?php
+            if($_SESSION['level'] == 2){
+              ?>
+              <li class="nav-item">
+                <a href="<?php echo RECEIVED_QUOTES; ?>" class="nav-link
+                  <?php
+                  if($current_manager == 'received'){
+                    echo 'active';
+                  }
+                  ?>
+                  ">
+                  <p>Received</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="<?php echo IN_PROCESS_QUOTES; ?>" class="nav-link
+                  <?php
+                  if($current_manager == 'in_process'){
+                    echo 'active';
+                  }
+                  ?>
+                  ">
+                  <p>In process</p>
+                </a>
+              </li>
+              <?php
+            }
+            ?>
+
             <li class="nav-item">
               <a href="<?php echo INVOICES; ?>" class="nav-link
                 <?php
@@ -98,6 +105,23 @@
                 <p>Invoices</p>
               </a>
             </li>
+            <?php
+            if($_SESSION['level'] == 3){
+              ?>
+              <li class="nav-item">
+                <a href="<?php echo ACCOUNTING_COMPLETED; ?>" class="nav-link
+                  <?php
+                  if($current_manager == 'accounting_completed'){
+                    echo 'active';
+                  }
+                  ?>
+                  ">
+                  <p>Accounting</p>
+                </a>
+              </li>
+              <?php
+            }
+            ?>
           </ul>
           <li class="nav-item has-treeview menu-open">
             <a href="<?php echo EMPLOYEE_DOCS_PAGE; ?>" class="nav-link

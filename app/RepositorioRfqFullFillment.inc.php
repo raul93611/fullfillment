@@ -67,7 +67,7 @@ class RepositorioRfqFullFillment{
     $received_quotes = [];
     if(isset($connection)){
       try{
-        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.fullfillment_date as quote_date, DATEDIFF(CURDATE(), rfq_fullfillment_part.fullfillment_date) as info FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 0 AND rfq_fullfillment_part.invoice = 0 ORDER BY rfq_fullfillment_part.fullfillment_date DESC';
+        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.fullfillment_date as quote_date, DATEDIFF(CURDATE(), rfq_fullfillment_part.fullfillment_date) as info FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 0 AND rfq_fullfillment_part.invoice = 0 ORDER BY rfq_fullfillment_part.fullfillment_date';
         $sentence = $connection-> prepare($sql);
         $sentence-> execute();
         $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
@@ -87,7 +87,7 @@ class RepositorioRfqFullFillment{
     $in_process_quotes = [];
     if(isset($connection)){
       try{
-        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.in_process_date as quote_date, DATEDIFF(CURDATE(), rfq_fullfillment_part.in_process_date) as info FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.invoice = 0 ORDER BY rfq_fullfillment_part.in_process_date DESC';
+        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.in_process_date as quote_date, DATEDIFF(CURDATE(), rfq_fullfillment_part.in_process_date) as info FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.invoice = 0 ORDER BY rfq_fullfillment_part.in_process_date';
         $sentence = $connection-> prepare($sql);
         $sentence-> execute();
         $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
@@ -107,7 +107,7 @@ class RepositorioRfqFullFillment{
     $invoices = [];
     if(isset($connection)){
       try{
-        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.invoice_date as quote_date, DATEDIFF(CURDATE(), rfq_fullfillment_part.invoice_date) as info FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.invoice = 1 ORDER BY rfq_fullfillment_part.invoice_date DESC';
+        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.invoice_date as quote_date, DATEDIFF(CURDATE(), rfq_fullfillment_part.invoice_date) as info FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.invoice = 1 AND accounting_completed = 0 ORDER BY rfq_fullfillment_part.invoice_date';
         $sentence = $connection-> prepare($sql);
         $sentence-> execute();
         $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
@@ -121,6 +121,26 @@ class RepositorioRfqFullFillment{
       }
     }
     return $invoices;
+  }
+
+  public static function get_all_accounting_completed($connection){
+    $quotes = [];
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT rfq.id as proposal, rfq.email_code as code, rfq.total_price as total_price, rfq_fullfillment_part.accounting_completed_date as quote_date FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.invoice = 1 AND rfq_fullfillment_part.accounting_completed = 1 ORDER BY rfq_fullfillment_part.accounting_completed_date';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> execute();
+        $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+        if(count($result)){
+          foreach ($result as $row) {
+            $quotes[] = $row;
+          }
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex-> getMessage() . '<br>';
+      }
+    }
+    return $quotes;
   }
 
   public static function print_received_quotes_table(){
@@ -179,6 +199,62 @@ class RepositorioRfqFullFillment{
     }
   }
 
+  public static function print_accounting_completed($quote){
+    if(!isset($quote)){
+      return;
+    }
+    $date = RepositorioRfqFullFillmentComment::mysql_datetime_to_english_format($quote['quote_date']);
+    ?>
+    <tr>
+      <td>
+        <a href="
+        <?php
+        switch ($_SESSION['level']) {
+          case 2:
+            echo EDIT_QUOTE . $quote['proposal'];
+            break;
+          case 3:
+            echo EDIT_ACCOUNTING_QUOTE . $quote['proposal'];
+            break;
+          default:
+            break;
+        }
+        ?>" class="btn-block">
+          <?php echo $quote['proposal']; ?>
+        </a>
+      </td>
+      <td><?php echo $quote['code']; ?></td>
+      <td><?php echo $date; ?></td>
+    </tr>
+    <?php
+  }
+
+  public static function print_accounting_completed_table(){
+    ConnectionFullFillment::open_connection();
+    $quotes = self::get_all_accounting_completed(ConnectionFullFillment::get_connection());
+    ConnectionFullFillment::close_connection();
+    if(count($quotes)){
+      ?>
+      <table class="rfq_team_table table table-bordered">
+        <thead>
+          <tr>
+            <th>PROPOSAL</th>
+            <th>CODE</th>
+            <th>ACCOUNTING DATE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+          foreach ($quotes as $quote) {
+            self::print_accounting_completed($quote);
+          }
+          ?>
+        </tbody>
+      </table>
+      <?php
+    }
+  }
+
   public static function print_invoices_table(){
     ConnectionFullFillment::open_connection();
     $invoices = self::get_all_invoices(ConnectionFullFillment::get_connection());
@@ -215,7 +291,19 @@ class RepositorioRfqFullFillment{
     ?>
     <tr>
       <td>
-        <a href="<?php echo EDIT_QUOTE . $quote['proposal']; ?>" class="btn-block">
+        <a href="
+        <?php
+        switch ($_SESSION['level']) {
+          case 2:
+            echo EDIT_QUOTE . $quote['proposal'];
+            break;
+          case 3:
+            echo EDIT_ACCOUNTING_QUOTE . $quote['proposal'];
+            break;
+          default:
+            break;
+        }
+        ?>" class="btn-block">
           <?php echo $quote['proposal']; ?>
         </a>
       </td>

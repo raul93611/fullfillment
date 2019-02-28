@@ -50,6 +50,16 @@ $email = 'pablo@ramirez';
 $activo = 1;
 $user = new User('', $username, $password, $names, $last_names, $level, $email, $activo, '');
 UserFullFillmentRepository::insert_user(ConnectionFullFillment::get_connection(), $user);
+
+$username = 'sergio1234';
+$password = password_hash('123456', PASSWORD_DEFAULT);
+$names = 'sergio';
+$last_names = 'ramirez';
+$level = 3;
+$email = 'sergio@ramirez';
+$activo = 1;
+$user = new User('', $username, $password, $names, $last_names, $level, $email, $activo, '');
+UserFullFillmentRepository::insert_user(ConnectionFullFillment::get_connection(), $user);
 ConnectionFullFillment::close_connection();
 
 ?>

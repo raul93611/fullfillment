@@ -16,8 +16,13 @@ class RfqFullFillmentPart{
   private $eta2;
   private $eta3;
   private $comment_consolidate_others;
+  private $due_date;
+  private $accounting_ship_to;
+  private $accounting_completed;
+  private $accounting_completed_date;
+  private $order_date;
 
-  public function __construct($id, $id_rfq, $name, $business_classification, $description, $po_date, $eta1, $consolidate_others, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date, $eta2, $eta3, $comment_consolidate_others){
+  public function __construct($id, $id_rfq, $name, $business_classification, $description, $po_date, $eta1, $consolidate_others, $fullfillment_date, $in_process, $in_process_date, $invoice, $invoice_date, $eta2, $eta3, $comment_consolidate_others, $due_date, $accounting_ship_to, $accounting_completed, $accounting_completed_date, $order_date){
     $this-> id = $id;
     $this-> id_rfq = $id_rfq;
     $this-> name = $name;
@@ -34,6 +39,11 @@ class RfqFullFillmentPart{
     $this-> eta2 = $eta2;
     $this-> eta3 = $eta3;
     $this-> comment_consolidate_others = $comment_consolidate_others;
+    $this-> due_date = $due_date;
+    $this-> accounting_ship_to = $accounting_ship_to;
+    $this-> accounting_completed = $accounting_completed;
+    $this-> accounting_completed_date = $accounting_completed_date;
+    $this-> order_date = $order_date;
   }
 
   public function get_id(){
@@ -98,6 +108,26 @@ class RfqFullFillmentPart{
 
   public function get_comment_consolidate_others(){
     return $this-> comment_consolidate_others;
+  }
+
+  public function get_due_date(){
+    return $this-> due_date;
+  }
+
+  public function get_accounting_ship_to(){
+    return $this-> accounting_ship_to;
+  }
+
+  public function get_accounting_completed(){
+    return $this-> accounting_completed;
+  }
+
+  public function get_accounting_completed_date(){
+    return $this-> accounting_completed_date;
+  }
+
+  public function get_order_date(){
+    return $this-> order_date;
   }
 }
 ?>

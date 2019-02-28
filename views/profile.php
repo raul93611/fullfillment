@@ -27,6 +27,9 @@ if(isset($current_manager)){
     case 'invoices':
       include_once 'templates/invoices.inc.php';
       break;
+    case 'accounting_completed':
+      include_once 'templates/accounting_completed.inc.php';
+      break;
     case 'sign_in':
       include_once 'templates/sign_in.inc.php';
       break;
@@ -77,6 +80,9 @@ if(isset($current_manager)){
       break;
     case 'excel_reports':
       include_once 'templates/excel_reports.inc.php';
+      break;
+    case 'edit_accounting_quote':
+      include_once 'templates/edit_accounting_quote.inc.php';
       break;
     default:
       break;

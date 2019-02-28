@@ -194,7 +194,7 @@
       <br>
       <?php
       if($rfq_fullfillment_part-> get_invoice()){
-        
+
       }else if($rfq_fullfillment_part-> get_in_process()){
         ?>
         <div class="custom-control custom-checkbox">
@@ -238,4 +238,4 @@
       </div>
     </div>
   </div>
-  </form>
+</form>

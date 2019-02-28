@@ -515,6 +515,151 @@ class RepositorioItemFullFillment{
     }
   }
 
+  public static function print_accounting_item($item, $i){
+    if(!isset($item)){
+      return;
+    }
+    ConnectionFullFillment::open_connection();
+    $accounting_item_prices = AccountingItemPriceRepository::get_all_accounting_item_prices_by_id_item(ConnectionFullFillment::get_connection(), $item-> obtener_id());
+    $real_cost_by_item = AccountingItemPriceRepository::get_real_cost_by_item(ConnectionFullFillment::get_connection(), $item-> obtener_id());
+    ConnectionFullFillment::close_connection();
+    if(!count($accounting_item_prices)){
+      $quantity = 1;
+    }else{
+      $quantity = count($accounting_item_prices);
+    }
+    ?>
+    <tr>
+      <td class="align-middle text-center" rowspan="<?php echo $quantity; ?>">
+        <button type="button" class="new_accounting_item_price_button btn btn-warning" name="<?php echo $item-> obtener_id(); ?>"><i class="fas fa-plus"></i></button>
+      </td>
+      <td rowspan="<?php echo $quantity; ?>"><?php echo $i + 1; ?></td>
+      <td rowspan="<?php echo $quantity; ?>">
+        <?php
+        echo '<b>Brand:</b> ' . $item-> obtener_brand() . '<br>';
+        echo '<b>Part #:</b> ' . $item-> obtener_part_number() . '<br>';
+        echo '<b>Description:</b> ' . nl2br(mb_substr($item->obtener_description(), 0, 100));
+        ?>
+      </td>
+      <td rowspan="<?php echo $quantity; ?>"><?php echo $item-> obtener_total_price(); ?></td>
+      <?php
+    if(count($accounting_item_prices)){
+          ?>
+          <td><a href="#" data="<?php echo $accounting_item_prices[0]-> get_id(); ?>" class="edit_accounting_item_price_button"><?php echo $accounting_item_prices[0]-> get_company(); ?></a></td>
+          <td><?php echo $accounting_item_prices[0]-> get_quantity(); ?></td>
+          <td><?php echo $accounting_item_prices[0]-> get_unit_cost(); ?></td>
+          <td><?php echo $accounting_item_prices[0]-> get_other_cost(); ?></td>
+          <td><?php echo $accounting_item_prices[0]-> get_real_cost(); ?></td>
+          <td rowspan="<?php echo $quantity; ?>"><?php echo $item-> obtener_total_price() - $real_cost_by_item; ?></td>
+      </tr>
+      <?php
+      for ($j = 1; $j < count($accounting_item_prices); $j++) {
+        $accounting_item_price = $accounting_item_prices[$j];
+        ?>
+        <tr>
+          <td><a href="#" data="<?php echo $accounting_item_price-> get_id(); ?>" class="edit_accounting_item_price_button"><?php echo $accounting_item_price-> get_company(); ?></a></td>
+          <td><?php echo $accounting_item_price-> get_quantity(); ?></td>
+          <td><?php echo $accounting_item_price-> get_unit_cost(); ?></td>
+          <td><?php echo $accounting_item_price-> get_other_cost(); ?></td>
+          <td><?php echo $accounting_item_price-> get_real_cost(); ?></td>
+        </tr>
+        <?php
+      }
+      ?>
+
+      <?php
+    }
+    ConnectionFullFillment::open_connection();
+    $subitems = RepositorioSubitemFullFillment::obtener_subitems_por_id_item(ConnectionFullFillment::get_connection(), $item-> obtener_id());
+    ConnectionFullFillment::close_connection();
+    foreach ($subitems as $subitem) {
+      RepositorioSubitemFullFillment::print_accounting_subitem($subitem);
+    }
+  }
+
+  public static function print_accounting_items($id_rfq){
+    ConnectionFullFillment::open_connection();
+    $quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
+    $rfq_fullfillment_part = RfqFullFillmentPartRepository::get_rfq_fullfillment_part_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
+    $items = self::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
+    $real_cost_by_quote = self::get_real_cost_by_quote(ConnectionFullFillment::get_connection(), $id_rfq);
+    $extra_costs = ExtraCostRepository::get_all_extra_costs_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
+    $total_extra_cost = ExtraCostRepository::get_total_extra_cost_by_quote(ConnectionFullFillment::get_connection(), $id_rfq);
+    ConnectionFullFillment::close_connection();
+    if(!count($extra_costs)){
+      $extra_costs_quantity = 1;
+    }else {
+      $extra_costs_quantity = count($extra_costs);
+    }
+    if(count($items)){
+      ?>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th class="thin">OPT</th>
+              <th class="thin">#</th>
+              <th class="description">PROJECT SPECIFICATIONS</th>
+              <th>INVOICE</th>
+              <th>COMPANY</th>
+              <th class="thin">QTY</th>
+              <th>UNIT COST</th>
+              <th>OTHER COST</th>
+              <th>REAL COST</th>
+              <th>PROFIT</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            foreach ($items as $i => $item) {
+              self::print_accounting_item($item, $i);
+            }
+            ?>
+            <tr>
+              <td class="align-middle text-center" rowspan="<?php echo $extra_costs_quantity; ?>">
+                <button type="button" class="new_extra_cost_button btn btn-warning" name="" data="<?php echo $id_rfq; ?>"><i class="fas fa-plus"></i></button>
+              </td>
+              <td rowspan="<?php echo $extra_costs_quantity; ?>"></td>
+              <td class="align-middle" colspan="2" rowspan="<?php echo $extra_costs_quantity; ?>"><b>EXTRA COST:</b></td>
+              <?php
+              if(count($extra_costs)){
+                ?>
+                <td colspan="4"><a href="#" data="<?php echo $extra_costs[0]-> get_id(); ?>" class="edit_extra_cost_button"><?php echo $extra_costs[0]-> get_description(); ?></a></td>
+                <td><?php echo $extra_costs[0]-> get_cost(); ?></td>
+                <td rowspan="<?php echo $extra_costs_quantity; ?>"></td>
+              </tr>
+                <?php
+                for ($o=1; $o < count($extra_costs) ; $o++) {
+                  $extra_cost = $extra_costs[$o];
+                  ?>
+                  <tr>
+                    <td colspan="4"><a href="#" data="<?php echo $extra_cost-> get_id(); ?>" class="edit_extra_cost_button"><?php echo $extra_cost-> get_description(); ?></a></td>
+                    <td><?php echo $extra_cost-> get_cost(); ?></td>
+                  </tr>
+                  <?php
+                }
+              }
+              ?>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td><b>TOTAL:</b></td>
+              <td><?php echo $quote-> obtener_total_price(); ?></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><?php echo $real_cost_by_quote + $total_extra_cost; ?></td>
+              <td><?php echo $quote-> obtener_total_price() - ($real_cost_by_quote + $total_extra_cost); ?></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <?php
+    }
+  }
+
   public static function obtener_item_por_id($conexion, $id_item) {
     $item = null;
     if (isset($conexion)) {
@@ -600,6 +745,29 @@ class RepositorioItemFullFillment{
       }
     }
     return $item_editado;
+  }
+
+  public static function get_real_cost_by_quote($connection, $id_rfq){
+    if(isset($connection)){
+      try{
+        $sql1 = 'SELECT (SUM(accounting_item_price.real_cost)) as real_cost FROM ((rfq INNER JOIN item ON rfq.id = item.id_rfq) INNER JOIN accounting_item_price ON item.id = accounting_item_price.id_item) WHERE rfq.id = :id_rfq';
+        $sql2 = 'SELECT (SUM(accounting_subitem_price.real_cost)) as real_cost FROM (((rfq INNER JOIN item ON rfq.id = item.id_rfq) INNER JOIN subitems ON item.id = subitems.id_item) INNER JOIN accounting_subitem_price ON subitems.id = accounting_subitem_price.id_subitem) WHERE rfq.id = :id_rfq';
+        $sentence1 = $connection-> prepare($sql1);
+        $sentence2 = $connection-> prepare($sql2);
+        $sentence1-> bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentence2-> bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentence1-> execute();
+        $sentence2-> execute();
+        $result1 = $sentence1-> fetch(PDO::FETCH_ASSOC);
+        $result2 = $sentence2-> fetch(PDO::FETCH_ASSOC);
+        if(!empty($result1['real_cost']) && !empty($result2['real_cost'])){
+          $real_cost = $result1['real_cost'] + $result2['real_cost'];
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $real_cost;
   }
 }
 ?>

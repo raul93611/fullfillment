@@ -1,4 +1,163 @@
 $(document).ready(function(){
+  /************************************set accounting completed**************************************/
+  $('#accounting_completed').click(function(){
+    if($(this).prop('checked')){
+      $.ajax({
+        url: 'http://' + document.location.hostname + '/fullfillment/set_accounting_completed/',
+        type: 'POST',
+        data: {
+          id_rfq: $(this).val()
+        },
+        success: function(res){
+          $('.accounting_completed').hide();
+        }
+      });
+    }
+  });
+  /***********************************edit  extra cost*******************************/
+  $('#accounting_quote_table').on('click', '.edit_extra_cost_button', function(){
+    $('#edit_extra_cost_modal form').load('http://' + document.location.hostname + '/fullfillment/load_extra_cost/' + $(this).attr('data'), function(){
+      $('#edit_extra_cost_modal').modal();
+    });
+    return false;
+  });
+
+  $('#edit_extra_cost_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_extra_cost', $(this).serialize(), function(res){
+      $('#edit_extra_cost_modal').modal('hide');
+      console.log(res);
+      $('#accounting_quote_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_quote_table/' + res.id_rfq);
+    });
+    return false;
+  });
+  //remove extra cost
+  $('#edit_extra_cost_form').on('click', '.remove_extra_cost_button', function(){
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_extra_cost/',
+      data: {
+        id_extra_cost: $(this).attr('data')
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#edit_extra_cost_modal').modal('hide');
+        $('#accounting_quote_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_quote_table/' + $('#accounting_quote_form input[name="id_rfq"]').val());
+      }
+    });
+  });
+  /******************************************save_extra_cost**************************/
+  $('#accounting_quote_table').on('click', '.new_extra_cost_button', function(){
+    $('#new_extra_cost_modal').modal();
+  });
+
+  $('#new_extra_cost_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_extra_cost', $(this).serialize(), function(res){
+      $('#new_extra_cost_form')[0].reset();
+      $('#new_extra_cost_modal').modal('hide');
+      console.log(res);
+      $('#accounting_quote_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_quote_table/' + res.id_rfq);
+    });
+    return false;
+  });
+  /*********************************edit accounting subitem price****************************************/
+  $('#accounting_quote_table').on('click', '.edit_accounting_subitem_price_button', function(){
+    $('#edit_accounting_subitem_price_modal form').load('http://' + document.location.hostname + '/fullfillment/load_accounting_subitem_price/' + $(this).attr('data'), function(){
+      $('#edit_accounting_subitem_price_modal').modal();
+    });
+    return false;
+  });
+
+  $('#edit_accounting_subitem_price_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_accounting_subitem_price', $(this).serialize(), function(res){
+      $('#edit_accounting_subitem_price_modal').modal('hide');
+      console.log(res);
+      $('#accounting_quote_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_quote_table/' + res.id_rfq);
+    });
+    return false;
+  });
+  //remove accounting subitem price
+  $('#edit_accounting_subitem_price_form').on('click', '.remove_accounting_subitem_price_button', function(){
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_accounting_subitem_price/',
+      data: {
+        id_accounting_subitem_price: $(this).attr('data')
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#edit_accounting_subitem_price_modal').modal('hide');
+        $('#accounting_quote_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_quote_table/' + $('#accounting_quote_form input[name="id_rfq"]').val());
+      }
+    });
+  });
+  /*********************************edit accounting item price****************************************/
+  $('#accounting_quote_table').on('click', '.edit_accounting_item_price_button', function(){
+    $('#edit_accounting_item_price_modal form').load('http://' + document.location.hostname + '/fullfillment/load_accounting_item_price/' + $(this).attr('data'), function(){
+      $('#edit_accounting_item_price_modal').modal();
+    });
+    return false;
+  });
+
+  $('#edit_accounting_item_price_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_accounting_item_price', $(this).serialize(), function(res){
+      $('#edit_accounting_item_price_modal').modal('hide');
+      console.log(res);
+      $('#accounting_quote_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_quote_table/' + res.id_rfq);
+    });
+    return false;
+  });
+  //remove accounting item price
+  $('#edit_accounting_item_price_form').on('click', '.remove_accounting_item_price_button', function(){
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_accounting_item_price/',
+      data: {
+        id_accounting_item_price: $(this).attr('data')
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#edit_accounting_item_price_modal').modal('hide');
+        $('#accounting_quote_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_quote_table/' + $('#accounting_quote_form input[name="id_rfq"]').val());
+      }
+    });
+  });
+  /******************************************save_accounting_item_price**************************/
+  $('#accounting_quote_table').on('click', '.new_accounting_item_price_button', function(){
+    $('#new_accounting_item_price_form input[name="id_item"]').val($(this).attr('name'));
+    $('#new_accounting_item_price_modal').modal();
+  });
+
+  $('#new_accounting_item_price_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_accounting_item_price', $(this).serialize(), function(res){
+      $('#new_accounting_item_price_form')[0].reset();
+      $('#new_accounting_item_price_modal').modal('hide');
+      console.log(res);
+      $('#accounting_quote_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_quote_table/' + res.id_rfq);
+    });
+    return false;
+  });
+  /******************************************save_accounting_subitem_price**************************/
+  $('#accounting_quote_table').on('click', '.new_accounting_subitem_price_button', function(){
+    $('#new_accounting_subitem_price_form input[name="id_subitem"]').val($(this).attr('name'));
+    $('#new_accounting_subitem_price_modal').modal();
+  });
+
+  $('#new_accounting_subitem_price_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_accounting_subitem_price', $(this).serialize(), function(res){
+      $('#new_accounting_subitem_price_form')[0].reset();
+      $('#new_accounting_subitem_price_modal').modal('hide');
+      console.log(res);
+      $('#accounting_quote_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_quote_table/' + res.id_rfq);
+    });
+    return false;
+  });
+  /******************************************SAVE ACCOUNTING QUOTE PART************************/
+  $('#accounting_quote_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_accounting_quote/', $(this).serialize(), function(res){
+      console.log('asdsadsada');
+    });
+    return false;
+  });
   /*********************************************FINAL QUOTE MANAGEMENT*************************/
   $('#final_quote').hide();
   $('#final_re_quote').hide();
@@ -406,7 +565,10 @@ $(document).ready(function(){
     $('#label_file_create').html(fileName_create.join(', '));
   });
   /**********************************************************************************/
-  $('.rfq_team_table').DataTable();
+  $('.rfq_team_table').DataTable({
+    'pageLength': 100,
+    'ordering': false
+  });
   /****************************************************************************/
   /***********************************VARIABLES INICIALES PARA EL BORRADO*********************/
   var link_to_delete;

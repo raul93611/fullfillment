@@ -418,7 +418,7 @@ END USERS TABLE STYLES
   color: #39485A !important;
 }
 /**************************************************TRACKING TABLE************************************/
-#tracking_table .thin{
+.thin{
   width: 30px !important;
 }
 

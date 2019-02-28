@@ -1,12 +1,13 @@
 <?php
 class SessionControl{
-  public static function log_in($id_user, $username){
+  public static function log_in($id_user, $username, $level){
     if(session_id() === ''){
       session_start();
     }
 
     $_SESSION['id_user'] = $id_user;
     $_SESSION['username'] = $username;
+    $_SESSION['level'] = $level;
   }
 
   public static function log_out(){
@@ -22,6 +23,10 @@ class SessionControl{
       unset($_SESSION['username']);
     }
 
+    if(isset($_SESSION['level'])){
+      unset($_SESSION['level']);
+    }
+
     session_destroy();
   }
 
@@ -30,7 +35,7 @@ class SessionControl{
       session_start();
     }
 
-    if(isset($_SESSION['id_user']) && isset($_SESSION['username'])){
+    if(isset($_SESSION['id_user']) && isset($_SESSION['username']) && isset($_SESSION['level'])){
       return true;
     }else{
       return false;

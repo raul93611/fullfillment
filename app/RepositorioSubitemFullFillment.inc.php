@@ -359,5 +359,58 @@ class RepositorioSubitemFullFillment{
       }
     }
   }
+
+  public static function print_accounting_subitem($subitem){
+    if(!isset($subitem)){
+      return;
+    }
+    ConnectionFullFillment::open_connection();
+    $accounting_subitem_prices = AccountingSubitemPriceRepository::get_all_accounting_subitem_prices_by_id_subitem(ConnectionFullFillment::get_connection(), $subitem-> obtener_id());
+    $real_cost_by_subitem = AccountingSubitemPriceRepository::get_real_cost_by_subitem(ConnectionFullFillment::get_connection(), $subitem-> obtener_id());
+    ConnectionFullFillment::close_connection();
+    if(!count($accounting_subitem_prices)){
+      $quantity = 1;
+    }else{
+      $quantity = count($accounting_subitem_prices);
+    }
+    ?>
+    <tr>
+      <td class="align-middle text-center" rowspan="<?php echo $quantity; ?>">
+        <button type="button" class="new_accounting_subitem_price_button btn btn-warning" name="<?php echo $subitem-> obtener_id(); ?>"><i class="fas fa-plus"></i></button>
+      </td>
+      <td rowspan="<?php echo $quantity; ?>"></td>
+      <td rowspan="<?php echo $quantity; ?>">
+        <?php
+        echo '<b>Brand:</b> ' . $subitem-> obtener_brand() . '<br>';
+        echo '<b>Part #:</b> ' . $subitem-> obtener_part_number() . '<br>';
+        echo '<b>Description:</b> ' . nl2br(mb_substr($subitem-> obtener_description(), 0, 100));
+        ?>
+      </td>
+      <td rowspan="<?php echo $quantity; ?>"><?php echo $subitem-> obtener_total_price(); ?></td>
+      <?php
+    if(count($accounting_subitem_prices)){
+          ?>
+          <td><a href="#" data="<?php echo $accounting_subitem_prices[0]-> get_id(); ?>" class="edit_accounting_subitem_price_button"><?php echo $accounting_subitem_prices[0]-> get_company(); ?></a></td>
+          <td><?php echo $accounting_subitem_prices[0]-> get_quantity(); ?></td>
+          <td><?php echo $accounting_subitem_prices[0]-> get_unit_cost(); ?></td>
+          <td><?php echo $accounting_subitem_prices[0]-> get_other_cost(); ?></td>
+          <td><?php echo $accounting_subitem_prices[0]-> get_real_cost(); ?></td>
+          <td rowspan="<?php echo $quantity; ?>"><?php echo $subitem-> obtener_total_price() - $real_cost_by_subitem; ?></td>
+      </tr>
+      <?php
+      for ($j = 1; $j < count($accounting_subitem_prices); $j++) {
+        $accounting_subitem_price = $accounting_subitem_prices[$j];
+        ?>
+        <tr>
+          <td><a href="#" data="<?php echo $accounting_subitem_price-> get_id(); ?>" class="edit_accounting_subitem_price_button"><?php echo $accounting_subitem_price-> get_company(); ?></a></td>
+          <td><?php echo $accounting_subitem_price-> get_quantity(); ?></td>
+          <td><?php echo $accounting_subitem_price-> get_unit_cost(); ?></td>
+          <td><?php echo $accounting_subitem_price-> get_other_cost(); ?></td>
+          <td><?php echo $accounting_subitem_price-> get_real_cost(); ?></td>
+        </tr>
+        <?php
+      }
+    }
+  }
 }
 ?>

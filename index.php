@@ -92,6 +92,17 @@ include_once 'app/PackingSlipRepository.inc.php';
 include_once 'app/PackingSlipItemRepository.inc.php';
 include_once 'app/PackingSlipSubitemRepository.inc.php';
 
+include_once 'app/ShipTo.inc.php';
+include_once 'app/ShipToRepository.inc.php';
+
+include_once 'app/AccountingItemPrice.inc.php';
+include_once 'app/AccountingItemPriceRepository.inc.php';
+include_once 'app/AccountingSubitemPrice.inc.php';
+include_once 'app/AccountingSubitemPriceRepository.inc.php';
+
+include_once 'app/ExtraCost.inc.php';
+include_once 'app/ExtraCostRepository.inc.php';
+
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $route = $url_components['path'];
 
@@ -238,6 +249,39 @@ if($parts_route[0] == 'fullfillment'){
       case 'generate_excel_report':
         $chosen_route = 'scripts/generate_excel_report.php';
         break;
+      case 'save_accounting_quote':
+        $chosen_route = 'scripts/save_accounting_quote.php';
+        break;
+      case 'save_new_accounting_item_price':
+        $chosen_route = 'scripts/save_new_accounting_item_price.php';
+        break;
+      case 'save_new_accounting_subitem_price':
+        $chosen_route = 'scripts/save_new_accounting_subitem_price.php';
+        break;
+      case 'save_edit_accounting_item_price':
+        $chosen_route = 'scripts/save_edit_accounting_item_price.php';
+        break;
+      case 'remove_accounting_item_price':
+        $chosen_route = 'scripts/remove_accounting_item_price.php';
+        break;
+      case 'save_edit_accounting_subitem_price':
+        $chosen_route = 'scripts/save_edit_accounting_subitem_price.php';
+        break;
+      case 'remove_accounting_subitem_price':
+        $chosen_route = 'scripts/remove_accounting_subitem_price.php';
+        break;
+      case 'set_accounting_completed':
+        $chosen_route = 'scripts/set_accounting_completed.php';
+        break;
+      case 'save_new_extra_cost':
+        $chosen_route = 'scripts/save_new_extra_cost.php';
+        break;
+      case 'save_edit_extra_cost':
+        $chosen_route = 'scripts/save_edit_extra_cost.php';
+        break;
+      case 'remove_extra_cost':
+        $chosen_route = 'scripts/remove_extra_cost.php';
+        break;
       default:
         break;
     }
@@ -254,6 +298,9 @@ if($parts_route[0] == 'fullfillment'){
             break;
           case 'invoices':
             $current_manager = 'invoices';
+            break;
+          case 'accounting_completed':
+            $current_manager = 'accounting_completed';
             break;
           case 'sign_in':
             $current_manager = 'sign_in';
@@ -395,6 +442,22 @@ if($parts_route[0] == 'fullfillment'){
         $id_packing_slip = $parts_route[2];
         $chosen_route = 'scripts/packing_slip_pdf.php';
         break;
+      case 'load_accounting_quote_table':
+        $id_rfq = $parts_route[2];
+        $chosen_route = 'scripts/load_accounting_quote_table.php';
+        break;
+      case 'load_accounting_item_price':
+        $id_accounting_item_price = $parts_route[2];
+        $chosen_route = 'scripts/load_accounting_item_price.php';
+        break;
+      case 'load_accounting_subitem_price':
+        $id_accounting_subitem_price = $parts_route[2];
+        $chosen_route = 'scripts/load_accounting_subitem_price.php';
+        break;
+      case 'load_extra_cost':
+        $id_extra_cost = $parts_route[2];
+        $chosen_route = 'scripts/load_extra_cost.php';
+        break;
       default;
         break;
     }
@@ -458,6 +521,10 @@ if($parts_route[0] == 'fullfillment'){
           case 'work_order':
             $current_manager = 'work_order';
             $id_work_order = $parts_route[3];
+            break;
+          case 'edit_accounting_quote':
+            $current_manager = 'edit_accounting_quote';
+            $id_rfq = $parts_route[3];
             break;
           default:
             break;

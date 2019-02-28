@@ -66,6 +66,11 @@ CREATE TABLE rfq_fullfillment_part(
   eta2 DATE NOT NULL,
   eta3 DATE NOT NULL,
   comment_consolidate_others VARCHAR(255) NOT NULL,
+  due_date DATE NOT NULL,
+  accounting_ship_to VARCHAR(255) NOT NULL,
+  accounting_completed TINYINT NOT NULL,
+  accounting_completed_date DATETIME NOT NULL,
+  order_date DATE NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_rfq)
     REFERENCES rfq(id)
@@ -336,6 +341,54 @@ CREATE TABLE packing_slip_subitems(
     ON DELETE RESTRICT,
   FOREIGN KEY(id_subitem)
     REFERENCES subitems(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE ship_to(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  ship_to VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE accounting_item_price(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_item INT NOT NULL,
+  company VARCHAR(255) NOT NULL,
+  quantity INT NOT NULL,
+  unit_cost DECIMAL(20,2) NOT NULL,
+  other_cost DECIMAL(20,2) NOT NULL,
+  real_cost DECIMAL(20,2) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_item)
+    REFERENCES item(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE accounting_subitem_price(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_subitem INT NOT NULL,
+  company VARCHAR(255) NOT NULL,
+  quantity INT NOT NULL,
+  unit_cost DECIMAL(20,2) NOT NULL,
+  other_cost DECIMAL(20,2) NOT NULL,
+  real_cost DECIMAL(20,2) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_subitem)
+    REFERENCES subitems(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE extra_costs(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_rfq INT NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  cost DECIMAL(20,2) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_rfq)
+    REFERENCES rfq(id)
     ON UPDATE CASCADE
     ON DELETE RESTRICT
 );

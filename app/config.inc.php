@@ -65,6 +65,7 @@ define('TRACKING_PDF', SERVER . 'tracking_pdf/');
 define('RECEIVED_QUOTES', PROFILE . 'received');
 define('IN_PROCESS_QUOTES', PROFILE . 'in_process');
 define('INVOICES', PROFILE . 'invoices');
+define('ACCOUNTING_COMPLETED', PROFILE . 'accounting_completed');
 /******************************************************************************/
 define('EMPLOYEE_DOCS_PAGE', PROFILE . 'employee_docs_page/');
 /********************************************************************************/
@@ -89,6 +90,8 @@ define('PACKING_SLIP_PDF', SERVER . 'packing_slip_pdf/');
 define('EXCEL_REPORTS', PROFILE . 'excel_reports');
 define('GENERATE_EXCEL_REPORT', SERVER . 'generate_excel_report');
 /********************************************************************************/
+define('EDIT_ACCOUNTING_QUOTE', PROFILE . 'edit_accounting_quote/');
+/*******************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');

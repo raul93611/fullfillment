@@ -3,7 +3,7 @@ class RfqFullFillmentPartRepository{
   public static function insert_rfq_fullfillment_part($connection, $rfq_fullfillment_part){
     if(isset($connection)){
       try{
-        $sql = 'INSERT INTO rfq_fullfillment_part (id_rfq, name, business_classification, description, po_date, eta1, consolidate_others, fullfillment_date, in_process, in_process_date, invoice, invoice_date, eta2, eta3, comment_consolidate_others) VALUES(:id_rfq, :name, :business_classification, :description, :po_date, :eta1, :consolidate_others, NOW(), :in_process, :in_process_date, :invoice, :invoice_date, :eta2, :eta3, :comment_consolidate_others)';
+        $sql = 'INSERT INTO rfq_fullfillment_part (id_rfq, name, business_classification, description, po_date, eta1, consolidate_others, fullfillment_date, in_process, in_process_date, invoice, invoice_date, eta2, eta3, comment_consolidate_others, due_date, accounting_ship_to, accounting_completed, accounting_completed_date, order_date) VALUES(:id_rfq, :name, :business_classification, :description, :po_date, :eta1, :consolidate_others, NOW(), :in_process, :in_process_date, :invoice, :invoice_date, :eta2, :eta3, :comment_consolidate_others, :due_date, :accounting_ship_to, :accounting_completed, :accounting_completed_date, :order_date)';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':id_rfq', $rfq_fullfillment_part-> get_id_rfq(), PDO::PARAM_STR);
         $sentence-> bindParam(':name', $rfq_fullfillment_part-> get_name(), PDO::PARAM_STR);
@@ -19,6 +19,11 @@ class RfqFullFillmentPartRepository{
         $sentence-> bindParam(':eta2', $rfq_fullfillment_part-> get_eta2(), PDO::PARAM_STR);
         $sentence-> bindParam(':eta3', $rfq_fullfillment_part-> get_eta3(), PDO::PARAM_STR);
         $sentence-> bindParam(':comment_consolidate_others', $rfq_fullfillment_part-> get_comment_consolidate_others(), PDO::PARAM_STR);
+        $sentence-> bindParam(':due_date', $rfq_fullfillment_part-> get_due_date(), PDO::PARAM_STR);
+        $sentence-> bindParam(':accounting_ship_to', $rfq_fullfillment_part-> get_accounting_ship_to(), PDO::PARAM_STR);
+        $sentence-> bindParam(':accounting_completed', $rfq_fullfillment_part-> get_accounting_completed(), PDO::PARAM_STR);
+        $sentence-> bindParam(':accounting_completed_date', $rfq_fullfillment_part-> get_accounting_completed_date(), PDO::PARAM_STR);
+        $sentence-> bindParam(':order_date', $rfq_fullfillment_part-> get_order_date(), PDO::PARAM_STR);
         $sentence-> execute();
       }catch(PDOException $ex){
         print 'ERROR:' . $ex->getMessage() . '<br>';
@@ -36,7 +41,7 @@ class RfqFullFillmentPartRepository{
         $sentence-> execute();
         $result = $sentence-> fetch(PDO::FETCH_ASSOC);
         if(!empty($result)){
-          $rfq_fullfillment_part = new RfqFullFillmentPart($result['id'], $result['id_rfq'], $result['name'], $result['business_classification'], $result['description'], $result['po_date'], $result['eta1'], $result['consolidate_others'], $result['fullfillment_date'], $result['in_process'], $result['in_process_date'], $result['invoice'], $result['invoice_date'], $result['eta2'], $result['eta3'], $result['comment_consolidate_others']);
+          $rfq_fullfillment_part = new RfqFullFillmentPart($result['id'], $result['id_rfq'], $result['name'], $result['business_classification'], $result['description'], $result['po_date'], $result['eta1'], $result['consolidate_others'], $result['fullfillment_date'], $result['in_process'], $result['in_process_date'], $result['invoice'], $result['invoice_date'], $result['eta2'], $result['eta3'], $result['comment_consolidate_others'], $result['due_date'], $result['accounting_ship_to'], $result['accounting_completed'], $result['accounting_completed_date'], $result['order_date']);
         }
       }catch(PDOException $ex){
         print 'ERROR:' . $ex->getMessage() . '<br>';
@@ -67,6 +72,19 @@ class RfqFullFillmentPartRepository{
     }
   }
 
+  public static function set_accounting_completed($connection, $id_rfq){
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE rfq_fullfillment_part SET accounting_completed = 1, accounting_completed_date = NOW() WHERE id_rfq = :id_rfq';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
+
   public static function set_status_invoice($connection, $id_rfq){
     if(isset($connection)){
       try{
@@ -86,20 +104,6 @@ class RfqFullFillmentPartRepository{
         $sql = 'UPDATE rfq_fullfillment_part SET in_process = 1, in_process_date = NOW() WHERE id_rfq = :id_rfq';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
-        $sentence-> execute();
-      }catch(PDOException $ex){
-        print 'ERROR:' . $ex->getMessage() . '<br>';
-      }
-    }
-  }
-
-  public  static function set_fedbid($connection, $fedbid, $id_rfq_fullfillment_part){
-    if(isset($connection)){
-      try{
-        $sql = 'UPDATE rfq_fullfillment_part SET fedbid = :fedbid WHERE id = :id_rfq_fullfillment_part';
-        $sentence = $connection-> prepare($sql);
-        $sentence-> bindParam(':fedbid', $fedbid, PDO::PARAM_STR);
-        $sentence-> bindParam(':id_rfq_fullfillment_part', $id_rfq_fullfillment_part, PDO::PARAM_STR);
         $sentence-> execute();
       }catch(PDOException $ex){
         print 'ERROR:' . $ex->getMessage() . '<br>';
@@ -153,6 +157,25 @@ class RfqFullFillmentPartRepository{
       }
     }
     return $quotes;
+  }
+
+  public static function save_accounting_quote($connection, $name, $order_date, $due_date, $ship_to, $business_classification, $id_rfq_fullfillment_part){
+    if(isset($connection)){
+      try{
+        echo $id_rfq_fullfillment_part;
+        $sql = 'UPDATE rfq_fullfillment_part SET name = :name, order_date = :order_date, due_date = :due_date, accounting_ship_to = :ship_to, business_classification = :business_classification WHERE id = :id_rfq_fullfillment_part';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':name', $name, PDO::PARAM_STR);
+        $sentence-> bindParam(':order_date', $order_date, PDO::PARAM_STR);
+        $sentence-> bindParam(':due_date', $due_date, PDO::PARAM_STR);
+        $sentence-> bindParam(':ship_to', $ship_to, PDO::PARAM_STR);
+        $sentence-> bindParam(':business_classification', $business_classification, PDO::PARAM_STR);
+        $sentence-> bindParam(':id_rfq_fullfillment_part', $id_rfq_fullfillment_part, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
   }
 }
 ?>
