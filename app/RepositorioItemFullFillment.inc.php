@@ -417,7 +417,7 @@ class RepositorioItemFullFillment{
     }
   }
 
-  public static function tracking_list_item($item, $i){
+  public static function tracking_list_item($item, $re_quote_item, $i){
     if(!isset($item)){
       return;
     }
@@ -442,7 +442,7 @@ class RepositorioItemFullFillment{
         echo '<b>Description:</b> ' . nl2br(mb_substr($item->obtener_description_project(), 0, 100));
         ?>
       </td>
-      <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $item-> obtener_quantity(); ?></td>
+      <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $re_quote_item-> get_quantity(); ?></td>
       <?php
   if(count($trackings)){
         ?>
@@ -475,8 +475,12 @@ class RepositorioItemFullFillment{
     ConnectionFullFillment::open_connection();
     $subitems = RepositorioSubitemFullFillment::obtener_subitems_por_id_item(ConnectionFullFillment::get_connection(), $item-> obtener_id());
     ConnectionFullFillment::close_connection();
-    foreach ($subitems as $subitem) {
-      RepositorioSubitemFullFillment::tracking_list_subitem($subitem);
+    Conexion::abrir_conexion();
+    $re_quote_subitems = ReQuoteSubitemRepository::get_re_quote_subitems_by_id_re_quote_item(Conexion::obtener_conexion(), $re_quote_item-> get_id());
+    Conexion::cerrar_conexion();
+    foreach ($subitems as $key => $subitem) {
+      $re_quote_subitem = $re_quote_subitems[$key];
+      RepositorioSubitemFullFillment::tracking_list_subitem($subitem, $re_quote_subitem);
     }
   }
 
@@ -485,6 +489,10 @@ class RepositorioItemFullFillment{
     $quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
     $items = self::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
     ConnectionFullFillment::close_connection();
+    Conexion::abrir_conexion();
+    $re_quote = ReQuoteRepository::get_re_quote_by_id_rfq(Conexion::obtener_conexion(), $id_rfq);
+    $re_quote_items = ReQuoteItemRepository::get_re_quote_items_by_id_re_quote(Conexion::obtener_conexion(), $re_quote-> get_id());
+    Conexion::cerrar_conexion();
     if(count($items)){
       ?>
       <div class="table-responsive">
@@ -505,7 +513,8 @@ class RepositorioItemFullFillment{
           <tbody>
             <?php
             foreach ($items as $i => $item) {
-              self::tracking_list_item($item, $i);
+              $re_quote_item = $re_quote_items[$i];
+              self::tracking_list_item($item, $re_quote_item, $i);
             }
             ?>
           </tbody>

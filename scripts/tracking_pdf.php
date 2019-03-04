@@ -4,6 +4,10 @@ ConnectionFullFillment::open_connection();
 $cotizacion = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
 $items = RepositorioItemFullFillment::obtener_items_por_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
 ConnectionFullFillment::close_connection();
+Conexion::abrir_conexion();
+$re_quote = ReQuoteRepository::get_re_quote_by_id_rfq(Conexion::obtener_conexion(), $id_rfq);
+$re_quote_items = ReQuoteItemRepository::get_re_quote_items_by_id_re_quote(Conexion::obtener_conexion(), $re_quote-> get_id());
+Conexion::cerrar_conexion();
 try{
   $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
   $fontDirs = $defaultConfig['fontDir'];
@@ -93,6 +97,7 @@ try{
     $a = 1;
     for ($i = 0; $i < count($items); $i++) {
       $item = $items[$i];
+      $re_quote_item = $re_quote_items[$i];
       ConnectionFullFillment::open_connection();
       $trackings = TrackingRepository::get_all_trackings_by_id_item(ConnectionFullFillment::get_connection(), $item-> obtener_id());
       ConnectionFullFillment::close_connection();
@@ -104,7 +109,7 @@ try{
       $html .= '<tr>
           <td rowspan="' . $trackings_quantity . '">' . $a . '</td>
           <td rowspan="' . $trackings_quantity . '"><b>Brand name:</b> ' . $item-> obtener_brand_project() . '<br><b>Part number:</b> ' . $item-> obtener_part_number_project() . '<br><b>Item description:</b> ' . nl2br(wordwrap(mb_substr($item-> obtener_description_project(), 0, 150), 70, '<br>', true)) . '</td>
-          <td rowspan="' . $trackings_quantity . '" style="text-align:right;">' . $item->obtener_quantity() . '</td>';
+          <td rowspan="' . $trackings_quantity . '" style="text-align:right;">' . $re_quote_item-> get_quantity() . '</td>';
       if(count($trackings)){
         $html .= '
         <td>' . $trackings[0]-> get_quantity() . '</td>
@@ -127,9 +132,13 @@ try{
       ConnectionFullFillment::open_connection();
       $subitems = RepositorioSubitemFullFillment::obtener_subitems_por_id_item(ConnectionFullFillment::get_connection(), $item-> obtener_id());
       ConnectionFullFillment::close_connection();
+      Conexion::abrir_conexion();
+      $re_quote_subitems = ReQuoteSubitemRepository::get_re_quote_subitems_by_id_re_quote_item(Conexion::obtener_conexion(), $re_quote_item-> get_id());
+      Conexion::cerrar_conexion();
       if(count($subitems)){
         for($k = 0; $k < count($subitems); $k++){
           $subitem = $subitems[$k];
+          $re_quote_subitem = $re_quote_subitems[$k];
           ConnectionFullFillment::open_connection();
           $trackings_subitems = TrackingSubitemRepository::get_all_trackings_by_id_subitem(ConnectionFullFillment::get_connection(), $subitem-> obtener_id());
           ConnectionFullFillment::close_connection();
@@ -142,7 +151,7 @@ try{
           <tr>
           <td rowspan="' . $trackings_subitems_quantity . '"></td>
           <td rowspan="' . $trackings_subitems_quantity . '"><b>Brand name:</b> ' . $subitem-> obtener_brand_project() . '<br><b>Part number:</b> ' . $subitem-> obtener_part_number_project() . '<br><b>Item description:</b><br> ' . nl2br(wordwrap(mb_substr($subitem->obtener_description_project(), 0, 150), 70, '<br>', true)) . '</td>}
-          <td rowspan="' . $trackings_subitems_quantity . '" style="text-align:right;">' . $subitem-> obtener_quantity() . '</td>';
+          <td rowspan="' . $trackings_subitems_quantity . '" style="text-align:right;">' . $re_quote_subitem-> get_quantity() . '</td>';
           if(count($trackings_subitems)){
             $html .= '
             <td>' . $trackings_subitems[0]-> get_quantity() . '</td>

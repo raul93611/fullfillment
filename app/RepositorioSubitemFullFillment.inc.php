@@ -303,7 +303,7 @@ class RepositorioSubitemFullFillment{
     }
   }
 
-  public static function tracking_list_subitem($subitem){
+  public static function tracking_list_subitem($subitem, $re_quote_subitem){
     if(!isset($subitem)){
       return;
     }
@@ -328,7 +328,7 @@ class RepositorioSubitemFullFillment{
         echo '<b>Description:</b> ' . nl2br(mb_substr($subitem-> obtener_description_project(), 0, 100));
         ?>
       </td>
-      <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $subitem-> obtener_quantity(); ?></td>
+      <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $re_quote_subitem-> get_quantity(); ?></td>
       <?php
     if(count($trackings_subitems)){
           ?>
