@@ -411,15 +411,16 @@ class RepositorioRfqFullFillment{
     }
   }
 
-  public static function actualizar_rfq_2($conexion, $address, $ship_to, $contract_number, $id_rfq) {
+  public static function actualizar_rfq_2($conexion, $address, $ship_to, $contract_number, $total_cost, $id_rfq) {
     $rfq_editado = false;
     if (isset($conexion)) {
       try {
-        $sql = 'UPDATE rfq SET address = :address, ship_to = :ship_to, contract_number = :contract_number WHERE id = :id_rfq';
+        $sql = 'UPDATE rfq SET address = :address, ship_to = :ship_to, contract_number = :contract_number, total_cost = :total_cost WHERE id = :id_rfq';
         $sentencia = $conexion->prepare($sql);
         $sentencia->bindParam(':address', $address, PDO::PARAM_STR);
         $sentencia->bindParam(':ship_to', $ship_to, PDO::PARAM_STR);
         $sentencia-> bindParam(':contract_number', $contract_number, PDO::PARAM_STR);
+        $sentencia-> bindParam(':total_cost', $total_cost, PDO::PARAM_STR);
         $sentencia->bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
         $sentencia->execute();
         if ($sentencia) {

@@ -159,9 +159,20 @@
       <h3 class="card-title"><i class="fas fa-money-bill-wave"></i> Fulfillment Re-quote</h3>
     </div>
     <div class="card-body">
-      <?php
-      RepositorioItemFullFillment::escribir_items($quote-> obtener_id());
-      ?>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Total cost:</label>
+            <input type="number" step=".01" class="form-control form-control-sm" name="total_cost" value="<?php echo $quote-> obtener_total_cost(); ?>">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label>Total price:</label>
+            <input type="text" disabled class="form-control form-control-sm" value="<?php echo $quote-> obtener_total_price(); ?>">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="card card-primary">
