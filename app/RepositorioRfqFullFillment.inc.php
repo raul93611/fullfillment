@@ -288,6 +288,9 @@ class RepositorioRfqFullFillment{
       return;
     }
     $date = RepositorioRfqFullFillmentComment::mysql_datetime_to_english_format($quote['quote_date']);
+    ConnectionFullFillment::open_connection();
+    $rfq_fullfillment_part = RfqFullFillmentPartRepository::get_rfq_fullfillment_part_by_id_rfq(ConnectionFullFillment::get_connection(), $quote['proposal']);
+    ConnectionFullFillment::close_connection();
     ?>
     <tr>
       <td>
@@ -298,7 +301,11 @@ class RepositorioRfqFullFillment{
             echo EDIT_QUOTE . $quote['proposal'];
             break;
           case 3:
-            echo EDIT_ACCOUNTING_QUOTE . $quote['proposal'];
+            if($rfq_fullfillment_part-> get_invoice()){
+              echo EDIT_ACCOUNTING_QUOTE . $quote['proposal'];
+            }else{
+              echo EDIT_QUOTE . $quote['proposal'];
+            }
             break;
           default:
             break;
@@ -332,6 +339,25 @@ class RepositorioRfqFullFillment{
       }
     }
     return $cotizacion_recuperada;
+  }
+
+  public static function get_quote_by_rfp($connection, $rfp) {
+    $quote = null;
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM rfq WHERE rfp = :rfp";
+        $sentence = $connection->prepare($sql);
+        $sentence->bindParam(':rfp', $rfp, PDO::PARAM_STR);
+        $sentence->execute();
+        $result = $sentence->fetch(PDO::FETCH_ASSOC);
+        if (!empty($result)) {
+          $quote = new Rfq($result['id'], $result['id_usuario'], $result['usuario_designado'], $result['canal'], $result['email_code'], $result['type_of_bid'], $result['issue_date'], $result['end_date'], $result['status'], $result['completado'], $result['total_cost'], $result['total_price'], $result['comments'], $result['award'], $result['fecha_completado'], $result['fecha_submitted'], $result['fecha_award'], $result['payment_terms'], $result['address'], $result['ship_to'], $result['expiration_date'], $result['ship_via'], $result['taxes'], $result['profit'], $result['additional'], $result['shipping'], $result['shipping_cost'], $result['rfp'], $result['fullfillment'], $result['contract_number']);
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $quote;
   }
 
   public static function actualizar_shipping($conexion, $shipping, $shipping_cost, $id_rfq) {

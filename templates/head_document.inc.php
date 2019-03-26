@@ -20,13 +20,13 @@
     <link rel="stylesheet" href="<?php echo PLUGINS; ?>font-awesome/css/all.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="<?php echo DIST; ?>css/adminlte.min.css">
-    <link rel="stylesheet" href="<?php echo PLUGINS; ?>fullcalendar/fullcalendar.css">
+    <link rel="stylesheet" href="<?php echo PLUGINS; ?>fullcalendar/fullcalendar.min.css">
     <link rel="stylesheet" href="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/css/fileinput.min.css">
     <link rel="stylesheet" href="<?php echo SERVER; ?>bower_components/bootstrap-fileinput/themes/explorer-fas/theme.min.css">
     <link rel="stylesheet" href="<?php echo PLUGINS; ?>datatables/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo PLUGINS; ?>iCheck/all.css">
     <link rel="stylesheet" href="<?php echo CSS; ?>styles.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700,900" rel="stylesheet">
   </head>
   <body class="hold-transition sidebar-mini sidebar-collapse">
     <div class="wrapper">

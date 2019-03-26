@@ -339,6 +339,26 @@ class UserFullFillmentRepository{
     return $users;
   }
 
+  public static function get_all_project_management_users($connection) {
+    $users = [];
+    if (isset($connection)) {
+      try {
+        $sql = "SELECT * FROM users WHERE level = 4 AND status = 1";
+        $sentence = $connection->prepare($sql);
+        $sentence->execute();
+        $result = $sentence->fetchAll(PDO::FETCH_ASSOC);
+        if (count($result)) {
+          foreach ($result as $row) {
+            $users [] = new User($row['id'], $row['username'], $row['password'], $row['names'], $row['last_names'], $row['level'], $row['email'], $row['status'], $row['hash_recover_password']);
+          }
+        }
+      } catch (PDOException $ex) {
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $users;
+  }
+
   public static function print_user($user) {
     if (!isset($user)) {
         return;

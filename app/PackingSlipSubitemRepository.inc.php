@@ -40,7 +40,7 @@ class PackingSlipSubitemRepository{
   public static function get_subitems_for_packing_slip_by_id_item($connection, $id_item){
     if(isset($connection)){
       try{
-        $sql = 'SELECT subitems.id, subitems.description, subitems.quantity, SUM(trackings_subitems.quantity) as order_shipped, packing_slip_subitems.unit_type, packing_slip_subitems.back_order_quantity FROM subitems LEFT JOIN trackings_subitems ON subitems.id = trackings_subitems.id_subitem LEFT JOIN packing_slip_subitems ON subitems.id = packing_slip_subitems.id_subitem WHERE subitems.id_item = :id_item GROUP BY subitems.id';
+        $sql = 'SELECT subitems.id, SUM(trackings_subitems.quantity) as order_shipped, packing_slip_subitems.unit_type, packing_slip_subitems.back_order_quantity FROM subitems LEFT JOIN trackings_subitems ON subitems.id = trackings_subitems.id_subitem LEFT JOIN packing_slip_subitems ON subitems.id = packing_slip_subitems.id_subitem WHERE subitems.id_item = :id_item GROUP BY subitems.id';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':id_item', $id_item, PDO::PARAM_STR);
         $sentence-> execute();

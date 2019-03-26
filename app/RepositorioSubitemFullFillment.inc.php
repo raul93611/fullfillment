@@ -323,9 +323,9 @@ class RepositorioSubitemFullFillment{
       <td rowspan="<?php echo $trackings_quantity; ?>"></td>
       <td rowspan="<?php echo $trackings_quantity; ?>">
         <?php
-        echo '<b>Brand:</b> ' . $subitem-> obtener_brand_project() . '<br>';
-        echo '<b>Part #:</b> ' . $subitem-> obtener_part_number_project() . '<br>';
-        echo '<b>Description:</b> ' . nl2br(mb_substr($subitem-> obtener_description_project(), 0, 100));
+        echo '<b>Brand:</b> ' . $re_quote_subitem-> get_brand() . '<br>';
+        echo '<b>Part #:</b> ' . $re_quote_subitem-> get_part_number() . '<br>';
+        echo '<b>Description:</b> ' . nl2br(mb_substr($re_quote_subitem-> get_description(), 0, 100));
         ?>
       </td>
       <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $re_quote_subitem-> get_quantity(); ?></td>

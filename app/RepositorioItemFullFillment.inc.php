@@ -437,9 +437,9 @@ class RepositorioItemFullFillment{
       <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $i + 1; ?></td>
       <td rowspan="<?php echo $trackings_quantity; ?>">
         <?php
-        echo '<b>Brand:</b> ' . $item-> obtener_brand_project() . '<br>';
-        echo '<b>Part #:</b> ' . $item-> obtener_part_number_project() . '<br>';
-        echo '<b>Description:</b> ' . nl2br(mb_substr($item->obtener_description_project(), 0, 100));
+        echo '<b>Brand:</b> ' . $re_quote_item-> get_brand() . '<br>';
+        echo '<b>Part #:</b> ' . $re_quote_item-> get_part_number() . '<br>';
+        echo '<b>Description:</b> ' . nl2br(mb_substr($re_quote_item-> get_description(), 0, 100));
         ?>
       </td>
       <td rowspan="<?php echo $trackings_quantity; ?>"><?php echo $re_quote_item-> get_quantity(); ?></td>

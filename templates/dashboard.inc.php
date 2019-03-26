@@ -8,6 +8,9 @@ switch ($level) {
     break;
   case 3:
     Redirection::redirect1(INVOICES);
+    break;
+  case 4:
+    Redirection::redirect1(RECEIVED_PROJECTS);
   default:
     break;
 }

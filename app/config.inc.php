@@ -4,6 +4,11 @@ define('BD_NAME_FULLFILLMENT', 'fullfillment');
 define('USERNAME_FULLFILLMENT', 'root');
 define('PASSWORD_FULLFILLMENT', '');
 
+define('SERVER_NAME', 'localhost');
+define('USER_NAME', 'root');
+define('PASSWORD', '');
+define('BD_NAME', 'rfp');
+
 define('NOMBRE_SERVIDOR', 'localhost');
 define('NOMBRE_USUARIO', 'root');
 define('PASSWORD', '');
@@ -53,7 +58,8 @@ define('SAVE_COMMENT_RFQ', SERVER . 'save_comment_rfq');
 /*****************************************************************************/
 define('SAVE_RFQ_FULLFILLMENT_INFO', SERVER . 'save_rfq_fullfillmet_info');
 /*****************************************************************************/
-define('PDF_ITEMS_TABLE', SERVER . 'pdf_items_table/');
+define('QUOTE_PDF_ITEMS_TABLE', SERVER . 'quote_pdf_items_table/');
+define('RE_QUOTE_PDF_ITEMS_TABLE', SERVER . 're_quote_pdf_items_table/');
 /*****************************************************************************/
 define('TRACKING', PROFILE . 'tracking/');
 define('SAVE_TRACKING', SERVER . 'save_tracking');
@@ -92,6 +98,12 @@ define('GENERATE_EXCEL_REPORT', SERVER . 'generate_excel_report');
 /********************************************************************************/
 define('EDIT_ACCOUNTING_QUOTE', PROFILE . 'edit_accounting_quote/');
 /*******************************************************************************/
+define('RECEIVED_PROJECTS', PROFILE . 'received_projects');
+/*******************************************************************************/
+define('EDIT_PROJECT', PROFILE . 'edit_project/');
+/********************************************************************************/
+define('SERVICE', PROFILE . 'service/');
+/****************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');

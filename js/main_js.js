@@ -1,4 +1,152 @@
 $(document).ready(function(){
+  /****************************project dates********************/
+  $('#project_dates_button').click(function(){
+    $('#project_dates_modal').modal();
+  });
+  /*****************************calendar***************************/
+  $('#calendar').fullCalendar({
+    themeSystem: 'bootstrap4',
+    dayClick: function(date, jsEvent, view){
+      $('#new_project_date_form input[name="date"]').val(date.format('MM/DD/YYYY'));
+      $('#new_project_date_modal').modal();
+    },
+    events: 'http://' + document.location.hostname + '/fullfillment/load_project_dates/' + $('#id_fulfillment_project').val(),
+    eventClick: function(info){
+      $('#project_date_modal .contenido').load('http://' + document.location.hostname + '/fullfillment/load_project_date/' + info.id);
+      $('#project_date_modal').modal();
+    }
+  });
+
+  $('#project_date_modal').on('click', '.remove_project_date', function(){
+    $.ajax({
+      type: 'POST',
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_project_date/',
+      data: {
+        id_project_date: $(this).attr('data')
+      },
+      success: function(res){
+        $('#project_date_modal').modal('hide');
+        $('#calendar').fullCalendar('refetchEvents');
+        $('#project_dates_modal .modal-body').load('http://' + document.location.hostname + '/fullfillment/load_all_project_dates/');
+      }
+    });
+  });
+
+  $('#new_project_date_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_project_date/', $(this).serialize(), function(res){
+      $('#new_project_date_form')[0].reset();
+      $('#new_project_date_modal').modal('hide');
+      $('#calendar').fullCalendar('refetchEvents');
+      $('#project_dates_modal .modal-body').load('http://' + document.location.hostname + '/fullfillment/load_all_project_dates/');
+    });
+    return false;
+  });
+  /***********************************members***********************/
+  $('#new_member_button').click(function(){
+    $('#new_member_modal').modal();
+  });
+
+  $('#new_member_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_member/', $(this).serialize(), function(res){
+      $('#new_member_form')[0].reset();
+      $('#new_member_modal').modal('hide');
+      $('#members').load('http://' + document.location.hostname + '/fullfillment/load_members/' + $('#id_fulfillment_project').val());
+    });
+    return false;
+  });
+
+  $('#members').on('click', '.edit_member_button', function(){
+    $('#edit_member_modal form').load('http://' + document.location.hostname + '/fullfillment/load_member/' + $(this).attr('data'));
+    $('#edit_member_modal').modal();
+    return false;
+  });
+
+  $('#edit_member_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_member/', $(this).serialize(), function(res){
+      $('#edit_member_modal').modal('hide');
+      $('#members').load('http://' + document.location.hostname + '/fullfillment/load_members/' + $('#id_fulfillment_project').val());
+    });
+    return false;
+  });
+
+  $('#edit_member_form').on('click', '.remove_member_button', function(){
+    $.ajax({
+      type: 'POST',
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_member/',
+      data: {
+        id_member: $(this).attr('data')
+      },
+      success: function(res){
+        $('#edit_member_modal').modal('hide');
+        $('#members').load('http://' + document.location.hostname + '/fullfillment/load_members/' + $('#id_fulfillment_project').val());
+      }
+    });
+  });
+  /***********************************real cost project***********************/
+  $('#real_project_costs').on('click', '.edit_real_project_cost_button', function(){
+    $('#edit_real_project_cost_modal form').load('http://' + document.location.hostname + '/fullfillment/load_real_project_cost/' + $(this).attr('data'));
+    $('#edit_real_project_cost_modal').modal();
+    return false;
+  });
+
+  $('#edit_real_project_cost_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_real_project_cost/', $(this).serialize(), function(res){
+      $('#edit_real_project_cost_modal').modal('hide');
+      $('#real_project_costs').load('http://' + document.location.hostname + '/fullfillment/load_real_project_costs/' + $('#id_fulfillment_project').val(), function(){
+        $('#total_difference').load('http://' + document.location.hostname + '/fullfillment/load_total_difference/' + $('#id_fulfillment_project').val(), {'total': $('#total_project').attr('data'), 'real_total': $('#total_real_project').attr('data')});
+      });
+    });
+    return false;
+  });
+  /*************************************inputfile fulfillment rfp*************/
+  $('#new_document_button').click(function(){
+    $('#new_document_modal').modal();
+  });
+
+  $('#new_document_form').submit(function(e){
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: 'http://' + document.location.hostname + '/fullfillment/save_new_project_document/',
+      data: new FormData(this),
+      contentType: false,
+      cache: false,
+      processData:false,
+      success: function(res){
+        $('#new_document_form')[0].reset();
+        $('#new_document_modal').modal('hide');
+        $('.project_documents').load('http://' + document.location.hostname + '/fullfillment/load_project_documents/' + $('#id_fulfillment_project').val());
+      }
+    });
+    return false;
+  });
+
+  $('#customFile').change(function(e){
+    var files = e.target.files;
+    var filename = [];
+    $.each(files, function(index, value) {
+      filename.push(value.name);
+    });
+    $('#filenames').html(filename.join());
+  });
+  /************************************comments*******************************/
+  $('#new_project_comment_button').click(function(){
+    $('#new_project_comment_modal').modal();
+  });
+
+  $('#new_project_comment_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_project_comment/', $(this).serialize(), function(res){
+      $('#new_project_comment_form')[0].reset();
+      $('#new_project_comment_modal').modal('hide');
+      $('#all_project_comments_modal .modal-body').load('http://' + document.location.hostname + '/fullfillment/load_project_comments_modal/' + res.id_fulfillment_project);
+      $('#project_comments').load('http://' + document.location.hostname + '/fullfillment/load_project_comments/' + res.id_fulfillment_project);
+    });
+    return false;
+  });
+
+  $('#project_comments').on('click', '#show_project_comments_button', function(){
+    $('#all_project_comments_modal').modal();
+  });
   /************************************set accounting completed**************************************/
   $('#accounting_completed').click(function(){
     if($(this).prop('checked')){
@@ -464,7 +612,40 @@ $(document).ready(function(){
       $('#purchase_order_items').load('http://' + document.location.hostname + '/fullfillment/load_purchase_order_items/' + res.id_purchase_order);
     });
   });
-  /**************************************INPUT FILE*************************************/
+  /**************************************INPUT FILE rfp*************************************/
+  if($('#file_input_rfp').length != 0){
+    var files = $('#files').val();
+    var array_div_files = [];
+    var array_options = [];
+    if(files != ''){
+      files = files.split(',');
+      for (var i = 0; i < files.length; i++) {
+        array_div_files.push('"<h3>' + "<i class='" + "fas fa-file" + "'></i>" + '</h3>"');
+        array_options.push('{"previewAsData": false, "caption": "' + files[i] + '", "downloadUrl": "' + 'http://' + document.location.hostname + '/fullfillment/documents/rfp_team/' + $('input[name="id_project"]').val() + '/' + files[i] + '", "key": ' + i + '}');
+      }
+      array_div_files.join(',');
+      array_div_files = '[' + array_div_files + ']';
+      array_div_files = jQuery.parseJSON(array_div_files);
+      array_options.join(',');
+      array_options = '[' + array_options + ']';
+      array_options = jQuery.parseJSON(array_options);
+    }
+    $('#file_input_rfp').fileinput({
+      theme: 'explorer-fas',
+      overwriteInitial: false,
+      showBrowse: false,
+      initialPreviewAsData: true,
+      showClose: false,
+      initialPreview: array_div_files,
+      initialPreviewConfig: array_options,
+      fileActionSettings:
+      {
+        showZoom: false,
+        showRemove: false
+      }
+    });
+  }
+  /**************************************INPUT FILE rfq*************************************/
   if($('#file_input').length != 0){
     var files = $('#files').val();
     var array_div_files = [];
@@ -565,7 +746,7 @@ $(document).ready(function(){
     $('#label_file_create').html(fileName_create.join(', '));
   });
   /**********************************************************************************/
-  $('.rfq_team_table').DataTable({
+  $('.rfq_team_table, .rfp_team_table').DataTable({
     'pageLength': 100,
     'ordering': false
   });

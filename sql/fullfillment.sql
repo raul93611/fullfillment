@@ -392,3 +392,73 @@ CREATE TABLE extra_costs(
     ON UPDATE CASCADE
     ON DELETE RESTRICT
 );
+
+CREATE TABLE fulfillment_projects(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_project INT NOT NULL,
+  received TINYINT NOT NULL,
+  received_date DATETIME NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE project_comments(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_fulfillment_project INT NOT NULL,
+  username VARCHAR(255) NOT NULL,
+  comment TEXT CHARACTER SET utf8 NOT NULL,
+  comment_date DATETIME NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_fulfillment_project)
+    REFERENCES fulfillment_projects(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE project_documents(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_fulfillment_project INT NOT NULL,
+  documents_name TEXT CHARACTER SET utf8 NOT NULL,
+  comment TEXT CHARACTER SET utf8 NOT NULL,
+  document_date DATETIME NOT NULL,
+  username VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_fulfillment_project)
+    REFERENCES fulfillment_projects(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE real_project_costs(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_fulfillment_project INT NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  cost DECIMAL(20,2) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_fulfillment_project)
+    REFERENCES fulfillment_projects(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE members(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_fulfillment_project INT NOT NULL,
+  names VARCHAR(255) NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_fulfillment_project)
+    REFERENCES fulfillment_projects(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE project_dates(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_fulfillment_project INT NOT NULL,
+  date DATE NOT NULL,
+  comment TEXT CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_fulfillment_project)
+    REFERENCES fulfillment_projects(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);

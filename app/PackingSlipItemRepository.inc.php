@@ -61,7 +61,7 @@ class PackingSlipItemRepository{
   public static function get_items_for_packing_slip_by_id_rfq($connection, $id_rfq){
     if(isset($connection)){
       try{
-        $sql = 'SELECT item.id, item.description, item.quantity, SUM(trackings.quantity) as order_shipped, packing_slip_items.unit_type, packing_slip_items.back_order_quantity FROM item LEFT JOIN trackings ON item.id = trackings.id_item LEFT JOIN packing_slip_items ON item.id = packing_slip_items.id_item WHERE item.id_rfq = :id_rfq GROUP BY item.id';
+        $sql = 'SELECT item.id, SUM(trackings.quantity) as order_shipped, packing_slip_items.unit_type, packing_slip_items.back_order_quantity FROM item LEFT JOIN trackings ON item.id = trackings.id_item LEFT JOIN packing_slip_items ON item.id = packing_slip_items.id_item WHERE item.id_rfq = :id_rfq GROUP BY item.id';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
         $sentence-> execute();
@@ -73,7 +73,7 @@ class PackingSlipItemRepository{
     return $result;
   }
 
-  public static function print_packing_slip_item($item, $i){
+  public static function print_packing_slip_item($item, $re_quote_item, $i){
     if(!isset($item)){
       return ;
     }
@@ -102,8 +102,8 @@ class PackingSlipItemRepository{
         </div>
       </td>
       <td><?php echo $i + 1; ?></td>
-      <td><?php echo nl2br($item['description']); ?></td>
-      <td><?php echo $item['quantity']; ?></td>
+      <td><?php echo nl2br($re_quote_item-> get_description()); ?></td>
+      <td><?php echo $re_quote_item-> get_quantity(); ?></td>
       <td><?php echo $item['order_shipped']; ?></td>
       <td><?php echo $item['unit_type']; ?></td>
       <td><?php echo $item['back_order_quantity']; ?></td>
@@ -112,8 +112,12 @@ class PackingSlipItemRepository{
     ConnectionFullFillment::open_connection();
     $subitems = PackingSlipSubitemRepository::get_subitems_for_packing_slip_by_id_item(ConnectionFullFillment::get_connection(), $item['id']);
     ConnectionFullFillment::close_connection();
+    Conexion::abrir_conexion();
+    $re_quote_subitems = ReQuoteSubitemRepository::get_re_quote_subitems_by_id_re_quote_item(Conexion::obtener_conexion(), $re_quote_item-> get_id());
+    Conexion::cerrar_conexion();
     if(count($subitems)){
       foreach ($subitems as $key => $subitem) {
+        $re_quote_subitem = $re_quote_subitems[$key];
         ?>
         <tr <?php if(!(is_null($subitem['unit_type']) && is_null($subitem['back_order_quantity']))){echo 'style="background-color: #dfffd6;"';} ?>>
           <td>
@@ -139,8 +143,8 @@ class PackingSlipItemRepository{
             </div>
           </td>
           <td></td>
-          <td><?php echo nl2br($subitem['description']); ?></td>
-          <td><?php echo $subitem['quantity']; ?></td>
+          <td><?php echo nl2br($re_quote_subitem-> get_description()); ?></td>
+          <td><?php echo $re_quote_subitem-> get_quantity(); ?></td>
           <td><?php echo $subitem['order_shipped']; ?></td>
           <td><?php echo $subitem['unit_type']; ?></td>
           <td><?php echo $subitem['back_order_quantity']; ?></td>
@@ -154,6 +158,10 @@ class PackingSlipItemRepository{
     ConnectionFullFillment::open_connection();
     $items = PackingSlipItemRepository::get_items_for_packing_slip_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
     ConnectionFullFillment::close_connection();
+    Conexion::abrir_conexion();
+    $re_quote = ReQuoteRepository::get_re_quote_by_id_rfq(Conexion::obtener_conexion(), $id_rfq);
+    $re_quote_items = ReQuoteItemRepository::get_re_quote_items_by_id_re_quote(Conexion::obtener_conexion(), $re_quote-> get_id());
+    Conexion::cerrar_conexion();
     if(count($items)){
       ?>
       <table id="packing_slip_table" class="table table-hover table-bordered">
@@ -171,7 +179,8 @@ class PackingSlipItemRepository{
         <tbody>
           <?php
           foreach ($items as $key => $item) {
-            self::print_packing_slip_item($item, $key);
+            $re_quote_item = $re_quote_items[$key];
+            self::print_packing_slip_item($item, $re_quote_item, $key);
           }
           ?>
         </tbody>

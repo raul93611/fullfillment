@@ -76,9 +76,11 @@ try{
   <table class="tabla">
     <tr>
       <th>PROPOSAL #</th>
+      <th>CONTRACT NUMBER</th>
     </tr>
     <tr>
       <td style="text-align:center;">' . $cotizacion->obtener_id() . '</td>
+      <td style="text-align:center;">' . $cotizacion-> obtener_contract_number() . '</ts>
     </tr>
   </table>';
   if (count($items)) {
@@ -108,7 +110,7 @@ try{
       }
       $html .= '<tr>
           <td rowspan="' . $trackings_quantity . '">' . $a . '</td>
-          <td rowspan="' . $trackings_quantity . '"><b>Brand name:</b> ' . $item-> obtener_brand_project() . '<br><b>Part number:</b> ' . $item-> obtener_part_number_project() . '<br><b>Item description:</b> ' . nl2br(wordwrap(mb_substr($item-> obtener_description_project(), 0, 150), 70, '<br>', true)) . '</td>
+          <td rowspan="' . $trackings_quantity . '"><b>Brand name:</b> ' . $re_quote_item-> get_brand() . '<br><b>Part number:</b> ' . $re_quote_item-> get_part_number() . '<br><b>Item description:</b> ' . nl2br(wordwrap(mb_substr($re_quote_item-> get_description(), 0, 150), 70, '<br>', true)) . '</td>
           <td rowspan="' . $trackings_quantity . '" style="text-align:right;">' . $re_quote_item-> get_quantity() . '</td>';
       if(count($trackings)){
         $html .= '
@@ -150,7 +152,7 @@ try{
           $html .= '
           <tr>
           <td rowspan="' . $trackings_subitems_quantity . '"></td>
-          <td rowspan="' . $trackings_subitems_quantity . '"><b>Brand name:</b> ' . $subitem-> obtener_brand_project() . '<br><b>Part number:</b> ' . $subitem-> obtener_part_number_project() . '<br><b>Item description:</b><br> ' . nl2br(wordwrap(mb_substr($subitem->obtener_description_project(), 0, 150), 70, '<br>', true)) . '</td>}
+          <td rowspan="' . $trackings_subitems_quantity . '"><b>Brand name:</b> ' . $re_quote_subitem-> get_brand() . '<br><b>Part number:</b> ' . $re_quote_subitem-> get_part_number() . '<br><b>Item description:</b><br> ' . nl2br(wordwrap(mb_substr($re_quote_subitem-> get_description(), 0, 150), 70, '<br>', true)) . '</td>
           <td rowspan="' . $trackings_subitems_quantity . '" style="text-align:right;">' . $re_quote_subitem-> get_quantity() . '</td>';
           if(count($trackings_subitems)){
             $html .= '

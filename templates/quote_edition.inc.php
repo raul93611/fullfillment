@@ -136,7 +136,7 @@
   </div>
   <div class="card card-primary">
     <div class="card-header" id="final_quote_toggle">
-      <h3 class="card-title"><i class="fas fa-money-bill-wave"></i> RFQ Quote</h3>
+      <h3 class="card-title"><i class="fas fa-money-bill-wave"></i> RFQ Quote <a class="float-right" target="_blank" href="<?php echo QUOTE_PDF_ITEMS_TABLE . $quote-> obtener_id(); ?>"><i class="fas fa-file"></i></a></h3>
     </div>
     <div class="card-body" id="final_quote">
       <?php
@@ -146,7 +146,7 @@
   </div>
   <div class="card card-primary">
     <div class="card-header" id="final_re_quote_toggle">
-      <h3 class="card-title"><i class="fas fa-money-bill-wave"></i> RFQ Re-Quote</h3>
+      <h3 class="card-title"><i class="fas fa-money-bill-wave"></i> RFQ Re-Quote <a class="float-right" target="_blank" href="<?php echo RE_QUOTE_PDF_ITEMS_TABLE . $quote-> obtener_id(); ?>"><i class="fas fa-file"></i></a></h3>
     </div>
     <div class="card-body" id="final_re_quote">
       <?php

@@ -66,7 +66,7 @@
           </a>
           <ul class="nav nav-treeview">
             <?php
-            if($_SESSION['level'] == 2){
+            if($_SESSION['level'] == 2 || $_SESSION['level'] == 3){
               ?>
               <li class="nav-item">
                 <a href="<?php echo RECEIVED_QUOTES; ?>" class="nav-link
@@ -123,30 +123,68 @@
             }
             ?>
           </ul>
-          <li class="nav-item has-treeview menu-open">
-            <a href="<?php echo EMPLOYEE_DOCS_PAGE; ?>" class="nav-link
+        </li>
+        <li class="nav-item has-treeview
+        <?php
+        if($current_manager == 'received_projects'){
+          echo 'menu-open';
+        }
+        ?>
+        ">
+          <a href="#" class="nav-link
             <?php
-            if ($current_manager == 'employee_docs_page') {
+            if($current_manager == 'received_projects'){
               echo 'active';
             }
             ?>
-               ">
-              <i class="fas fa-file nav-icon"></i>
-              <p>Employee docs</p>
-            </a>
-          </li>
-          <li class="nav-item has-treeview menu-open">
-            <a href="<?php echo EXCEL_REPORTS; ?>" class="nav-link
+            ">
+            <i class="fas fa-tag nav-icon"></i>
+            <p>RFP Team</p>
+            <i class="right fa fa-angle-left"></i>
+          </a>
+          <ul class="nav nav-treeview">
             <?php
-            if ($current_manager == 'excel_reports') {
-              echo 'active';
+            if($_SESSION['level'] == 4){
+              ?>
+              <li class="nav-item">
+                <a href="<?php echo RECEIVED_PROJECTS; ?>" class="nav-link
+                  <?php
+                  if($current_manager == 'received_projects'){
+                    echo 'active';
+                  }
+                  ?>
+                  ">
+                  <p>Received</p>
+                </a>
+              </li>
+              <?php
             }
             ?>
-               ">
-              <i class="fas fa-file-excel nav-icon"></i>
-              <p>Excel reports</p>
-            </a>
-          </li>
+          </ul>
+        </li>
+        <li class="nav-item has-treeview menu-open">
+          <a href="<?php echo EMPLOYEE_DOCS_PAGE; ?>" class="nav-link
+          <?php
+          if ($current_manager == 'employee_docs_page') {
+            echo 'active';
+          }
+          ?>
+             ">
+            <i class="fas fa-file nav-icon"></i>
+            <p>Employee docs</p>
+          </a>
+        </li>
+        <li class="nav-item has-treeview menu-open">
+          <a href="<?php echo EXCEL_REPORTS; ?>" class="nav-link
+          <?php
+          if ($current_manager == 'excel_reports') {
+            echo 'active';
+          }
+          ?>
+             ">
+            <i class="fas fa-file-excel nav-icon"></i>
+            <p>Excel reports</p>
+          </a>
         </li>
       </ul>
     </nav>

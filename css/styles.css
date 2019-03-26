@@ -1,9 +1,8 @@
 body{
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Nunito', sans-serif;
   font-size: 11pt !important;
   color: #39485A !important;
 }
-
 /**********************************************************************************************************************************************
 START SIDEBAR STYLES
 ************************************************************************************************************************************************/
@@ -455,4 +454,8 @@ END USERS TABLE STYLES
   #footer_lg{
     position: static !important;
   }
+}
+
+.total li span, .total a span{
+  float: right;
 }
