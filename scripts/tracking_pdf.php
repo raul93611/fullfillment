@@ -73,14 +73,15 @@ try{
   </style>
   </head>';
   $html .= '<body>
+  <h2 class="color" style="text-align:center;">TRACKING DETAILS</h2>
   <table class="tabla">
     <tr>
-      <th>PROPOSAL #</th>
-      <th>CONTRACT NUMBER</th>
+      <th style="font-size:9pt;">PROPOSAL #</th>
+      <th style="font-size:9pt;">CONTRACT NUMBER</th>
     </tr>
     <tr>
-      <td style="text-align:center;">' . $cotizacion->obtener_id() . '</td>
-      <td style="text-align:center;">' . $cotizacion-> obtener_contract_number() . '</ts>
+      <td style="text-align:center;font-size:9pt;">' . $cotizacion->obtener_id() . '</td>
+      <td style="text-align:center;font-size:9pt;">' . $cotizacion-> obtener_contract_number() . '</ts>
     </tr>
   </table>';
   if (count($items)) {
