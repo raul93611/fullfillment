@@ -162,7 +162,6 @@ class RfqFullFillmentPartRepository{
   public static function save_accounting_quote($connection, $name, $order_date, $due_date, $ship_to, $business_classification, $id_rfq_fullfillment_part){
     if(isset($connection)){
       try{
-        echo $id_rfq_fullfillment_part;
         $sql = 'UPDATE rfq_fullfillment_part SET name = :name, order_date = :order_date, due_date = :due_date, accounting_ship_to = :ship_to, business_classification = :business_classification WHERE id = :id_rfq_fullfillment_part';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':name', $name, PDO::PARAM_STR);

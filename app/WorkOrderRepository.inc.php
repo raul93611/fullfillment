@@ -60,7 +60,6 @@ class WorkOrderRepository{
   public static function set_work_order($connection, $responsible, $company, $phone, $bpa, $address, $date, $client, $doc_name, $id_work_order){
     if(isset($connection)){
       try{
-        echo $responsible, $company, $phone, $bpa, $address, $date, $contract_number, $client, $id_work_order;
         $sql = 'UPDATE work_orders SET responsible = :responsible, company = :company, phone = :phone, bpa = :bpa, address = :address, date = :date, client = :client, doc_name = :doc_name WHERE id = :id_work_order';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':responsible', $responsible, PDO::PARAM_STR);
