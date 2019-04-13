@@ -143,18 +143,29 @@
             <i class="right fa fa-angle-left"></i>
           </a>
           <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="<?php echo RECEIVED_PROJECTS; ?>" class="nav-link
+                <?php
+                if($current_manager == 'received_projects'){
+                  echo 'active';
+                }
+                ?>
+                ">
+                <p>Received</p>
+              </a>
+            </li>
             <?php
-            if($_SESSION['level'] == 4){
+            if($_SESSION['level'] == 3){
               ?>
               <li class="nav-item">
-                <a href="<?php echo RECEIVED_PROJECTS; ?>" class="nav-link
+                <a href="<?php echo ACCOUNTING_COMPLETED_PROJECTS; ?>" class="nav-link
                   <?php
-                  if($current_manager == 'received_projects'){
+                  if($current_manager == 'accounting_completed_projects'){
                     echo 'active';
                   }
                   ?>
                   ">
-                  <p>Received</p>
+                  <p>Accounting</p>
                 </a>
               </li>
               <?php

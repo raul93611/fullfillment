@@ -398,6 +398,13 @@ CREATE TABLE fulfillment_projects(
   id_project INT NOT NULL,
   received TINYINT NOT NULL,
   received_date DATETIME NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  business_classification VARCHAR(255) NOT NULL,
+  due_date DATE NOT NULL,
+  ship_to VARCHAR(255) NOT NULL,
+  accounting_completed TINYINT NOT NULL,
+  accounting_completed_date DATETIME NOT NULL,
+  order_date DATE NOT NULL,
   PRIMARY KEY(id)
 );
 
@@ -456,6 +463,30 @@ CREATE TABLE project_dates(
   id_fulfillment_project INT NOT NULL,
   date DATE NOT NULL,
   comment TEXT CHARACTER SET utf8 NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(id_fulfillment_project)
+    REFERENCES fulfillment_projects(id)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+);
+
+CREATE TABLE accounting_services_price(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_service INT NOT NULL,
+  id_fulfillment_project INT NOT NULL,
+  company VARCHAR(255) NOT NULL,
+  quantity INT NOT NULL,
+  unit_cost DECIMAL(20,2) NOT NULL,
+  other_cost DECIMAL(20,2) NOT NULL,
+  real_cost DECIMAL(20,2) NOT NULL,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE extra_services(
+  id INT NOT NULL AUTO_INCREMENT UNIQUE,
+  id_fulfillment_project INT NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  cost DECIMAL(20,2) NOT NULL,
   PRIMARY KEY(id),
   FOREIGN KEY(id_fulfillment_project)
     REFERENCES fulfillment_projects(id)

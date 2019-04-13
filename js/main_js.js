@@ -1,4 +1,150 @@
 $(document).ready(function(){
+  /***********************************edit tracking*******************************/
+  $('#tracking_box').on('click', '.edit_tracking_subitem', function(){
+    $('#edit_tracking_subitem_modal form').load('http://' + document.location.hostname + '/fullfillment/load_tracking_subitem/' + $(this).attr('data'), function(){
+      $('.date').daterangepicker({
+        singleDatePicker: true
+      });
+      $('#edit_tracking_subitem_modal').modal();
+    });
+    return false;
+  });
+
+  $('#edit_tracking_subitem_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_tracking_subitem', $(this).serialize(), function(res){
+      $('#edit_tracking_subitem_modal').modal('hide');
+      $('#tracking_box').load('http://' + document.location.hostname + '/fullfillment/load_tracking_box/' + res.id_rfq);
+    });
+    return false;
+  });
+  /***********************************edit tracking*******************************/
+  $('#tracking_box').on('click', '.edit_tracking', function(){
+    $('#edit_tracking_modal form').load('http://' + document.location.hostname + '/fullfillment/load_tracking/' + $(this).attr('data'), function(){
+      $('.date').daterangepicker({
+        singleDatePicker: true
+      });
+      $('#edit_tracking_modal').modal();
+    });
+    return false;
+  });
+
+  $('#edit_tracking_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_tracking', $(this).serialize(), function(res){
+      $('#edit_tracking_modal').modal('hide');
+      $('#tracking_box').load('http://' + document.location.hostname + '/fullfillment/load_tracking_box/' + res.id_rfq);
+    });
+    return false;
+  });
+  /************************************set accounting completed for projects**************************************/
+  $('#accounting_project_completed').click(function(){
+    if($(this).prop('checked')){
+      $.ajax({
+        url: 'http://' + document.location.hostname + '/fullfillment/set_accounting_project_completed/',
+        type: 'POST',
+        data: {
+          id_fulfillment_project: $(this).val()
+        },
+        success: function(res){
+          $('.accounting_project_completed').hide();
+        }
+      });
+    }
+  });
+  /***********************************edit  extra service*******************************/
+  $('#accounting_project_table').on('click', '.edit_extra_service_button', function(){
+    $('#edit_extra_service_modal form').load('http://' + document.location.hostname + '/fullfillment/load_extra_service/' + $(this).attr('data'), function(){
+      $('#edit_extra_service_modal').modal();
+    });
+    return false;
+  });
+
+  $('#edit_extra_service_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_extra_service', $(this).serialize(), function(res){
+      $('#edit_extra_service_modal').modal('hide');
+      $('#accounting_project_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_project_table/' + res.id_fulfillment_project);
+    });
+    return false;
+  });
+  //remove extra cost
+  $('#edit_extra_service_form').on('click', '.remove_extra_service_button', function(){
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_extra_service/',
+      data: {
+        id_extra_service: $(this).attr('data')
+      },
+      type: 'POST',
+      success: function(res){
+        console.log(res);
+        $('#edit_extra_service_modal').modal('hide');
+        $('#accounting_project_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_project_table/' + $('#accounting_project_form input[name="id_fulfillment_project"]').val());
+      }
+    });
+  });
+  /******************************************save_extra_service**************************/
+  $('#accounting_project_table').on('click', '.new_extra_service_button', function(){
+    $('#new_extra_service_modal').modal();
+  });
+
+  $('#new_extra_service_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_extra_service', $(this).serialize(), function(res){
+      $('#new_extra_service_form')[0].reset();
+      $('#new_extra_service_modal').modal('hide');
+      console.log(res);
+      $('#accounting_project_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_project_table/' + res.id_fulfillment_project);
+    });
+    return false;
+  });
+  /*********************************edit accounting item price****************************************/
+  $('#accounting_project_table').on('click', '.edit_accounting_service_price_button', function(){
+    $('#edit_accounting_service_price_modal form').load('http://' + document.location.hostname + '/fullfillment/load_accounting_service_price/' + $(this).attr('data'), function(){
+      $('#edit_accounting_service_price_modal').modal();
+    });
+    return false;
+  });
+
+  $('#edit_accounting_service_price_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_edit_accounting_service_price', $(this).serialize(), function(res){
+      $('#edit_accounting_service_price_modal').modal('hide');
+      $('#accounting_project_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_project_table/' + res.id_fulfillment_project);
+    });
+    return false;
+  });
+  //remove accounting item price
+  $('#edit_accounting_service_price_form').on('click', '.remove_accounting_service_price_button', function(){
+    $.ajax({
+      url: 'http://' + document.location.hostname + '/fullfillment/remove_accounting_service_price/',
+      data: {
+        id_accounting_service_price: $(this).attr('data')
+      },
+      type: 'POST',
+      success: function(res){
+        $('#edit_accounting_service_price_modal').modal('hide');
+        $('#accounting_project_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_project_table/' + $('#accounting_project_form input[name="id_fulfillment_project"]').val());
+      }
+    });
+  });
+  /******************************************save_accounting_item_price**************************/
+  $('#accounting_project_table').on('click', '.new_accounting_service_price_button', function(){
+    $('#new_accounting_service_price_form input[name="id_service"]').val($(this).attr('name'));
+    $('#new_accounting_service_price_modal').modal();
+  });
+
+  $('#new_accounting_service_price_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_new_accounting_service_price', $(this).serialize(), function(res){
+      $('#new_accounting_service_price_form')[0].reset();
+      $('#new_accounting_service_price_modal').modal('hide');
+      console.log(res);
+      $('#accounting_project_table').load('http://' + document.location.hostname + '/fullfillment/load_accounting_project_table/' + res.id_fulfillment_project);
+    });
+    return false;
+  });
+  /******************************************SAVE ACCOUNTING project PART************************/
+  $('#accounting_project_form').submit(function(){
+    $.post('http://' + document.location.hostname + '/fullfillment/save_accounting_project/', $(this).serialize(), function(res){
+      console.log('asdsadsada');
+    });
+    return false;
+  });
   /****************************project dates********************/
   $('#project_dates_button').click(function(){
     $('#project_dates_modal').modal();
@@ -712,13 +858,13 @@ $(document).ready(function(){
 /********************************SUBMIT PAYMENT TERMS FORM******************************/
 
   /*********************************TRACKING SUBITEM MODAL*******************************/
-  $('.add_tracking_subitem_button').click(function(){
+  $('#tracking_box').on('click', '.add_tracking_subitem_button', function(){
     var id_subitem = $(this).attr('name');
     $('#new_tracking_subitem #id_subitem').val(id_subitem);
     $('#new_tracking_subitem').modal();
   });
   /*********************************TRACKING MODAL*******************************/
-  $('.add_tracking_button').click(function(){
+  $('#tracking_box').on('click', '.add_tracking_button', function(){
     var id_item = $(this).attr('name');
     $('#new_tracking #id_item').val(id_item);
     $('#new_tracking').modal();

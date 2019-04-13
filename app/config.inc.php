@@ -99,8 +99,10 @@ define('GENERATE_EXCEL_REPORT', SERVER . 'generate_excel_report');
 define('EDIT_ACCOUNTING_QUOTE', PROFILE . 'edit_accounting_quote/');
 /*******************************************************************************/
 define('RECEIVED_PROJECTS', PROFILE . 'received_projects');
+define('ACCOUNTING_COMPLETED_PROJECTS', PROFILE . 'accounting_completed_projects/');
 /*******************************************************************************/
 define('EDIT_PROJECT', PROFILE . 'edit_project/');
+define('EDIT_ACCOUNTING_PROJECT', PROFILE . 'edit_accounting_project/');
 /********************************************************************************/
 define('SERVICE', PROFILE . 'service/');
 /****************************************************************************/

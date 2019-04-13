@@ -22,7 +22,7 @@ ConnectionFullFillment::close_connection();
             <div class="card-header">
               <h3 class="card-title"><i class="fas fa-highlighter"></i> Enter the data</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body" id="tracking_box">
               <?php
               RepositorioItemFullFillment::tracking_list_items($id_rfq);
               ?>
@@ -36,6 +36,40 @@ ConnectionFullFillment::close_connection();
       </div>
     </div>
   </section>
+</div>
+<!--******************************************edit TRACKING SUBITEM MODAL**********************************-->
+<div class="modal fade" id="edit_tracking_subitem_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add tracking</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <input type="hidden" name="id_rfq" form="edit_tracking_subitem_form" value="<?php echo $quote-> obtener_id(); ?>">
+        <form id="edit_tracking_subitem_form" method="post" action="">
+          
+        </form>
+    </div>
+  </div>
+</div>
+<!--******************************************edit TRACKING MODAL**********************************-->
+<div class="modal fade" id="edit_tracking_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add tracking</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <input type="hidden" name="id_rfq" form="edit_tracking_form" value="<?php echo $quote-> obtener_id(); ?>">
+        <form id="edit_tracking_form" method="post" action="">
+
+        </form>
+    </div>
+  </div>
 </div>
 <!--******************************************ADD TRACKING MODAL**********************************-->
 <div class="modal fade" id="new_tracking" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -447,10 +447,11 @@ class RepositorioItemFullFillment{
   if(count($trackings)){
         ?>
         <td class="align-middle text-center">
-          <a href="<?php echo DELETE_TRACKING . $trackings[0]-> get_id(); ?>" class="btn btn-warning"><i class="fas fa-trash"></i></a>
+          <a href="<?php echo DELETE_TRACKING . $trackings[0]-> get_id(); ?>" class="mb-2 btn btn-warning"><i class="fas fa-trash"></i></a><br>
+          <a href="#" data="<?php echo $trackings[0]-> get_id(); ?>" class="edit_tracking btn btn-warning"><i class="fas fa-pen"></i></a>
         </td>
         <td><?php echo $trackings[0]-> get_quantity(); ?></td>
-        <td><?php echo $trackings[0]-> get_tracking_number(); ?></td>
+        <td><?php echo nl2br($trackings[0]-> get_tracking_number()); ?></td>
         <td><?php echo RepositorioRfqFullFillmentComment::mysql_date_to_english_format($trackings[0]-> get_delivery_date()); ?></td>
         <td><?php echo $trackings[0]-> get_signed_by(); ?></td>
         <?php
@@ -462,7 +463,8 @@ class RepositorioItemFullFillment{
       ?>
       <tr>
         <td class="align-middle text-center">
-          <a href="<?php echo DELETE_TRACKING . $tracking-> get_id(); ?>" class="btn btn-warning"><i class="fas fa-trash"></i></a>
+          <a href="<?php echo DELETE_TRACKING . $tracking-> get_id(); ?>" class="mb-2 btn btn-warning"><i class="fas fa-trash"></i></a><br>
+          <a href="#" data="<?php echo $tracking-> get_id(); ?>" class="edit_tracking btn btn-warning"><i class="fas fa-pen"></i></a>
         </td>
         <td><?php echo $tracking-> get_quantity(); ?></td>
         <td><?php echo nl2br($tracking-> get_tracking_number()); ?></td>

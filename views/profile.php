@@ -90,8 +90,14 @@ if(isset($current_manager)){
     case 'edit_project':
       include_once 'templates/edit_project.inc.php';
       break;
+    case 'edit_accounting_project':
+      include_once 'templates/edit_accounting_project.inc.php';
+      break;
     case 'service':
       include_once 'templates/service.inc.php';
+      break;
+    case 'accounting_completed_projects':
+      include_once 'templates/accounting_completed_projects.inc.php';
       break;
     default:
       break;

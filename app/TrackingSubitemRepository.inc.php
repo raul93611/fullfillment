@@ -88,5 +88,22 @@ class TrackingSubitemRepository{
     }
     return $sum_tracking_subitem;
   }
+
+  public static function update_tracking_subitem($connection, $quantity, $tracking_number, $delivery_date, $signed_by, $id_tracking_subitem){
+    if(isset($connection)){
+      try{
+        $sql = 'UPDATE trackings_subitems SET quantity = :quantity, tracking_number = :tracking_number, delivery_date = :delivery_date, signed_by = :signed_by WHERE id = :id_tracking_subitem';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':quantity', $quantity, PDO::PARAM_STR);
+        $sentence-> bindParam(':tracking_number', $tracking_number, PDO::PARAM_STR);
+        $sentence-> bindParam(':delivery_date', $delivery_date, PDO::PARAM_STR);
+        $sentence-> bindParam(':signed_by', $signed_by, PDO::PARAM_STR);
+        $sentence-> bindParam(':id_tracking_subitem', $id_tracking_subitem, PDO::PARAM_STR);
+        $sentence-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
 }
 ?>
