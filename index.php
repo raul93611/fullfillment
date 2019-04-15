@@ -289,6 +289,12 @@ if($parts_route[0] == 'fullfillment'){
       case 'generate_excel_report':
         $chosen_route = 'scripts/generate_excel_report.php';
         break;
+      case 'generate_excel_report_rfp':
+        $chosen_route = 'scripts/generate_excel_report_rfp.php';
+        break;
+      case 'generate_excel_report_rfq_rfp':
+        $chosen_route = 'scripts/generate_excel_report_rfq_rfp.php';
+        break;
       case 'save_accounting_quote':
         $chosen_route = 'scripts/save_accounting_quote.php';
         break;

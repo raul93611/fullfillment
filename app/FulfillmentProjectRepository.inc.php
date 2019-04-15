@@ -214,5 +214,27 @@ class FulfillmentProjectRepository{
       }
     }
   }
+
+  public static function get_projects_completed_between_dates($connection, $date_from, $date_to){
+    $projects = [];
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT * FROM fulfillment_projects WHERE accounting_completed = 1 AND accounting_completed_date BETWEEN :date_from AND :date_to';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':date_from', $date_from, PDO::PARAM_STR);
+        $sentence-> bindParam(':date_to', $date_to, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetchall(PDO::FETCH_ASSOC);
+        if(count($result)){
+          foreach ($result as $key => $row) {
+            $projects[] = new FulfillmentProject($row['id'], $row['id_project'], $row['received'], $row['received_date'], $row['name'], $row['business_classification'], $row['due_date'], $row['ship_to'], $row['accounting_completed'], $row['accounting_completed_date'], $row['order_date']);
+          }
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $projects;
+  }
 }
 ?>

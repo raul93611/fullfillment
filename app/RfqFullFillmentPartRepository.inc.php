@@ -114,7 +114,7 @@ class RfqFullFillmentPartRepository{
   public static function get_all_in_process_quotes_between_dates($connection, $date_from, $date_to){
     if(isset($connection)){
       try{
-        $sql = 'SELECT rfq.id, rfq.usuario_designado, rfq.canal, rfq.email_code, rfq.type_of_bid, rfq.fecha_submitted, rfq.fecha_award, rfq_fullfillment_part.fullfillment_date, rfq_fullfillment_part.in_process_date, rfq_fullfillment_part.invoice_date, rfq.total_price, rfq.total_cost, rfq.rfp FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.in_process_date BETWEEN :date_from AND :date_to';
+        $sql = 'SELECT rfq.id, rfq.usuario_designado, rfq.canal, rfq.email_code, rfq.type_of_bid, rfq.fecha_submitted, rfq.fecha_award, rfq_fullfillment_part.fullfillment_date, rfq_fullfillment_part.in_process_date, rfq_fullfillment_part.invoice_date, rfq.total_price, rfq.total_cost, rfq.rfp FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.in_process = 1 AND rfq_fullfillment_part.invoice = 0 AND rfq_fullfillment_part.in_process_date BETWEEN :date_from AND :date_to';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':date_from', $date_from, PDO::PARAM_STR);
         $sentence-> bindParam(':date_to', $date_to, PDO::PARAM_STR);
@@ -143,10 +143,26 @@ class RfqFullFillmentPartRepository{
     return $quotes;
   }
 
+  public static function get_all_accounting_quotes_between_dates($connection, $date_from, $date_to){
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT rfq.id, rfq.usuario_designado, rfq.canal, rfq.email_code, rfq.type_of_bid, rfq.fecha_submitted, rfq.fecha_award, rfq_fullfillment_part.fullfillment_date, rfq_fullfillment_part.in_process_date, rfq_fullfillment_part.invoice_date, rfq.total_price, rfq.total_cost, rfq.rfp, rfq_fullfillment_part.due_date, rfq_fullfillment_part.accounting_ship_to, rfq_fullfillment_part.name, rfq_fullfillment_part.business_classification FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.invoice = 1 AND rfq_fullfillment_part.accounting_completed = 1 AND rfq_fullfillment_part.invoice_date BETWEEN :date_from AND :date_to';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':date_from', $date_from, PDO::PARAM_STR);
+        $sentence-> bindParam(':date_to', $date_to, PDO::PARAM_STR);
+        $sentence-> execute();
+        $quotes = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $quotes;
+  }
+
   public static function get_all_received_quotes_between_dates($connection, $date_from, $date_to){
     if(isset($connection)){
       try{
-        $sql = 'SELECT rfq.id, rfq.usuario_designado, rfq.canal, rfq.email_code, rfq.type_of_bid, rfq.fecha_submitted, rfq.fecha_award, rfq_fullfillment_part.fullfillment_date, rfq_fullfillment_part.in_process_date, rfq_fullfillment_part.invoice_date, rfq.total_price, rfq.total_cost, rfq.rfp FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.fullfillment_date != "0000-00-00" AND rfq_fullfillment_part.fullfillment_date BETWEEN :date_from AND :date_to';
+        $sql = 'SELECT rfq.id, rfq.usuario_designado, rfq.canal, rfq.email_code, rfq.type_of_bid, rfq.fecha_submitted, rfq.fecha_award, rfq_fullfillment_part.fullfillment_date, rfq_fullfillment_part.in_process_date, rfq_fullfillment_part.invoice_date, rfq.total_price, rfq.total_cost, rfq.rfp FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.fullfillment_date != "0000-00-00" AND rfq_fullfillment_part.in_process = 0 AND invoice = 0 AND rfq_fullfillment_part.fullfillment_date BETWEEN :date_from AND :date_to';
         $sentence = $connection-> prepare($sql);
         $sentence-> bindParam(':date_from', $date_from, PDO::PARAM_STR);
         $sentence-> bindParam(':date_to', $date_to, PDO::PARAM_STR);

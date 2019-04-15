@@ -95,6 +95,8 @@ define('PACKING_SLIP_PDF', SERVER . 'packing_slip_pdf/');
 /*******************************************************************************/
 define('EXCEL_REPORTS', PROFILE . 'excel_reports');
 define('GENERATE_EXCEL_REPORT', SERVER . 'generate_excel_report');
+define('GENERATE_EXCEL_REPORT_RFP', SERVER . 'generate_excel_report_rfp');
+define('GENERATE_EXCEL_REPORT_RFQ_RFP', SERVER . 'generate_excel_report_rfq_rfp');
 /********************************************************************************/
 define('EDIT_ACCOUNTING_QUOTE', PROFILE . 'edit_accounting_quote/');
 /*******************************************************************************/
