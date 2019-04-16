@@ -1,4 +1,27 @@
 $(document).ready(function(){
+  $('#generate_graphic_report_rfq').click(function(){
+    $('#graphic_report_rfq').load('http://' + document.location.hostname + '/fullfillment/load_graphic_report_rfq/',{'date_from': $('#date_from').val(), 'date_to': $('#date_to').val()}, function(){
+      if($('#rfq_pie_report').length != 0){
+        var users_array = jQuery.parseJSON($('#users_array').val());
+        var received_array = jQuery.parseJSON($('#received_array').val());
+        var colors = jQuery.parseJSON($('#colors').val());
+        console.log(users_array);
+        var rfq_pie_report_box = $('#rfq_pie_report');
+        var rfq_pie_report = new Chart(rfq_pie_report_box, {
+          type: 'pie',
+          data:
+          {
+            labels: users_array,
+            datasets:
+            [{
+              backgroundColor: colors,
+              data: received_array
+            }]
+          }
+        });
+      }
+    });
+  });
   /***********************************edit tracking*******************************/
   $('#tracking_box').on('click', '.edit_tracking_subitem', function(){
     $('#edit_tracking_subitem_modal form').load('http://' + document.location.hostname + '/fullfillment/load_tracking_subitem/' + $(this).attr('data'), function(){
@@ -892,7 +915,7 @@ $(document).ready(function(){
     $('#label_file_create').html(fileName_create.join(', '));
   });
   /**********************************************************************************/
-  $('.rfq_team_table, .rfp_team_table').DataTable({
+  $('.rfq_team_table, .rfp_team_table', '.table').DataTable({
     'pageLength': 100,
     'ordering': false
   });

@@ -385,6 +385,9 @@ if($parts_route[0] == 'fullfillment'){
       case 'save_edit_tracking_subitem':
         $chosen_route = 'scripts/save_edit_tracking_subitem.php';
         break;
+      case 'load_graphic_report_rfq':
+        $chosen_route = 'scripts/load_graphic_report_rfq.php';
+        break;
       default:
         break;
     }
@@ -422,6 +425,9 @@ if($parts_route[0] == 'fullfillment'){
             break;
           case 'accounting_completed_projects':
             $current_manager = 'accounting_completed_projects';
+            break;
+          case 'graphic_reports':
+            $current_manager = 'graphic_reports';
             break;
           default:
             break;

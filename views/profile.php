@@ -99,6 +99,9 @@ if(isset($current_manager)){
     case 'accounting_completed_projects':
       include_once 'templates/accounting_completed_projects.inc.php';
       break;
+    case 'graphic_reports':
+      include_once 'templates/graphic_reports.inc.php';
+      break;
     default:
       break;
   }

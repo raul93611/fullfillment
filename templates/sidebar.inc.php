@@ -197,6 +197,18 @@
             <p>Excel reports</p>
           </a>
         </li>
+        <li class="nav-item has-treeview menu-open">
+          <a href="<?php echo GRAPHIC_REPORTS; ?>" class="nav-link
+          <?php
+          if ($current_manager == 'graphic_reports') {
+            echo 'active';
+          }
+          ?>
+             ">
+            <i class="fas fa-chart-pie nav-icon"></i>
+            <p>Graphic reports</p>
+          </a>
+        </li>
       </ul>
     </nav>
   </div>

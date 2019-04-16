@@ -108,6 +108,8 @@ define('EDIT_ACCOUNTING_PROJECT', PROFILE . 'edit_accounting_project/');
 /********************************************************************************/
 define('SERVICE', PROFILE . 'service/');
 /****************************************************************************/
+define('GRAPHIC_REPORTS', PROFILE . 'graphic_reports');
+/*******************************************************************************/
 define('CSS', SERVER . 'css/');
 define('JS', SERVER . 'js/');
 define('IMG', SERVER . 'img/');

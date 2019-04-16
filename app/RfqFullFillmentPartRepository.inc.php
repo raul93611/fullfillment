@@ -192,5 +192,136 @@ class RfqFullFillmentPartRepository{
       }
     }
   }
+
+  public static function count_received_by_user($connection, $id_user, $date_from, $date_to){
+    $total = 0;
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT COUNT(*) as total FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq.fullfillment = 1 AND rfq.usuario_designado = :id_user AND rfq_fullfillment_part.fullfillment_date BETWEEN :date_from AND :date_to';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_user', $id_user, PDO::PARAM_STR);
+        $sentence-> bindParam(':date_from', $date_from, PDO::PARAM_STR);
+        $sentence-> bindParam(':date_to', $date_to, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetch(PDO::FETCH_ASSOC);
+        if(!empty($result['total'])){
+          $total = $result['total'];
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $total;
+  }
+
+  public static function count_invoices_by_user($connection, $id_user, $date_from, $date_to){
+    $total = 0;
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT COUNT(*) as total FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.accounting_completed = 1 AND rfq.usuario_designado = :id_user AND rfq_fullfillment_part.fullfillment_date BETWEEN :date_from AND :date_to';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_user', $id_user, PDO::PARAM_STR);
+        $sentence-> bindParam(':date_from', $date_from, PDO::PARAM_STR);
+        $sentence-> bindParam(':date_to', $date_to, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetch(PDO::FETCH_ASSOC);
+        if(!empty($result['total'])){
+          $total = $result['total'];
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return $total;
+  }
+
+  public static function count_positive_negative_invoices_by_user($connection, $id_user, $date_from, $date_to){
+    $positive = 0;
+    $negative = 0;
+    if(isset($connection)){
+      try{
+        $sql = 'SELECT * FROM rfq INNER JOIN rfq_fullfillment_part ON rfq.id = rfq_fullfillment_part.id_rfq WHERE rfq_fullfillment_part.accounting_completed = 1 AND rfq.usuario_designado = :id_user AND rfq_fullfillment_part.fullfillment_date BETWEEN :date_from AND :date_to';
+        $sentence = $connection-> prepare($sql);
+        $sentence-> bindParam(':id_user', $id_user, PDO::PARAM_STR);
+        $sentence-> bindParam(':date_from', $date_from, PDO::PARAM_STR);
+        $sentence-> bindParam(':date_to', $date_to, PDO::PARAM_STR);
+        $sentence-> execute();
+        $result = $sentence-> fetchAll(PDO::FETCH_ASSOC);
+        if(count($result)){
+          foreach ($result as $key => $row) {
+            $real_cost_by_quote = RepositorioItemFullFillment::get_real_cost_by_quote(ConnectionFullFillment::get_connection(), $row['id_rfq']);
+            $total_extra_cost = ExtraCostRepository::get_total_extra_cost_by_quote(ConnectionFullFillment::get_connection(), $row['id_rfq']);
+            $profit = $row['total_price'] - ($real_cost_by_quote + $total_extra_cost);
+            if($profit > 0){
+              $positive++;
+            }else {
+              $negative++;
+            }
+          }
+        }
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+    return array($positive, $negative);
+  }
+
+  public static function rfq_table_report($date_from, $date_to){
+    Conexion::abrir_conexion();
+    $users = RepositorioUsuario::obtener_usuarios_rfq(Conexion::obtener_conexion());
+    Conexion::cerrar_conexion();
+    ?>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>USER</th>
+          <th>P.O.</th>
+          <th>INVOICES</th>
+          <th>PENDING</th>
+          <th>+</th>
+          <th>-</th>
+          <th>TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $users_array = [];
+        $received_array = [];
+        $colors = [];
+        if(count($users)){
+          if(!is_null($date_from) && !is_null($date_to)){
+            $date_from = RepositorioComment::english_format_to_mysql_date($date_from);
+            $date_to = RepositorioComment::english_format_to_mysql_date($date_to);
+            foreach ($users as $key => $user) {
+              ConnectionFullFillment::open_connection();
+              $received = self::count_received_by_user(ConnectionFullFillment::get_connection(), $user-> obtener_id(), $date_from, $date_to);
+              $invoices = self::count_invoices_by_user(ConnectionFullFillment::get_connection(), $user-> obtener_id(), $date_from, $date_to);
+              list($positive, $negative) = self::count_positive_negative_invoices_by_user(ConnectionFullFillment::get_connection(), $user-> obtener_id(), $date_from, $date_to);
+              $total = $positive + $negative;
+              $pendings = $invoices - ($total);
+              ConnectionFullFillment::close_connection();
+              $users_array[] = $user-> obtener_nombre_usuario();
+              $received_array[] = $received;
+              $colors[] = '#' . dechex(rand(0x000000, 0xFFFFFF));
+              ?>
+              <tr>
+                <td><?php echo $user-> obtener_nombre_usuario(); ?></td>
+                <td><?php echo $received; ?></td>
+                <td><?php echo $invoices; ?></td>
+                <td><?php echo $pendings; ?></td>
+                <td><?php echo $positive; ?></td>
+                <td><?php echo $negative; ?></td>
+                <td><?php echo $total; ?></td>
+              </tr>
+              <?php
+            }
+          }
+        }
+        ?>
+      </tbody>
+    </table>
+    <?php
+    return array($users_array, $received_array, $colors);
+  }
 }
 ?>
