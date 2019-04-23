@@ -88,7 +88,7 @@ foreach ($quotes as $key => $quote) {
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('D'.$i, $quote['email_code']);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('E'.$i, $quote['type_of_bid']);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('F'.$i, $quote['fecha_submitted']);
-  $spreadsheet->setActiveSheetIndex(0)->setCellValue('G'.$i, $quote['fecha_award']);
+  $spreadsheet->setActiveSheetIndex(0)->setCellValue('G'.$i, $rfq_quote-> obtener_fecha_award());
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('H'.$i, $quote['fullfillment_date']);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('I'.$i, $quote['in_process_date']);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('J'.$i, $quote['invoice_date']);
