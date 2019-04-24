@@ -323,7 +323,7 @@ class UserFullFillmentRepository{
     $users = [];
     if (isset($connection)) {
       try {
-        $sql = "SELECT * FROM users WHERE level = 2 AND status = 1";
+        $sql = "SELECT * FROM users WHERE level = 2 AND level = 3 AND status = 1";
         $sentence = $connection->prepare($sql);
         $sentence->execute();
         $result = $sentence->fetchAll(PDO::FETCH_ASSOC);
