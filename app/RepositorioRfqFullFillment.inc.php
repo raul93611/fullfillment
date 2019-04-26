@@ -458,5 +458,18 @@ class RepositorioRfqFullFillment{
     }
     return $rfq_editado;
   }
+
+  public static function remove_fulfillment($conexion, $id_rfq){
+    if(isset($conexion)){
+      try{
+        $sql = 'UPDATE rfq SET fullfillment = 0 WHERE id = :id_rfq';
+        $sentencia = $conexion-> prepare($sql);
+        $sentencia-> bindParam(':id_rfq', $id_rfq, PDO::PARAM_STR);
+        $sentencia-> execute();
+      }catch(PDOException $ex){
+        print 'ERROR:' . $ex->getMessage() . '<br>';
+      }
+    }
+  }
 }
 ?>

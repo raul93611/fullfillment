@@ -34,18 +34,30 @@ $i=2;
 ConnectionFullFillment::open_connection();
 Connection::open_connection();
 Conexion::abrir_conexion();
+
+$all_ship_to = ShipToRepository::get_all_ship_to(ConnectionFullFillment::get_connection());
+$array_ship_to = [];
+$count_ship_to = [];
+
 $date_from = RepositorioComment::english_format_to_mysql_date($_POST['date_from']);
 $date_to = RepositorioComment::english_format_to_mysql_date($_POST['date_to']);
 $projects = FulfillmentProjectRepository::get_projects_completed_between_dates(ConnectionFullFillment::get_connection(), $date_from, $date_to);
 if(count($projects)){
   $project_rfp = null;
   foreach ($projects as $key => $project) {
-    $project_rfp = ProjectRepository::get_project_by_id(Connection::get_connection(), $project-> get_id());
+    $project_rfp = ProjectRepository::get_project_by_id(Connection::get_connection(), $project-> get_id_project());
     $real_cost_by_project = AccountingServicePriceRepository::get_real_cost_by_project(ConnectionFullFillment::get_connection(), $project-> get_id());
     $total_extra_service = ExtraServiceRepository::get_total_extra_service_by_fulfillment_project(ConnectionFullFillment::get_connection(), $project-> get_id());
 
     $profit_project = $project_rfp-> get_total_service() - ($real_cost_by_project + $total_extra_service);
     $percentage_profit_project = ($profit_project / $project_rfp-> get_total_service()) * 100;
+
+    foreach ($all_ship_to as $key => $ship_to) {
+      if($ship_to-> get_ship_to() == $project-> get_ship_to()){
+        $array_ship_to[$ship_to-> get_ship_to()] += $real_cost_by_project + $total_extra_service;
+        $count_ship_to[$ship_to-> get_ship_to()]++;
+      }
+    }
 
     $designated_user = UserRepository::get_user_by_id(Connection::get_connection(), $project_rfp-> get_designated_user());
 
@@ -65,8 +77,7 @@ if(count($projects)){
 
 $quotes = RfqFullfillmentPartRepository::get_all_accounting_quotes_between_dates(ConnectionFullFillment::get_connection(), $date_from, $date_to);
 
-$all_ship_to = ShipToRepository::get_all_ship_to(ConnectionFullFillment::get_connection());
-$array_ship_to = [];
+
 
 if(count($quotes)){
   foreach ($quotes as $key => $quote) {
@@ -80,7 +91,8 @@ if(count($quotes)){
 
     foreach ($all_ship_to as $key => $ship_to) {
       if($ship_to-> get_ship_to() == $quote['accounting_ship_to']){
-        $array_ship_to[$ship_to-> get_ship_to()] =+ $real_cost_by_quote + $total_extra_cost;
+        $array_ship_to[$ship_to-> get_ship_to()] += $real_cost_by_quote + $total_extra_cost;
+        $count_ship_to[$ship_to-> get_ship_to()]++;
       }
     }
 
@@ -113,10 +125,9 @@ $i++;
 
 if(count($all_ship_to)){
   foreach ($all_ship_to as $key => $ship_to) {
-    $total_quotes = ShipToRepository::count_by_ship_to(ConnectionFullFillment::get_connection(), $ship_to-> get_ship_to(), $date_from, $date_to);
     $spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$i, $ship_to-> get_ship_to());
     $spreadsheet->setActiveSheetIndex(0)->setCellValue('B'.$i, $array_ship_to[$ship_to-> get_ship_to()]);
-    $spreadsheet->setActiveSheetIndex(0)->setCellValue('C'.$i, $total_quotes);
+    $spreadsheet->setActiveSheetIndex(0)->setCellValue('C'.$i, $count_ship_to[$ship_to-> get_ship_to()]);
     $i++;
   }
 }

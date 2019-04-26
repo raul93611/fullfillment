@@ -237,7 +237,6 @@
     ?>
     "><i class="fa fa-reply"></i></a>
     <button type="submit" class="btn btn-success" id="save_item" name="guardar_cambios_cotizacion"><i class="fa fa-check"></i> Save</button>
-    <a class="btn btn-primary add_item_charter" href="<?php echo ADD_ITEM . $quote->obtener_id(); ?>"><i class="fa fa-plus-circle"></i> Add item</a>
     <a href="#" id="add_comment" class="btn btn-primary add_item_charter"><i class="fas fa-plus"></i> Add comment</a>
     <div class="btn-group dropup">
       <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -40,7 +40,10 @@ $spreadsheet->setActiveSheetIndex(0)->setCellValue('S1', 'TOTAL_PRICE(FULFILLMEN
 $spreadsheet->setActiveSheetIndex(0)->setCellValue('T1', 'TOTAL_COST(FULFILLMENT RE-QUOTE)');
 $spreadsheet->setActiveSheetIndex(0)->setCellValue('U1', 'PROFIT(FULFILLMENT RE-QUOTE)');
 $spreadsheet->setActiveSheetIndex(0)->setCellValue('V1', '%PROFIT(FULFILLMENT RE-QUOTE)');
-$spreadsheet->setActiveSheetIndex(0)->setCellValue('W1', 'RFP PROJECT');
+$spreadsheet->setActiveSheetIndex(0)->setCellValue('W1', 'TOTAL_COST(ACCOUNTING)');
+$spreadsheet->setActiveSheetIndex(0)->setCellValue('X1', 'PROFIT(ACCOUNTING)');
+$spreadsheet->setActiveSheetIndex(0)->setCellValue('Y1', '%PROFIT(ACCOUNTING)');
+$spreadsheet->setActiveSheetIndex(0)->setCellValue('Z1', 'RFP PROJECT');
 
 ConnectionFullFillment::open_connection();
 Conexion::abrir_conexion();
@@ -61,8 +64,7 @@ if(count($quotes)){
     $rfq_re_quotes[] = ReQuoteRepository::get_re_quote_by_id_rfq(Conexion::obtener_conexion(), $quote['id']);
   }
 }
-Conexion::cerrar_conexion();
-ConnectionFullFillment::close_connection();
+
 
 $i=2;
 
@@ -79,9 +81,13 @@ foreach ($quotes as $key => $quote) {
   $profit_fullfillment_re_quote = $quote['total_price'] - $quote['total_cost'];
   $percentage_profit_fullfillment_re_quote = ($profit_fullfillment_re_quote / $quote['total_price']) * 100;
 
-  Conexion::abrir_conexion();
+  $real_cost_by_quote = RepositorioItemFullFillment::get_real_cost_by_quote(ConnectionFullFillment::get_connection(), $quote['id']);
+  $total_extra_cost = ExtraCostRepository::get_total_extra_cost_by_quote(ConnectionFullFillment::get_connection(), $quote['id']);
+
+  $profit_accounting = $quote['total_price'] - ($real_cost_by_quote + $total_extra_cost);
+  $percentage_profit_accounting = ($profit_accounting / $quote['total_price']) * 100;
+
   $usuario_designado = RepositorioUsuario::obtener_usuario_por_id(Conexion::obtener_conexion(), $quote['usuario_designado']);
-  Conexion::cerrar_conexion();
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$i, $quote['id']);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('B'.$i, $usuario_designado-> obtener_nombre_usuario());
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('C'.$i, $quote['canal']);
@@ -104,9 +110,15 @@ foreach ($quotes as $key => $quote) {
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('T'.$i, $quote['total_cost']);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('U'.$i, $profit_fullfillment_re_quote);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('V'.$i, $percentage_profit_fullfillment_re_quote);
-  $spreadsheet->setActiveSheetIndex(0)->setCellValue('W'.$i, $quote['rfp']);
+  $spreadsheet->setActiveSheetIndex(0)->setCellValue('W'.$i, $real_cost_by_quote + $total_extra_cost);
+  $spreadsheet->setActiveSheetIndex(0)->setCellValue('X'.$i, $profit_accounting);
+  $spreadsheet->setActiveSheetIndex(0)->setCellValue('Y'.$i, $percentage_profit_accounting);
+  $spreadsheet->setActiveSheetIndex(0)->setCellValue('Z'.$i, $quote['rfp']);
   $i++;
 }
+
+Conexion::cerrar_conexion();
+ConnectionFullFillment::close_connection();
 
 $spreadsheet->setActiveSheetIndex(0);
 

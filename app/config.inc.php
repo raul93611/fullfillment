@@ -97,6 +97,7 @@ define('EXCEL_REPORTS', PROFILE . 'excel_reports');
 define('GENERATE_EXCEL_REPORT', SERVER . 'generate_excel_report');
 define('GENERATE_EXCEL_REPORT_RFP', SERVER . 'generate_excel_report_rfp');
 define('GENERATE_EXCEL_REPORT_RFQ_RFP', SERVER . 'generate_excel_report_rfq_rfp');
+define('GENERATE_EXCEL_REPORT_SERVICES_EQUIPMENT', SERVER . 'generate_excel_report_services_equipment');
 /********************************************************************************/
 define('EDIT_ACCOUNTING_QUOTE', PROFILE . 'edit_accounting_quote/');
 /*******************************************************************************/

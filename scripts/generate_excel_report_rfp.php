@@ -39,7 +39,7 @@ $projects = FulfillmentProjectRepository::get_projects_completed_between_dates(C
 if(count($projects)){
   $project_rfp = null;
   foreach ($projects as $key => $project) {
-    $project_rfp = ProjectRepository::get_project_by_id(Connection::get_connection(), $project-> get_id());
+    $project_rfp = ProjectRepository::get_project_by_id(Connection::get_connection(), $project-> get_id_project());
     $real_cost_by_project = AccountingServicePriceRepository::get_real_cost_by_project(ConnectionFullFillment::get_connection(), $project-> get_id());
     $total_extra_service = ExtraServiceRepository::get_total_extra_service_by_fulfillment_project(ConnectionFullFillment::get_connection(), $project-> get_id());
 
