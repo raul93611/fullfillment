@@ -50,7 +50,7 @@ if(count($projects)){
     $total_extra_service = ExtraServiceRepository::get_total_extra_service_by_fulfillment_project(ConnectionFullFillment::get_connection(), $project-> get_id());
 
     $profit_project = $project_rfp-> get_total_service() - ($real_cost_by_project + $total_extra_service);
-    $percentage_profit_project = ($profit_project / $project_rfp-> get_total_service()) * 100;
+    $percentage_profit_project = ($profit_project / ($real_cost_by_project + $total_extra_service)) * 100;
 
     foreach ($all_ship_to as $key => $ship_to) {
       if($ship_to-> get_ship_to() == $project-> get_ship_to()){
@@ -87,7 +87,7 @@ if(count($quotes)){
     $usuario_designado = RepositorioUsuario::obtener_usuario_por_id(Conexion::obtener_conexion(), $quote['usuario_designado']);
 
     $profit_quote = $quote['total_price'] - ($real_cost_by_quote + $total_extra_cost);
-    $percentage_profit_quote = ($profit_quote / $quote['total_price']) * 100;
+    $percentage_profit_quote = ($profit_quote / ($real_cost_by_quote + $total_extra_cost)) * 100;
 
     foreach ($all_ship_to as $key => $ship_to) {
       if($ship_to-> get_ship_to() == $quote['accounting_ship_to']){

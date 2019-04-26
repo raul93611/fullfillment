@@ -58,7 +58,7 @@ if(count($quotes)){
         $designated_user = UserRepository::get_user_by_id(Connection::get_connection(), $project_rfp-> get_designated_user());
 
         $profit = $project_rfp-> get_total_service() + $project_rfp-> get_total_equipment() - ($real_cost_by_project + $total_extra_service + $real_cost_by_quote + $total_extra_cost);
-        $percentage_profit = ($profit / ($project_rfp-> get_total_service() + $project_rfp-> get_total_equipment())) * 100;
+        $percentage_profit = ($profit / ($real_cost_by_project + $total_extra_service + $real_cost_by_quote + $total_extra_cost)) * 100;
 
         foreach ($all_ship_to as $key => $ship_to) {
           if($ship_to-> get_ship_to() == $project-> get_ship_to()){

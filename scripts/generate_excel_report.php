@@ -73,19 +73,19 @@ foreach ($quotes as $key => $quote) {
   $rfq_re_quote = $rfq_re_quotes[$key];
 
   $profit_rfq_quote = $rfq_quote-> obtener_total_price() - $rfq_quote-> obtener_total_cost();
-  $percentage_profit_rfq_quote = ($profit_rfq_quote / $rfq_quote-> obtener_total_price()) * 100;
+  $percentage_profit_rfq_quote = ($profit_rfq_quote / $rfq_quote-> obtener_total_cost()) * 100;
 
-  $profit_rfq_re_quote = $rfq_re_quote-> get_total_price() - $rfq_re_quote-> get_total_cost();
-  $percentage_profit_rfq_re_quote = ($profit_rfq_re_quote / $rfq_re_quote-> get_total_price()) * 100;
+  $profit_rfq_re_quote = $rfq_quote-> obtener_total_price() - $rfq_re_quote-> get_total_cost();
+  $percentage_profit_rfq_re_quote = ($profit_rfq_re_quote / $rfq_re_quote-> get_total_cost()) * 100;
 
-  $profit_fullfillment_re_quote = $quote['total_price'] - $quote['total_cost'];
-  $percentage_profit_fullfillment_re_quote = ($profit_fullfillment_re_quote / $quote['total_price']) * 100;
+  $profit_fullfillment_re_quote = $rfq_quote-> obtener_total_price() - $quote['total_cost'];
+  $percentage_profit_fullfillment_re_quote = ($profit_fullfillment_re_quote / $quote['total_cost']) * 100;
 
   $real_cost_by_quote = RepositorioItemFullFillment::get_real_cost_by_quote(ConnectionFullFillment::get_connection(), $quote['id']);
   $total_extra_cost = ExtraCostRepository::get_total_extra_cost_by_quote(ConnectionFullFillment::get_connection(), $quote['id']);
 
-  $profit_accounting = $quote['total_price'] - ($real_cost_by_quote + $total_extra_cost);
-  $percentage_profit_accounting = ($profit_accounting / $quote['total_price']) * 100;
+  $profit_accounting = $rfq_quote-> obtener_total_price() - ($real_cost_by_quote + $total_extra_cost);
+  $percentage_profit_accounting = ($profit_accounting / ($real_cost_by_quote + $total_extra_cost)) * 100;
 
   $usuario_designado = RepositorioUsuario::obtener_usuario_por_id(Conexion::obtener_conexion(), $quote['usuario_designado']);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$i, $quote['id']);
@@ -102,11 +102,11 @@ foreach ($quotes as $key => $quote) {
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('L'.$i, $rfq_quote-> obtener_total_cost());
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('M'.$i, $profit_rfq_quote);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('N'.$i, $percentage_profit_rfq_quote);
-  $spreadsheet->setActiveSheetIndex(0)->setCellValue('O'.$i, $rfq_re_quote-> get_total_price());
+  $spreadsheet->setActiveSheetIndex(0)->setCellValue('O'.$i, $rfq_quote-> obtener_total_price());
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('P'.$i, $rfq_re_quote-> get_total_cost());
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('Q'.$i, $profit_rfq_re_quote);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('R'.$i, $percentage_profit_rfq_re_quote);
-  $spreadsheet->setActiveSheetIndex(0)->setCellValue('S'.$i, $quote['total_price']);
+  $spreadsheet->setActiveSheetIndex(0)->setCellValue('S'.$i, $rfq_quote-> obtener_total_price());
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('T'.$i, $quote['total_cost']);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('U'.$i, $profit_fullfillment_re_quote);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('V'.$i, $percentage_profit_fullfillment_re_quote);

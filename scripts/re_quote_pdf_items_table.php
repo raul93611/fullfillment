@@ -4,6 +4,7 @@ Conexion::abrir_conexion();
 $cotizacion = RepositorioRfq::obtener_cotizacion_por_id(Conexion::obtener_conexion(), $id_rfq);
 $re_quote = ReQuoteRepository::get_re_quote_by_id_rfq(Conexion::obtener_conexion(), $id_rfq);
 $re_quote_items = ReQuoteItemRepository::get_re_quote_items_by_id_re_quote(Conexion::obtener_conexion(), $re_quote-> get_id());
+$items = RepositorioItem::obtener_items_por_id_rfq(Conexion::obtener_conexion(), $id_rfq);
 $usuario_designado = RepositorioUsuario::obtener_usuario_por_id(Conexion::obtener_conexion(), $cotizacion->obtener_usuario_designado());
 Conexion::cerrar_conexion();
 $partes_fecha_completado = explode('-', $cotizacion->obtener_fecha_completado());
@@ -114,11 +115,6 @@ try{
   </table>
   <div >
   </div>
-  <div class="color">
-    <b>Taxes:</b> '  . $re_quote-> get_taxes() . '%<br>
-    <b>Profit:</b> ' . $re_quote-> get_profit() . '%<br>
-    <b>Additional general: </b> $ ' . $re_quote-> get_additional() . '
-  </div>
   <br>';
   if (count($re_quote_items)) {
     $html .= '
@@ -129,7 +125,6 @@ try{
     <th>E-LOGIC PROP.</th>
     <th class="quantity">QTY</th>
     <th>PROVIDER</th>
-    <th>ADDITIONAL</th>
     <th>BEST UNIT COST</th>
     <th>TOTAL COST</th>
     <th>PRICE FOR CLIENT</th>
@@ -137,13 +132,9 @@ try{
     </tr>
     ';
     $a = 1;
-    if($re_quote-> get_payment_terms() == 'Net 30/CC'){
-      $payment_terms = 1.0215;
-    }else{
-      $payment_terms = 1;
-    }
     for ($i = 0; $i < count($re_quote_items); $i++) {
       $re_quote_item = $re_quote_items[$i];
+      $item = $items[$i];
       $html .= '
       <tr>
       <td>' . $a . '</td>
@@ -166,16 +157,15 @@ try{
         }
         $html .= '
         </td>
-        <td>$ ' . number_format($re_quote_item-> get_additional(), 2) . '</td>
         <td>$
         ';
-        $best_unit_price = min($prices)*$payment_terms*(1+($re_quote-> get_taxes()/100)) + $re_quote_item-> get_additional() + $re_quote-> get_additional();
+        $best_unit_price = min($prices);
         $html .= number_format($best_unit_price, 2);
         $html .= '
         </td>
         <td>$ ' . number_format(round($best_unit_price, 2) * $re_quote_item-> get_quantity(), 2) . '</td>
-        <td style="text-align:right;">$ ' . number_format($re_quote_item-> get_unit_price(), 2) . '</td>
-        <td style="text-align:right;">$ ' . number_format($re_quote_item-> get_total_price(), 2) . '</td>
+        <td style="text-align:right;">$ ' . number_format($item-> obtener_unit_price(), 2) . '</td>
+        <td style="text-align:right;">$ ' . number_format($item-> obtener_total_price(), 2) . '</td>
         ';
       }else{
         $html .= '
@@ -192,9 +182,11 @@ try{
       ';
       Conexion::abrir_conexion();
       $re_quote_subitems = ReQuoteSubitemRepository::get_re_quote_subitems_by_id_re_quote_item(Conexion::obtener_conexion(), $re_quote_item-> get_id());
+      $subitems = RepositorioSubitem::obtener_subitems_por_id_item(Conexion::obtener_conexion(), $item-> obtener_id());
       Conexion::cerrar_conexion();
       for($j = 0; $j < count($re_quote_subitems); $j++){
         $re_quote_subitem = $re_quote_subitems[$j];
+        $subitem = $subitems[$j];
         $html .= '
         <tr>
         <td></td>
@@ -223,16 +215,15 @@ try{
             </td>
             ';
             $html .= '
-            <td>$ ' . number_format($re_quote_subitem-> get_additional(), 2) . '</td>
             <td>$
             ';
-              $best_unit_price = min($prices)*$payment_terms*(1+($re_quote-> get_taxes()/100)) + $re_quote_subitem-> get_additional() + $re_quote-> get_additional();
+              $best_unit_price = min($prices);
               $html .= number_format($best_unit_price, 2);
               $html .= '
               </td>
               <td>$ ' . number_format(round($best_unit_price, 2) * $re_quote_subitem-> get_quantity(), 2) . '</td>
-              <td style="text-align:right;">$ ' . number_format($re_quote_subitem-> get_unit_price(), 2) . '</td>
-              <td style="text-align:right;">$ ' . number_format($re_quote_subitem-> get_total_price(), 2) . '</td>
+              <td style="text-align:right;">$ ' . number_format($subitem-> obtener_unit_price(), 2) . '</td>
+              <td style="text-align:right;">$ ' . number_format($subitem-> obtener_total_price(), 2) . '</td>
               ';
             }else{
               $html .= '
@@ -253,11 +244,12 @@ try{
         $html .= '
         <tr>
         <td style="border:none;"></td>
-        <td colspan="8" style="font-size:10pt;">' . nl2br($re_quote-> get_shipping()) .'</td>
+        <td colspan="5" style="font-size:10pt;">' . nl2br($re_quote-> get_shipping()) .'</td>
         <td style="text-align:right;">$ ' . number_format($re_quote-> get_shipping_cost(), 2) . '</td>
+        <td></td>
+        <td>$ ' . number_format($cotizacion-> obtener_shipping_cost(), 2) . '</td>
         </tr>
         <tr>
-        <td style="border:none;"></td>
         <td style="border:none;"></td>
         <td style="border:none;"></td>
         <td style="border:none;"></td>
