@@ -1,4 +1,9 @@
 $(document).ready(function(){
+  $('.rfq_team_table, .rfp_team_table').DataTable({
+    'pageLength': 100,
+    'ordering': false
+  });
+  /**/
   $('#generate_graphic_report_rfq').click(function(){
     $('#graphic_report_rfq').load('http://' + document.location.hostname + '/fullfillment/load_graphic_report_rfq/',{'date_from': $('#date_from').val(), 'date_to': $('#date_to').val()}, function(){
       if($('#rfq_pie_report').length != 0){
@@ -915,10 +920,7 @@ $(document).ready(function(){
     $('#label_file_create').html(fileName_create.join(', '));
   });
   /**********************************************************************************/
-  $('.rfq_team_table, .rfp_team_table', '.table').DataTable({
-    'pageLength': 100,
-    'ordering': false
-  });
+
   /****************************************************************************/
   /***********************************VARIABLES INICIALES PARA EL BORRADO*********************/
   var link_to_delete;

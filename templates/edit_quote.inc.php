@@ -1,6 +1,8 @@
 <?php
 ConnectionFullFillment::open_connection();
-$quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $id_rfq);
+Conexion::abrir_conexion();
+$quote = RepositorioRfq::obtener_cotizacion_por_id(Conexion::obtener_conexion(), $id_rfq);
+Conexion::cerrar_conexion();
 $rfq_fullfillment_part = RfqFullFillmentPartRepository::get_rfq_fullfillment_part_by_id_rfq(ConnectionFullFillment::get_connection(), $id_rfq);
 $po_date = RepositorioRfqFullFillmentComment::mysql_date_to_english_format($rfq_fullfillment_part-> get_po_date());
 $eta1 = RepositorioRfqFullFillmentComment::mysql_date_to_english_format($rfq_fullfillment_part-> get_eta1());
