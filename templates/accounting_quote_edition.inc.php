@@ -32,7 +32,7 @@
           <div class="form-group">
             <label for="business_classification">Business classification:</label>
             <select class="form-control form-control-sm" name="business_classification">
-              <option value="small_business" <?php if($rfq_fullfillment_part-> get_business_classification() == ''){echo 'selected';} ?>></option>
+              <option value="" <?php if($rfq_fullfillment_part-> get_business_classification() == ''){echo 'selected';} ?>></option>
               <option value="small_business" <?php if($rfq_fullfillment_part-> get_business_classification() == 'small_business'){echo 'selected';} ?>>Small business</option>
               <option value="8a" <?php if($rfq_fullfillment_part-> get_business_classification() == '8a'){echo 'selected';} ?>>8A</option>
               <option value="hubzone" <?php if($rfq_fullfillment_part-> get_business_classification() == 'hubzone'){echo 'selected';} ?>>HUBZONE</option>
