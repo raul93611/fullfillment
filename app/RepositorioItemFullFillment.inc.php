@@ -771,7 +771,7 @@ class RepositorioItemFullFillment{
         $sentence2-> execute();
         $result1 = $sentence1-> fetch(PDO::FETCH_ASSOC);
         $result2 = $sentence2-> fetch(PDO::FETCH_ASSOC);
-        if(!empty($result1['real_cost']) && !empty($result2['real_cost'])){
+        if(!empty($result1['real_cost']) || !empty($result2['real_cost'])){
           $real_cost = $result1['real_cost'] + $result2['real_cost'];
         }
       }catch(PDOException $ex){
