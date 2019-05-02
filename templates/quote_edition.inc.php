@@ -169,7 +169,7 @@
         <div class="col-md-6">
           <div class="form-group">
             <label>Total price:</label>
-            <input type="text" disabled class="form-control form-control-sm" value="<?php echo $quote-> obtener_total_price(); ?>">
+            <input type="text" disabled class="form-control form-control-sm" value="<?php echo $cotizacion-> obtener_total_price(); ?>">
           </div>
         </div>
       </div>
