@@ -258,7 +258,7 @@ try{
         <td style="font-size:12pt;">TOTAL:</td>
         <td>$ ' . number_format($re_quote-> get_total_cost(), 2) . '</td>
         <td></td>
-        <td style="font-size:12pt;text-align:right;">$ ' . number_format($re_quote-> get_total_price(), 2) . '</td>
+        <td style="font-size:12pt;text-align:right;">$ ' . number_format($cotizacion-> obtener_total_price(), 2) . '</td>
         </tr>
         </table>
         ';
