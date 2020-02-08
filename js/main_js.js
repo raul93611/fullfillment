@@ -1,7 +1,7 @@
 $(document).ready(function(){
   $('.rfq_team_table, .rfp_team_table').DataTable({
     'pageLength': 100,
-    'ordering': false
+    'ordering': true
   });
   /**/
   $('#generate_graphic_report_rfq').click(function(){
