@@ -86,7 +86,7 @@ include_once 'templates/validation_login.inc.php';
           <a href="http://www.elogicportal.com" class="btn btn_home btn-flat">Home</a>
         </div>
         <div class="social-auth-links text-center">
-          <a href="http://localhost/fullfillment/recover_password_form" class="">Did you forget your password?</a>
+          <a href="http://www.elogicportal.com/fullfillment/recover_password_form" class="">Did you forget your password?</a>
         </div>
       </div>
     </div>
