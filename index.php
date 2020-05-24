@@ -14,6 +14,7 @@ include_once 'app/RfqFullFillmentPart.inc.php';
 include_once 'app/RfqFullFillmentPartRepository.inc.php';
 
 include_once '../rfq/app/Conexion.inc.php';
+include_once '../rfq/app/ProposalRepository.inc.php';
 
 include_once '../rfq/app/Comment.inc.php';
 include_once '../rfq/app/RepositorioComment.inc.php';
