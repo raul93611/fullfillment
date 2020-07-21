@@ -4,11 +4,6 @@ define('BD_NAME_FULLFILLMENT', 'fullfillment');
 define('USERNAME_FULLFILLMENT', 'root');
 define('PASSWORD_FULLFILLMENT', '');
 
-define('SERVER_NAME', 'localhost');
-define('USER_NAME', 'root');
-define('PASSWORD', '');
-define('BD_NAME', 'rfp');
-
 define('NOMBRE_SERVIDOR', 'localhost');
 define('NOMBRE_USUARIO', 'root');
 define('PASSWORD', '');
@@ -95,19 +90,8 @@ define('PACKING_SLIP_PDF', SERVER . 'packing_slip_pdf/');
 /*******************************************************************************/
 define('EXCEL_REPORTS', PROFILE . 'excel_reports');
 define('GENERATE_EXCEL_REPORT', SERVER . 'generate_excel_report');
-define('GENERATE_EXCEL_REPORT_RFP', SERVER . 'generate_excel_report_rfp');
-define('GENERATE_EXCEL_REPORT_RFQ_RFP', SERVER . 'generate_excel_report_rfq_rfp');
-define('GENERATE_EXCEL_REPORT_SERVICES_EQUIPMENT', SERVER . 'generate_excel_report_services_equipment');
 /********************************************************************************/
 define('EDIT_ACCOUNTING_QUOTE', PROFILE . 'edit_accounting_quote/');
-/*******************************************************************************/
-define('RECEIVED_PROJECTS', PROFILE . 'received_projects');
-define('ACCOUNTING_COMPLETED_PROJECTS', PROFILE . 'accounting_completed_projects/');
-/*******************************************************************************/
-define('EDIT_PROJECT', PROFILE . 'edit_project/');
-define('EDIT_ACCOUNTING_PROJECT', PROFILE . 'edit_accounting_project/');
-/********************************************************************************/
-define('SERVICE', PROFILE . 'service/');
 /****************************************************************************/
 define('GRAPHIC_REPORTS', PROFILE . 'graphic_reports');
 /*******************************************************************************/

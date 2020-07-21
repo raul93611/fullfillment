@@ -84,21 +84,6 @@ if(isset($current_manager)){
     case 'edit_accounting_quote':
       include_once 'templates/edit_accounting_quote.inc.php';
       break;
-    case 'received_projects':
-      include_once 'templates/received_projects.inc.php';
-      break;
-    case 'edit_project':
-      include_once 'templates/edit_project.inc.php';
-      break;
-    case 'edit_accounting_project':
-      include_once 'templates/edit_accounting_project.inc.php';
-      break;
-    case 'service':
-      include_once 'templates/service.inc.php';
-      break;
-    case 'accounting_completed_projects':
-      include_once 'templates/accounting_completed_projects.inc.php';
-      break;
     case 'graphic_reports':
       include_once 'templates/graphic_reports.inc.php';
       break;

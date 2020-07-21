@@ -124,55 +124,6 @@
             ?>
           </ul>
         </li>
-        <li class="nav-item has-treeview
-        <?php
-        if($current_manager == 'received_projects'){
-          echo 'menu-open';
-        }
-        ?>
-        ">
-          <a href="#" class="nav-link
-            <?php
-            if($current_manager == 'received_projects'){
-              echo 'active';
-            }
-            ?>
-            ">
-            <i class="fas fa-tag nav-icon"></i>
-            <p>RFP Team</p>
-            <i class="right fa fa-angle-left"></i>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="<?php echo RECEIVED_PROJECTS; ?>" class="nav-link
-                <?php
-                if($current_manager == 'received_projects'){
-                  echo 'active';
-                }
-                ?>
-                ">
-                <p>Received</p>
-              </a>
-            </li>
-            <?php
-            if($_SESSION['level'] == 3){
-              ?>
-              <li class="nav-item">
-                <a href="<?php echo ACCOUNTING_COMPLETED_PROJECTS; ?>" class="nav-link
-                  <?php
-                  if($current_manager == 'accounting_completed_projects'){
-                    echo 'active';
-                  }
-                  ?>
-                  ">
-                  <p>Accounting</p>
-                </a>
-              </li>
-              <?php
-            }
-            ?>
-          </ul>
-        </li>
         <li class="nav-item has-treeview menu-open">
           <a href="<?php echo EMPLOYEE_DOCS_PAGE; ?>" class="nav-link
           <?php

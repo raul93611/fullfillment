@@ -43,7 +43,6 @@ $spreadsheet->setActiveSheetIndex(0)->setCellValue('V1', '%PROFIT(FULFILLMENT RE
 $spreadsheet->setActiveSheetIndex(0)->setCellValue('W1', 'TOTAL_COST(ACCOUNTING)');
 $spreadsheet->setActiveSheetIndex(0)->setCellValue('X1', 'PROFIT(ACCOUNTING)');
 $spreadsheet->setActiveSheetIndex(0)->setCellValue('Y1', '%PROFIT(ACCOUNTING)');
-$spreadsheet->setActiveSheetIndex(0)->setCellValue('Z1', 'RFP PROJECT');
 
 ConnectionFullFillment::open_connection();
 Conexion::abrir_conexion();
@@ -113,7 +112,6 @@ foreach ($quotes as $key => $quote) {
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('W'.$i, $real_cost_by_quote + $total_extra_cost);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('X'.$i, $profit_accounting);
   $spreadsheet->setActiveSheetIndex(0)->setCellValue('Y'.$i, $percentage_profit_accounting);
-  $spreadsheet->setActiveSheetIndex(0)->setCellValue('Z'.$i, $quote['rfp']);
   $i++;
 }
 

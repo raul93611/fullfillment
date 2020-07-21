@@ -104,45 +104,7 @@ include_once 'app/AccountingSubitemPriceRepository.inc.php';
 include_once 'app/ExtraCost.inc.php';
 include_once 'app/ExtraCostRepository.inc.php';
 
-include_once '../rfp/app/Connection.inc.php';
-
 include_once '../rfp/app/UserRepository.inc.php';
-
-include_once 'app/FulfillmentProject.inc.php';
-include_once 'app/FulfillmentProjectRepository.inc.php';
-
-include_once 'app/ProjectComment.inc.php';
-include_once 'app/ProjectCommentRepository.inc.php';
-
-include_once '../rfp/app/Project.inc.php';
-include_once '../rfp/app/ProjectRepository.inc.php';
-
-include_once '../rfp/app/Service.inc.php';
-include_once '../rfp/app/ServiceRepository.inc.php';
-
-include_once '../rfp/app/Staff.inc.php';
-include_once '../rfp/app/StaffRepository.inc.php';
-
-include_once '../rfp/app/Cost.inc.php';
-include_once '../rfp/app/CostRepository.inc.php';
-
-include_once 'app/ProjectDocument.inc.php';
-include_once 'app/ProjectDocumentRepository.inc.php';
-
-include_once 'app/RealProjectExtracost.inc.php';
-include_once 'app/RealProjectExtracostRepository.inc.php';
-
-include_once 'app/Member.inc.php';
-include_once 'app/MemberRepository.inc.php';
-
-include_once 'app/ProjectDate.inc.php';
-include_once 'app/ProjectDateRepository.inc.php';
-
-include_once 'app/AccountingServicePrice.inc.php';
-include_once 'app/AccountingServicePriceRepository.inc.php';
-
-include_once 'app/ExtraService.inc.php';
-include_once 'app/ExtraServiceRepository.inc.php';
 
 $url_components = parse_url($_SERVER['REQUEST_URI']);
 $route = $url_components['path'];
@@ -290,15 +252,6 @@ if($parts_route[0] == 'fullfillment'){
       case 'generate_excel_report':
         $chosen_route = 'scripts/generate_excel_report.php';
         break;
-      case 'generate_excel_report_rfp':
-        $chosen_route = 'scripts/generate_excel_report_rfp.php';
-        break;
-      case 'generate_excel_report_rfq_rfp':
-        $chosen_route = 'scripts/generate_excel_report_rfq_rfp.php';
-        break;
-      case 'generate_excel_report_services_equipment':
-        $chosen_route = 'scripts/generate_excel_report_services_equipment.php';
-        break;
       case 'save_accounting_quote':
         $chosen_route = 'scripts/save_accounting_quote.php';
         break;
@@ -331,57 +284,6 @@ if($parts_route[0] == 'fullfillment'){
         break;
       case 'remove_extra_cost':
         $chosen_route = 'scripts/remove_extra_cost.php';
-        break;
-      case 'save_new_project_comment':
-        $chosen_route = 'scripts/save_new_project_comment.php';
-        break;
-      case 'save_new_project_document':
-        $chosen_route = 'scripts/save_new_project_document.php';
-        break;
-      case 'save_edit_real_project_cost':
-        $chosen_route = 'scripts/save_edit_real_project_cost.php';
-        break;
-      case 'save_new_member':
-        $chosen_route = 'scripts/save_new_member.php';
-        break;
-      case 'save_edit_member':
-        $chosen_route = 'scripts/save_edit_member.php';
-        break;
-      case 'remove_member':
-        $chosen_route = 'scripts/remove_member.php';
-        break;
-      case 'save_new_project_date':
-        $chosen_route = 'scripts/save_new_project_date.php';
-        break;
-      case 'remove_project_date':
-        $chosen_route = 'scripts/remove_project_date.php';
-        break;
-      case 'load_all_project_dates':
-        $chosen_route = 'scripts/load_all_project_dates.php';
-        break;
-      case 'save_accounting_project':
-        $chosen_route = 'scripts/save_accounting_project.php';
-        break;
-      case 'save_new_accounting_service_price':
-        $chosen_route = 'scripts/save_new_accounting_service_price.php';
-        break;
-      case 'save_edit_accounting_service_price':
-        $chosen_route = 'scripts/save_edit_accounting_service_price.php';
-        break;
-      case 'remove_accounting_service_price':
-        $chosen_route = 'scripts/remove_accounting_service_price.php';
-        break;
-      case 'save_new_extra_service':
-        $chosen_route = 'scripts/save_new_extra_service.php';
-        break;
-      case 'save_edit_extra_service':
-        $chosen_route = 'scripts/save_edit_extra_service.php';
-        break;
-      case 'remove_extra_service':
-        $chosen_route = 'scripts/remove_extra_service.php';
-        break;
-      case 'set_accounting_project_completed':
-        $chosen_route = 'scripts/set_accounting_project_completed.php';
         break;
       case 'save_edit_tracking':
         $chosen_route = 'scripts/save_edit_tracking.php';
@@ -423,12 +325,6 @@ if($parts_route[0] == 'fullfillment'){
             break;
           case 'excel_reports':
             $current_manager = 'excel_reports';
-            break;
-          case 'received_projects':
-            $current_manager = 'received_projects';
-            break;
-          case 'accounting_completed_projects':
-            $current_manager = 'accounting_completed_projects';
             break;
           case 'graphic_reports':
             $current_manager = 'graphic_reports';
@@ -581,58 +477,6 @@ if($parts_route[0] == 'fullfillment'){
         $id_extra_cost = $parts_route[2];
         $chosen_route = 'scripts/load_extra_cost.php';
         break;
-      case 'load_project_comments':
-        $id_fulfillment_project = $parts_route[2];
-        $chosen_route = 'scripts/load_project_comments.php';
-        break;
-      case 'load_project_comments_modal':
-        $id_fulfillment_project = $parts_route[2];
-        $chosen_route = 'scripts/load_project_comments_modal.php';
-        break;
-      case 'load_project_documents':
-        $id_fulfillment_project = $parts_route[2];
-        $chosen_route = 'scripts/load_project_documents.php';
-        break;
-      case 'load_real_project_costs':
-        $id_fulfillment_project = $parts_route[2];
-        $chosen_route = 'scripts/load_real_project_costs.php';
-        break;
-      case 'load_real_project_cost':
-        $id_real_project_cost = $parts_route[2];
-        $chosen_route = 'scripts/load_real_project_cost.php';
-        break;
-      case 'load_total_difference':
-        $id_fulfillment_project = $parts_route[2];
-        $chosen_route = 'scripts/load_total_difference.php';
-        break;
-      case 'load_members':
-        $id_fulfillment_project = $parts_route[2];
-        $chosen_route = 'scripts/load_members.php';
-        break;
-      case 'load_member':
-        $id_member = $parts_route[2];
-        $chosen_route = 'scripts/load_member.php';
-        break;
-      case 'load_project_dates':
-        $id_fulfillment_project = $parts_route[2];
-        $chosen_route = 'scripts/load_project_dates.php';
-        break;
-      case 'load_project_date':
-        $id_project_date = $parts_route[2];
-        $chosen_route = 'scripts/load_project_date.php';
-        break;
-      case 'load_accounting_project_table':
-        $id_fulfillment_project = $parts_route[2];
-        $chosen_route = 'scripts/load_accounting_project_table.php';
-        break;
-      case 'load_accounting_service_price':
-        $id_accounting_service_price = $parts_route[2];
-        $chosen_route = 'scripts/load_accounting_service_price.php';
-        break;
-      case 'load_extra_service':
-        $id_extra_service = $parts_route[2];
-        $chosen_route = 'scripts/load_extra_service.php';
-        break;
       case 'load_tracking':
         $id_tracking = $parts_route[2];
         $chosen_route = 'scripts/load_tracking.php';
@@ -712,18 +556,6 @@ if($parts_route[0] == 'fullfillment'){
           case 'edit_accounting_quote':
             $current_manager = 'edit_accounting_quote';
             $id_rfq = $parts_route[3];
-            break;
-          case 'edit_project':
-            $current_manager = 'edit_project';
-            $id_project = $parts_route[3];
-            break;
-          case 'edit_accounting_project':
-            $current_manager = 'edit_accounting_project';
-            $id_project = $parts_route[3];
-            break;
-          case 'service':
-            $current_manager = 'service';
-            $id_service = $parts_route[3];
             break;
           default:
             break;
