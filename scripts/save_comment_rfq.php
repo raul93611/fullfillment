@@ -2,7 +2,6 @@
 session_start();
 if(isset($_POST['guardar_comment'])){
   Conexion::abrir_conexion();
-  Connection::open_connection();
   ConnectionFullFillment::open_connection();
   $quote = RepositorioRfqFullFillment::obtener_cotizacion_por_id(ConnectionFullFillment::get_connection(), $_POST['id_rfq']);
   $comment = new CommentRfqFullFillment('', $_POST['id_rfq'], $_SESSION['username'], htmlspecialchars($_POST['comment_rfq']), '');
@@ -17,7 +16,6 @@ if(isset($_POST['guardar_comment'])){
       break;
   }
   ConnectionFullFillment::close_connection();
-  Connection::close_connection();
   Conexion::cerrar_conexion();
   switch ($_SESSION['level']) {
     case 3:

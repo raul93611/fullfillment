@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('.rfq_team_table).DataTable({
+  $('.rfq_team_table').DataTable({
     'pageLength': 100,
     'ordering': true
   });
